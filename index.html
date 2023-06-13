@@ -31,8 +31,8 @@
 
     .card{
         background-color: white;
-        height: 80px;
-        width: 40px;
+        height: 140px;
+        width: 80px;
         border: solid 2px black;
     }
 
@@ -44,6 +44,11 @@
     }
     #new-card{
         background-color: green;
+    }
+    #r3{ /*don't start CSS with a number*/
+        font-size: 120px;       
+        color: black;
+                
     }
 
 </style>
@@ -60,15 +65,17 @@
         <div class="card" id="1">1</div>
         <div class="card" id="2">
             <div>2</div>
-            <div style="text-align: right;padding-top: 45px;">2</div>
-            
+            <div style="text-align: right;padding-top: 45px;">2</div>            
         </div>
-        <div class="card" id="3"></div>
+        <div class="card" id="r3">&#x1F0AE</div>
         <div class="card" id="4"></div>
         <div class="card" id="5"></div>
         <div class="card" id="6"></div>
-        <div class="card" id="7"></div>        
+        <div class="card" id="7"></div>     
+        <!--spade= &#x2660 , heart= &#x2665 , club= &#x2663, diamond= &#x2666-->   
     </div>    
+    <div id="testing" style="font-size: 100px;">&#x1F0A1 &#x1F0A2 &#x1F0A3 &#x1F0A4 &#x1F0A5 &#x1F0A6 &#x1F0A7 &#x1F0A8 &#x1F0A9 &#x1F0AA &#x1F0AB &#x1F0AD &#x1F0AE
+    </div>
     <br>
     <div class="new-card-block">
         <div class="card" id="pile"></div>
