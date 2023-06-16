@@ -34,6 +34,8 @@
         height: 140px;
         width: 80px;
         border: solid 2px black;
+        font-size: 120px;       
+        color: black;
     }
 
     .new-card-block{
@@ -45,11 +47,7 @@
     #new-card{
         background-color: green;
     }
-    #r3{ /*don't start CSS with a number*/
-        font-size: 120px;       
-        color: black;
-                
-    }
+    /*don't start CSS with a number*/   
 
 </style>
 <body>    
@@ -62,12 +60,10 @@
     </div>    
     <br>
     <div class="board-container">
-        <div class="card" id="1">1</div>
-        <div class="card" id="2">
-            <div>2</div>
-            <div style="text-align: right;padding-top: 45px;">2</div>            
-        </div>
-        <div class="card" id="r3">&#x1F0AE</div>
+        <!--1,1+1,1+2,1+3,1+4,1+5,1+6-->
+        <div class="card" id="1"></div>
+        <div class="card" id="2"></div>
+        <div class="card" id="3"></div>
         <div class="card" id="4"></div>
         <div class="card" id="5"></div>
         <div class="card" id="6"></div>
@@ -82,9 +78,124 @@
         <div class="card" id="new-card"></div>
     </div>
     
-    <!--Four foundation cards, 7 rows of cards and the deck with 1/3 cards-->
+    <!--Four foundation cards, 7 rows of cards and the deck with 1/3 cards
+    Hearts, Diamonds, Clubs, Spades
+    -->
 
 </body>
 <script>
+function Card(value, sym, col, text, id){
+    this.value = value;
+    this.sym = sym;
+    this.col = col;
+    this.text = text;
+    this.id = id;
+}
+//Can't start variables with a number either
+let pre = "&#x1F0";
+const c1h = new Card("1","H","R","&#x1F0B1","0");
+const c2h = new Card("2","H","R",pre+"B2","1");
+const c3h = new Card("3","H","R",pre+"B3","2");
+const c4h = new Card("4","H","R",pre+"B4","3");
+const c5h = new Card("5","H","R",pre+"B5","4");
+const c6h = new Card("6","H","R",pre+"B6","5");
+const c7h = new Card("7","H","R",pre+"B7","6");
+const c8h = new Card("8","H","R",pre+"B8","7");
+const c9h = new Card("9","H","R",pre+"B9","8");
+const c10h = new Card("10","H","R",pre+"BA","9");
+const cJh = new Card("J","H","R",pre+"BB","10");
+const cQh = new Card("Q","H","R",pre+"BD","11");
+const cKh = new Card("K","H","R",pre+"BE","12");
+
+const c1d = new Card("1","D","R",pre+"C1","13");
+const c2d = new Card("2","D","R",pre+"C2","14");
+const c3d = new Card("3","D","R",pre+"C3","15");
+const c4d = new Card("4","D","R",pre+"C4","16");
+const c5d = new Card("5","D","R",pre+"C5","17");
+const c6d = new Card("6","D","R",pre+"C6","18");
+const c7d = new Card("7","D","R",pre+"C7","19");
+const c8d = new Card("8","D","R",pre+"C8","20");
+const c9d = new Card("9","D","R",pre+"C9","21");
+const c10d = new Card("10","D","R",pre+"CA","22");
+const cJd = new Card("J","D","R",pre+"CB","23");
+const cQd = new Card("Q","D","R",pre+"CD","24");
+const cKd = new Card("K","D","R",pre+"CE","25");
+
+const c1c = new Card("1","C","B",pre+"D1","26");
+const c2c = new Card("2","C","B",pre+"D2","27");
+const c3c = new Card("3","C","B",pre+"D3","28");
+const c4c = new Card("4","C","B",pre+"D4","29");
+const c5c = new Card("5","C","B",pre+"D5","30");
+const c6c = new Card("6","C","B",pre+"D6","31");
+const c7c = new Card("7","C","B",pre+"D7","32");
+const c8c = new Card("8","C","B",pre+"D8","33");
+const c9c = new Card("9","C","B",pre+"D9","34");
+const c10c = new Card("10","C","B",pre+"DA","35");
+const cJc = new Card("J","C","B",pre+"DB","36");
+const cQc = new Card("Q","C","B",pre+"DD","37");
+const cKc = new Card("K","C","B",pre+"DE","38");
+
+const c1s = new Card("1","S","B",pre+"A1","39");
+const c2s = new Card("2","S","B",pre+"A2","40");
+const c3s = new Card("3","S","B",pre+"A3","41");
+const c4s = new Card("4","S","B",pre+"A4","42");
+const c5s = new Card("5","S","B",pre+"A5","43");
+const c6s = new Card("6","S","B",pre+"A6","44");
+const c7s = new Card("7","S","B",pre+"A7","45");
+const c8s = new Card("8","S","B",pre+"A8","46");
+const c9s = new Card("9","S","B",pre+"A9","47");
+const c10s = new Card("10","S","B",pre+"AA","48");
+const cJs = new Card("J","S","B",pre+"AB","49");
+const cQs = new Card("Q","S","B",pre+"AD","50");
+const cKs = new Card("K","S","B",pre+"AE","51");   
+
+let cardArray1 = [c1h,c2h,c3h,c4h,c5h,c6h,c7h,c8h,c9h,c10h,cJh,cQh,cKh];
+let cardArray2 = [c1d,c2d,c3d,c4d,c5d,c6d,c7d,c8d,c9d,c10d,cJd,cQd,cKd];
+let cardArray3 = [c1c,c2c,c3c,c4c,c5c,c6c,c7c,c8c,c9c,c10c,cJc,cQc,cKc];
+let cardArray4 = [c1s,c2s,c3s,c4s,c5s,c6s,c7s,c8s,c9s,c10s,cJs,cQs,cKs];
+
+let cardArrayA = cardArray1.concat(cardArray2,cardArray3,cardArray4);
+//console.log(cardArrayA[14].value);
+
+var shuffle = function (array) {
+    var currentIndex = array.length;
+    var temporaryValue, randomIndex;
+
+    while (0 !== currentIndex) {            
+        randomIndex = Math.floor(Math.random() * currentIndex);
+        currentIndex -= 1;            
+        temporaryValue = array[currentIndex];
+        array[currentIndex] = array[randomIndex];
+        array[randomIndex] = temporaryValue;
+    }        
+};
+
+let shuffledArray = cardArrayA.slice();
+shuffle(shuffledArray);
+
+console.log(shuffledArray[0]);
+document.getElementById("1").innerHTML = shuffledArray[0].text;
+document.getElementById("2").innerHTML = shuffledArray[1].text;
+document.getElementById("3").innerHTML = shuffledArray[2].text;
+document.getElementById("4").innerHTML = shuffledArray[3].text;
+document.getElementById("5").innerHTML = shuffledArray[4].text;
+document.getElementById("6").innerHTML = shuffledArray[5].text;
+document.getElementById("7").innerHTML = shuffledArray[6].text;
+
+for(let i=0;i<7;i++){
+    let a = i + 1;
+    if(shuffledArray[i].col == "R"){
+        document.getElementById(`${a}`).style.color = "red";
+    }
+    else{
+        document.getElementById(`${a}`).style.color = "black";
+    }
+}
+/*if(shuffledArray[6].col == "R"){
+    document.getElementById("7").style.color = "red";
+}
+else{
+document.getElementById("7").style.color = "black";
+}*/
 </script>
 </html>
