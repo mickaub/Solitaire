@@ -11,3 +11,7 @@ Added shuffle function, to shuffle all cards in random order.
 Created first loop to colour cards either red or black when displayed.
 
 ADD NEXT: change IDs of all board card slots to linear numbers, remove unneeded space, start adding extra rows of cards to board.
+
+19th Jun: Added buttons to show deck card on foundations, created all cards on board, pushed non-starting cards to deck array, applied colour change to board cards not in front.
+
+ADD NEXT: margin/padding change to non-front cards to move text out of sight.

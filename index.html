@@ -26,15 +26,17 @@
         grid-template-columns: auto auto auto auto auto auto auto;
         gap: 10px;
         padding: 10px;
-        height: 400px;
+        height: 800px;
     }
 
     .card{
         background-color: white;
-        height: 140px;
-        width: 80px;
+        height: 120px;
+        width: 100px;
         border: solid 2px black;
-        font-size: 120px;       
+        font-size: 120px;   
+        padding-bottom: 20px;  
+        padding-left: 20px;
         color: black;
     }
 
@@ -47,41 +49,54 @@
     #new-card{
         background-color: green;
     }
+    #HF,#DF{
+       color: red;
+    }
+    .second-row{
+        margin-top: -180px;
+    }
+    .covered{
+        background-color: rgb(255, 245, 100);
+    }
     /*don't start CSS with a number*/   
 
 </style>
 <body>    
-    <h1 style="text-align: center;">Solitaire Game</h1>
+    <h1 style="text-align: center;">Solitaire Game</h1>  
     <div class="foundation-container">
-        <div class="card"></div>
-        <div class="card"></div>
-        <div class="card"></div>
-        <div class="card"></div>
+        <div class="card" id="HF"></div>
+        <div class="card" id="DF"></div>
+        <div class="card" id="CF"></div>
+        <div class="card" id="SF"></div>
     </div>    
     <br>
-    <div class="board-container">
+    <button id="board-to-foundation1" onclick="BoardToFound(1)">Board to Foundation</button>
+    <button id="board-to-foundation2" onclick="BoardToFound(2)">Board to Foundation</button>
+    <button id="board-to-foundation3" onclick="BoardToFound(3)">Board to Foundation</button>
+    <button id="board-to-foundation4" onclick="BoardToFound(4)">Board to Foundation</button>
+    <button id="board-to-foundation5" onclick="BoardToFound(5)">Board to Foundation</button>
+    <button id="board-to-foundation6" onclick="BoardToFound(6)">Board to Foundation</button>
+    <button id="board-to-foundation7" onclick="BoardToFound(7)">Board to Foundation</button>
+    <div class="board-container" id="board-container">
         <!--1,1+1,1+2,1+3,1+4,1+5,1+6-->
+        <div class="card" id="0"></div>
         <div class="card" id="1"></div>
         <div class="card" id="2"></div>
         <div class="card" id="3"></div>
         <div class="card" id="4"></div>
         <div class="card" id="5"></div>
-        <div class="card" id="6"></div>
-        <div class="card" id="7"></div>     
+        <div class="card" id="6"></div>     
         <!--spade= &#x2660 , heart= &#x2665 , club= &#x2663, diamond= &#x2666-->   
     </div>    
-    <div id="testing" style="font-size: 100px;">&#x1F0A1 &#x1F0A2 &#x1F0A3 &#x1F0A4 &#x1F0A5 &#x1F0A6 &#x1F0A7 &#x1F0A8 &#x1F0A9 &#x1F0AA &#x1F0AB &#x1F0AD &#x1F0AE
-    </div>
+   <!-- <div id="testing" style="font-size: 100px;">&#x1F0A1 &#x1F0A2 &#x1F0A3 &#x1F0A4 &#x1F0A5 &#x1F0A6 &#x1F0A7 &#x1F0A8 &#x1F0A9 &#x1F0AA &#x1F0AB &#x1F0AD &#x1F0AE  </div> -->   
     <br>
     <div class="new-card-block">
         <div class="card" id="pile"></div>
         <div class="card" id="new-card"></div>
-    </div>
-    
+    </div>    
     <!--Four foundation cards, 7 rows of cards and the deck with 1/3 cards
     Hearts, Diamonds, Clubs, Spades
     -->
-
 </body>
 <script>
 function Card(value, sym, col, text, id){
@@ -170,27 +185,86 @@ var shuffle = function (array) {
     }        
 };
 
+function BoardToFound(row){
+    let a = row-1;
+    if(shuffledArray[a].id < 13){
+        document.getElementById("HF").innerHTML = shuffledArray[a].text;
+        return;
+    }
+     if(shuffledArray[a].id < 26){
+        document.getElementById("DF").innerHTML = shuffledArray[a].text;
+        return;
+    }
+     if(shuffledArray[a].id < 39){
+        document.getElementById("CF").innerHTML = shuffledArray[a].text;
+        return;
+    }
+    else{
+        document.getElementById("SF").innerHTML = shuffledArray[a].text;
+        return;
+    }
+    
+}
+
 let shuffledArray = cardArrayA.slice();
 shuffle(shuffledArray);
 
-console.log(shuffledArray[0]);
-document.getElementById("1").innerHTML = shuffledArray[0].text;
-document.getElementById("2").innerHTML = shuffledArray[1].text;
-document.getElementById("3").innerHTML = shuffledArray[2].text;
-document.getElementById("4").innerHTML = shuffledArray[3].text;
-document.getElementById("5").innerHTML = shuffledArray[4].text;
-document.getElementById("6").innerHTML = shuffledArray[5].text;
-document.getElementById("7").innerHTML = shuffledArray[6].text;
+//console.log(shuffledArray[0]);
+let mult = 13*7; //temp
+console.log(mult)
 
-for(let i=0;i<7;i++){
-    let a = i + 1;
+document.getElementById("0").innerHTML = shuffledArray[0].text;
+document.getElementById("1").innerHTML = shuffledArray[1].text;
+document.getElementById("2").innerHTML = shuffledArray[2].text;
+document.getElementById("3").innerHTML = shuffledArray[3].text;
+document.getElementById("4").innerHTML = shuffledArray[4].text;
+document.getElementById("5").innerHTML = shuffledArray[5].text;
+document.getElementById("6").innerHTML = shuffledArray[6].text;
+
+let boardContainer = document.getElementById("board-container");
+
+/*let num8 = document.createElement('div');
+num8.classList.add('card');
+num8.classList.add('second-row');
+num8.id = 8;
+boardContainer.append(num8);*/
+
+for(let i=7;i<52;i++){
+    let a = i+1;
+    let newCard = document.createElement('div');
+    newCard.classList.add('card');
+    newCard.classList.add('second-row');
+    newCard.id = i;
+    boardContainer.append(newCard);
+    document.getElementById(`${i}`).innerHTML = shuffledArray[i].text;
+}
+//document.getElementById("8").innerHTML = shuffledArray[6].text;
+//document.getElementById("8").innerHTML = shuffledArray[7].text;
+
+console.log(shuffledArray[7],shuffledArray[8],shuffledArray[9])
+console.log(shuffledArray[51])
+
+let hidden = [7,14,21,28,35,42,49,15,22,29,36,43,50,23,30,37,44,51,31,38,45,39,46,47];
+let front = [0,8,16,24,32,40,48]
+let deck = [];
+
+for(let i=0;i<52;i++){    
     if(shuffledArray[i].col == "R"){
-        document.getElementById(`${a}`).style.color = "red";
+        document.getElementById(`${i}`).style.color = "red";
     }
     else{
-        document.getElementById(`${a}`).style.color = "black";
+        document.getElementById(`${i}`).style.color = "black";
+    }
+    if(hidden.indexOf(i)!==-1){
+        document.getElementById(`${i}`).style.visibility = "hidden";
+        deck.push(i);
+    }
+    if(front.indexOf(i)==-1){
+        document.getElementById(`${i}`).classList.add("covered");
+       // document.getElementById(`${i}`).innerHTML = "";
     }
 }
+console.log(deck);
 /*if(shuffledArray[6].col == "R"){
     document.getElementById("7").style.color = "red";
 }
