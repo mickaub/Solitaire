@@ -12,6 +12,12 @@ Created first loop to colour cards either red or black when displayed.
 
 ADD NEXT: change IDs of all board card slots to linear numbers, remove unneeded space, start adding extra rows of cards to board.
 
-19th Jun: Added buttons to show deck card on foundations, created all cards on board, pushed non-starting cards to deck array, applied colour change to board cards not in front.
+19th Jun: Added buttons to show deck card on foundations.
+Created all 52 cards on board, pushed non-starting cards to deck array.
+Applied colour change to board cards not in front.
 
-ADD NEXT: margin/padding change to non-front cards to move text out of sight.
+Changed font size of non-front cards to keep text away from view.
+Created functions to move cards from deck to board, deck to foundation cards and foundation back to the board.
+Created max card amount on board (each of the 7 columns being at max 13+7 cards, total 140).
+
+ADD NEXT: Allow only Aces to move to foundation initially, block attempts to move wrong cards to foundation, make sure all functions allow colour change.
