@@ -21,3 +21,8 @@ Created functions to move cards from deck to board, deck to foundation cards and
 Created max card amount on board (each of the 7 columns being at max 13+7 cards, total 140).
 
 ADD NEXT: Allow only Aces to move to foundation initially, block attempts to move wrong cards to foundation, make sure all functions allow colour change.
+
+20th Jun: Allowed Aces to move to foundation initially, from both the board and the deck. 
+All functions now allow colour change.
+
+FIX NEXT: cards that are not ace are not moving from deck to foundation.

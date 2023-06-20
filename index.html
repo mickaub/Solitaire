@@ -201,25 +201,117 @@ var shuffle = function (array) {
     }        
 };
 
+let foundationH = -1;
+let foundationD = -1;
+let foundationC = -1;
+let foundationS = -1;
+let column1 = [];
+let column2 = [];
+let column3 = [];
+let column4 = [];
+let column5 = [];
+let column6 = [];
+let column7 = [];
+
 function BoardToFound(row){
     let pos = row-1
-    let a = front[pos];
+    let a = front[pos];    
     
     if(shuffledArray[a].id < 13){
-        document.getElementById("HF").innerHTML = shuffledArray[a].text;
-        return;
+        if(foundationH == -1){
+            if(shuffledArray[a].id==0){
+                document.getElementById("HF").innerHTML = shuffledArray[a].text;
+                foundationH = 0;
+                return;
+            }
+            else{
+                return;
+            }
+        }
+        else{
+            let b = shuffledArray[a].id;
+            let newID = b+1;
+            if(newID==foundationH){
+                document.getElementById("HF").innerHTML = shuffledArray[a].text;
+                foundationH += 1;
+                return;
+            }
+            else{
+                return;
+            }
+        }
     }
      if(shuffledArray[a].id < 26){
-        document.getElementById("DF").innerHTML = shuffledArray[a].text;
-        return;
+        if(foundationD == -1){
+            if(shuffledArray[a].id==13){
+                document.getElementById("DF").innerHTML = shuffledArray[a].text;
+                foundationD = 13;
+                return;
+            }
+            else{
+                return;
+            }
+        }
+        else{
+            let b = shuffledArray[a].id;
+            let newID = b+1;
+            if(newID==foundationD){
+                document.getElementById("DF").innerHTML = shuffledArray[a].text;
+                foundationD += 1;
+                return;
+            }
+            else{
+                return;
+            }
+        }        
     }
      if(shuffledArray[a].id < 39){
-        document.getElementById("CF").innerHTML = shuffledArray[a].text;
-        return;
+        if(foundationC == -1){
+            if(shuffledArray[a].id==26){
+                document.getElementById("CF").innerHTML = shuffledArray[a].text;
+                foundationC = 26;
+                return;
+            }
+            else{
+                return;
+            }
+        }
+        else{
+            let b = shuffledArray[a].id;
+            let newID = b+1;
+            if(newID==foundationC){
+                document.getElementById("CF").innerHTML = shuffledArray[a].text;
+                foundationC += 1;
+                return;
+            }
+            else{
+                return;
+            }
+        }
     }
     else{
-        document.getElementById("SF").innerHTML = shuffledArray[a].text;
-        return;
+        if(foundationS == -1){
+            if(shuffledArray[a].id==39){
+                document.getElementById("SF").innerHTML = shuffledArray[a].text;
+                foundationS = 39;
+                return;
+            }
+            else{
+                return;
+            }
+        }
+        else{
+            let b = shuffledArray[a].id;
+            let newID = b+1;
+            if(newID==foundationS){
+                document.getElementById("SF").innerHTML = shuffledArray[a].text;
+                foundationS += 1;
+                return;
+            }
+            else{
+                return;
+            }
+        }
     }
     
 }
@@ -233,6 +325,12 @@ function UpToBoard(){
     deck.shift();
     let b = deck[0];
     document.getElementById("new-card").innerHTML = shuffledArray[b].text;
+    if(shuffledArray[a].col == "R"){
+        document.getElementById("7").style.color = "red";
+    }
+    else{
+        document.getElementById("7").style.color = "black";
+    }
     
 }
 
@@ -242,7 +340,9 @@ function FoundToBoard(iden){
         document.getElementById("HF").innerHTML = "";
         document.getElementById("7").innerHTML = a;
         document.getElementById("7").style.visibility = "visible";
-        document.getElementById("7").classList.remove("covered");
+        document.getElementById("7").classList.remove("covered");        
+        document.getElementById("7").style.color = "red";
+        
     }
     if(iden==2){
         let a = document.getElementById("DF").innerHTML;
@@ -250,6 +350,7 @@ function FoundToBoard(iden){
         document.getElementById("7").innerHTML = a;
         document.getElementById("7").style.visibility = "visible";
         document.getElementById("7").classList.remove("covered");
+        document.getElementById("7").style.color = "red";
     }
     if(iden==3){
         let a = document.getElementById("CF").innerHTML;
@@ -257,6 +358,7 @@ function FoundToBoard(iden){
         document.getElementById("7").innerHTML = a;
         document.getElementById("7").style.visibility = "visible";
         document.getElementById("7").classList.remove("covered");
+        document.getElementById("7").style.color = "black";
     }
     if(iden==4){
         let a = document.getElementById("SF").innerHTML;
@@ -264,6 +366,7 @@ function FoundToBoard(iden){
         document.getElementById("7").innerHTML = a;
         document.getElementById("7").style.visibility = "visible";
         document.getElementById("7").classList.remove("covered");
+        document.getElementById("7").style.color = "black";
     }
 }
 let foundationCodes = [];
@@ -271,32 +374,127 @@ function UpToFound(){
     let a = deck[0];
     
     if(shuffledArray[a].id < 13){
-        document.getElementById("HF").innerHTML = shuffledArray[a].text;
-        deck.shift()
-        let b = deck[0];
-        document.getElementById("new-card").innerHTML = shuffledArray[b].text;
-        return;
+        if(foundationH == -1){
+            if(shuffledArray[a].id==0){
+                document.getElementById("HF").innerHTML = shuffledArray[a].text;
+                foundationH = 0;
+                deck.shift()
+                let b = deck[0];
+                document.getElementById("new-card").innerHTML = shuffledArray[b].text;
+                return;
+            }
+            else{
+                return;
+            }
+        }
+        else{
+            let c = shuffledArray[a].id;
+            let newID = c+1;
+            if(newID==foundationH){
+                document.getElementById("HF").innerHTML = shuffledArray[a].text;
+                foundationH += 1;
+                deck.shift()
+                let b = deck[0];
+                document.getElementById("new-card").innerHTML = shuffledArray[b].text;
+                return;
+            }
+            else{
+                return;
+            }
+        }
+       
     }
      if(shuffledArray[a].id < 26){
-        document.getElementById("DF").innerHTML = shuffledArray[a].text;
-        deck.shift()
-        let b = deck[0];
-        document.getElementById("new-card").innerHTML = shuffledArray[b].text;
-        return;
+        if(foundationD == -1){
+            if(shuffledArray[a].id==13){
+                document.getElementById("DF").innerHTML = shuffledArray[a].text;
+                foundationD = 13;
+                deck.shift()
+                let b = deck[0];
+                document.getElementById("new-card").innerHTML = shuffledArray[b].text;
+                return;
+            }
+            else{
+                return;
+            }
+        }
+        else{
+            let c = shuffledArray[a].id;
+            let newID = c+1;
+            if(newID==foundationD){
+                document.getElementById("DF").innerHTML = shuffledArray[a].text;
+                foundationD += 1;
+                deck.shift()
+                let b = deck[0];
+                document.getElementById("new-card").innerHTML = shuffledArray[b].text;
+                return;
+            }
+            else{
+                return;
+            }
+        }        
+        
     }
      if(shuffledArray[a].id < 39){
-        document.getElementById("CF").innerHTML = shuffledArray[a].text;
-        deck.shift()
-        let b = deck[0];
-        document.getElementById("new-card").innerHTML = shuffledArray[b].text;
-        return;
+        if(foundationC == -1){
+            if(shuffledArray[a].id==26){
+                document.getElementById("CF").innerHTML = shuffledArray[a].text;
+                foundationC = 26;
+                deck.shift()
+                let b = deck[0];
+                document.getElementById("new-card").innerHTML = shuffledArray[b].text;
+                return;
+            }
+            else{
+                return;
+            }
+        }
+        else{
+            let c = shuffledArray[a].id;
+            let newID = c+1;
+            if(newID==foundationC){
+                document.getElementById("CF").innerHTML = shuffledArray[a].text;
+                foundationC += 1;
+                deck.shift()
+                let b = deck[0];
+                document.getElementById("new-card").innerHTML = shuffledArray[b].text;
+                return;
+            }
+            else{
+                return;
+            }
+        }
+        
     }
     else{
-        document.getElementById("SF").innerHTML = shuffledArray[a].text;
-        deck.shift()
-        let b = deck[0];
-        document.getElementById("new-card").innerHTML = shuffledArray[b].text;
-        return;
+        if(foundationS == -1){
+            if(shuffledArray[a].id==39){
+                document.getElementById("SF").innerHTML = shuffledArray[a].text;
+                foundationS = 39;
+                deck.shift()
+                let b = deck[0];
+                document.getElementById("new-card").innerHTML = shuffledArray[b].text;
+                return;
+            }
+            else{
+                return;
+            }
+        }
+        else{
+            let c = shuffledArray[a].id;
+            let newID = c+1;
+            if(newID==foundationS){
+                document.getElementById("SF").innerHTML = shuffledArray[a].text;
+                foundationS += 1;
+                deck.shift()
+                let b = deck[0];
+                document.getElementById("new-card").innerHTML = shuffledArray[b].text;
+                return;
+            }
+            else{
+                return;
+            }
+        }        
     }
 }
 
@@ -305,8 +503,8 @@ function SwapDeck(){
     deck.shift();
     let a = deck[0];
     document.getElementById("new-card").innerHTML = shuffledArray[a].text;
-    console.log(deck);
-    if(shuffledArray[a].col == "R"){
+    //console.log(deck,shuffledArray[a].col);
+    if( shuffledArray[a].col == "R"){
         document.getElementById("new-card").style.color = "red";
     }
     else{
@@ -379,7 +577,7 @@ for(let i=0;i<52;i++){
        // document.getElementById(`${i}`).innerHTML = "";
     }
 }
-console.log(deck);
+//console.log(deck);
 
 let firstDeck = deck[0];
 document.getElementById("new-card").innerHTML = shuffledArray[firstDeck].text;
