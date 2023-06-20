@@ -24,5 +24,10 @@ ADD NEXT: Allow only Aces to move to foundation initially, block attempts to mov
 
 20th Jun: Allowed Aces to move to foundation initially, from both the board and the deck. 
 All functions now allow colour change.
-
 FIX NEXT: cards that are not ace are not moving from deck to foundation.
+
+All cards now move to foundation properly.
+Deck cards now change colour on both types of moves.
+When deck cards move to foundation, card is hidden and next card is shown. If no card left, moving button for row disappears.
+
+ADD NEXT: win function with victory changes, reset button and function, when moving deck to board have the correct column chosen to move to and add card to that column, code cleaning required.

@@ -215,26 +215,79 @@ let column7 = [];
 
 function BoardToFound(row){
     let pos = row-1
-    let a = front[pos];    
+    let a = front[pos];
+    if(a==-1){
+        return;
+    }
+    let columnChoice = -1;
+    if(pos==0){
+        columnChoice = column1;
+    }    
+    if(pos==1){
+        columnChoice = column2;
+    } 
+    if(pos==2){
+        columnChoice = column3;
+    } 
+    if(pos==3){
+        columnChoice = column4;
+    } 
+    if(pos==4){
+        columnChoice = column5;
+    } 
+    if(pos==5){
+        columnChoice = column6;
+    } 
+    if(pos==6){
+        columnChoice = column7;
+    } 
     
     if(shuffledArray[a].id < 13){
         if(foundationH == -1){
             if(shuffledArray[a].id==0){
                 document.getElementById("HF").innerHTML = shuffledArray[a].text;
-                foundationH = 0;
-                return;
+                foundationH = 0;      
+                if(columnChoice.length==0){
+                    document.getElementById(`board-to-foundation${row}`).style.visibility = "hidden";
+                    front[pos]=-1;
+                    document.getElementById(`${a}`).style.visibility = "hidden";
+                    return;
+                }    
+                else{
+                    document.getElementById(`${a}`).style.visibility = "hidden";
+                    front[pos] -= 7;  
+                    a = front[pos];                  
+                    document.getElementById(`${a}`).classList.remove("covered");
+                    return;
+                }      
+                
             }
             else{
                 return;
             }
         }
         else{
-            let b = shuffledArray[a].id;
-            let newID = b+1;
+          //  console.log("step1");
+            let b = Number(shuffledArray[a].id);
+            let newID = b-1;
+          //  console.log(newID, foundationH);
             if(newID==foundationH){
+                console.log("step2");
                 document.getElementById("HF").innerHTML = shuffledArray[a].text;
                 foundationH += 1;
-                return;
+                if(columnChoice.length==0){
+                    document.getElementById(`board-to-foundation${row}`).style.visibility = "hidden";
+                    front[pos]=-1;
+                    document.getElementById(`${a}`).style.visibility = "hidden";
+                    return;
+                }    
+                else{
+                    document.getElementById(`${a}`).style.visibility = "hidden";
+                    front[pos] -= 7;  
+                    a = front[pos];                  
+                    document.getElementById(`${a}`).classList.remove("covered");
+                    return;
+                }    
             }
             else{
                 return;
@@ -246,19 +299,46 @@ function BoardToFound(row){
             if(shuffledArray[a].id==13){
                 document.getElementById("DF").innerHTML = shuffledArray[a].text;
                 foundationD = 13;
-                return;
+                if(columnChoice.length==0){
+                    document.getElementById(`board-to-foundation${row}`).style.visibility = "hidden";
+                    front[pos]=-1;
+                    document.getElementById(`${a}`).style.visibility = "hidden";
+                    return;
+                }    
+                else{
+                    document.getElementById(`${a}`).style.visibility = "hidden";
+                    front[pos] -= 7;  
+                    a = front[pos];                  
+                    document.getElementById(`${a}`).classList.remove("covered");
+                    return;
+                }    
             }
             else{
                 return;
             }
         }
         else{
-            let b = shuffledArray[a].id;
-            let newID = b+1;
+            console.log("step1");
+            let b = Number(shuffledArray[a].id);
+            let newID = b-1;
+            console.log(newID, foundationD);
             if(newID==foundationD){
+               // console.log("step2");
                 document.getElementById("DF").innerHTML = shuffledArray[a].text;
                 foundationD += 1;
-                return;
+                if(columnChoice.length==0){
+                    document.getElementById(`board-to-foundation${row}`).style.visibility = "hidden";
+                    front[pos]=-1;
+                    document.getElementById(`${a}`).style.visibility = "hidden";
+                    return;
+                }    
+                else{
+                    document.getElementById(`${a}`).style.visibility = "hidden";
+                    front[pos] -= 7;  
+                    a = front[pos];                  
+                    document.getElementById(`${a}`).classList.remove("covered");
+                    return;
+                }    
             }
             else{
                 return;
@@ -270,19 +350,46 @@ function BoardToFound(row){
             if(shuffledArray[a].id==26){
                 document.getElementById("CF").innerHTML = shuffledArray[a].text;
                 foundationC = 26;
-                return;
+                if(columnChoice.length==0){
+                    document.getElementById(`board-to-foundation${row}`).style.visibility = "hidden";
+                    front[pos]=-1;
+                    document.getElementById(`${a}`).style.visibility = "hidden";
+                    return;
+                }    
+                else{
+                    document.getElementById(`${a}`).style.visibility = "hidden";
+                    front[pos] -= 7;  
+                    a = front[pos];                  
+                    document.getElementById(`${a}`).classList.remove("covered");
+                    return;
+                }    
             }
             else{
                 return;
             }
         }
         else{
-            let b = shuffledArray[a].id;
-            let newID = b+1;
+          //  console.log("step1");
+            let b = Number(shuffledArray[a].id);
+            let newID = b-1;
+           // console.log(newID, foundationC);
             if(newID==foundationC){
+              //  console.log("step2");
                 document.getElementById("CF").innerHTML = shuffledArray[a].text;
                 foundationC += 1;
-                return;
+                if(columnChoice.length==0){
+                    document.getElementById(`board-to-foundation${row}`).style.visibility = "hidden";
+                    front[pos]=-1;
+                    document.getElementById(`${a}`).style.visibility = "hidden";
+                    return;
+                }    
+                else{
+                    document.getElementById(`${a}`).style.visibility = "hidden";
+                    front[pos] -= 7;  
+                    a = front[pos];                  
+                    document.getElementById(`${a}`).classList.remove("covered");
+                    return;
+                }    
             }
             else{
                 return;
@@ -294,19 +401,46 @@ function BoardToFound(row){
             if(shuffledArray[a].id==39){
                 document.getElementById("SF").innerHTML = shuffledArray[a].text;
                 foundationS = 39;
-                return;
+                if(columnChoice.length==0){
+                    document.getElementById(`board-to-foundation${row}`).style.visibility = "hidden";
+                    front[pos]=-1;
+                    document.getElementById(`${a}`).style.visibility = "hidden";
+                    return;
+                }    
+                else{
+                    document.getElementById(`${a}`).style.visibility = "hidden";
+                    front[pos] -= 7;  
+                    a = front[pos];                  
+                    document.getElementById(`${a}`).classList.remove("covered");
+                    return;
+                }    
             }
             else{
                 return;
             }
         }
         else{
-            let b = shuffledArray[a].id;
-            let newID = b+1;
+         //   console.log("step1");
+            let b = Number(shuffledArray[a].id);
+            let newID = b-1;
+         //   console.log(newID, foundationS);
             if(newID==foundationS){
+              //  console.log("step2");
                 document.getElementById("SF").innerHTML = shuffledArray[a].text;
                 foundationS += 1;
-                return;
+                if(columnChoice.length==0){
+                    document.getElementById(`board-to-foundation${row}`).style.visibility = "hidden";
+                    front[pos]=-1;
+                    document.getElementById(`${a}`).style.visibility = "hidden";
+                    return;
+                }    
+                else{
+                    document.getElementById(`${a}`).style.visibility = "hidden";
+                    front[pos] -= 7;  
+                    a = front[pos];                  
+                    document.getElementById(`${a}`).classList.remove("covered");
+                    return;
+                }    
             }
             else{
                 return;
@@ -316,20 +450,41 @@ function BoardToFound(row){
     
 }
 
+
 function UpToBoard(){
+    if(deck.length==0){
+        return;
+    }
     let a = deck[0];
     document.getElementById("7").innerHTML = shuffledArray[a].text;    
-    console.log(deck);
+    //console.log(deck);
     document.getElementById("7").style.visibility = "visible";
     document.getElementById("7").classList.remove("covered");    
-    deck.shift();
-    let b = deck[0];
-    document.getElementById("new-card").innerHTML = shuffledArray[b].text;
     if(shuffledArray[a].col == "R"){
         document.getElementById("7").style.color = "red";
     }
     else{
         document.getElementById("7").style.color = "black";
+    }
+    deck.shift();
+    if(deck.length==1){        
+        document.getElementById("pile").style.visibility = "hidden";
+        document.getElementById("swap-deck").style.visibility = "hidden";        
+    }    
+    if(deck.length==0){
+        document.getElementById("deck-to-board").style.visibility = "hidden";
+        document.getElementById("deck-to-found").style.visibility = "hidden";
+        document.getElementById("new-card").style.visibility = "hidden";
+        return;
+    }
+    let b = deck[0];
+    document.getElementById("new-card").innerHTML = shuffledArray[b].text;
+    
+    if(shuffledArray[b].col == "R"){
+        document.getElementById("new-card").style.color = "red";
+    }
+    else{
+        document.getElementById("new-card").style.color = "black";
     }
     
 }
@@ -371,6 +526,9 @@ function FoundToBoard(iden){
 }
 let foundationCodes = [];
 function UpToFound(){    
+    if(deck.length==0){
+        return;
+    }
     let a = deck[0];
     
     if(shuffledArray[a].id < 13){
@@ -379,8 +537,25 @@ function UpToFound(){
                 document.getElementById("HF").innerHTML = shuffledArray[a].text;
                 foundationH = 0;
                 deck.shift()
+                if(deck.length==1){        
+        document.getElementById("pile").style.visibility = "hidden";
+        document.getElementById("swap-deck").style.visibility = "hidden";        
+    }    
+    if(deck.length==0){
+        document.getElementById("deck-to-board").style.visibility = "hidden";
+        document.getElementById("deck-to-found").style.visibility = "hidden";
+        document.getElementById("new-card").style.visibility = "hidden";
+        return;
+    }
+                
                 let b = deck[0];
                 document.getElementById("new-card").innerHTML = shuffledArray[b].text;
+                if(shuffledArray[b].col == "R"){
+        document.getElementById("new-card").style.color = "red";
+    }
+    else{
+        document.getElementById("new-card").style.color = "black";
+    }
                 return;
             }
             else{
@@ -388,14 +563,34 @@ function UpToFound(){
             }
         }
         else{
-            let c = shuffledArray[a].id;
-            let newID = c+1;
+           // console.log("step1");
+            let c = Number(shuffledArray[a].id);
+            let newID = c-1;
+         //   console.log(newID, foundationH);
             if(newID==foundationH){
+              //  console.log("step2");
                 document.getElementById("HF").innerHTML = shuffledArray[a].text;
                 foundationH += 1;
                 deck.shift()
+                if(deck.length==1){        
+        document.getElementById("pile").style.visibility = "hidden";
+        document.getElementById("swap-deck").style.visibility = "hidden";        
+    }    
+    if(deck.length==0){
+        document.getElementById("deck-to-board").style.visibility = "hidden";
+        document.getElementById("deck-to-found").style.visibility = "hidden";
+        document.getElementById("new-card").style.visibility = "hidden";
+        return;
+    }
+               
                 let b = deck[0];
                 document.getElementById("new-card").innerHTML = shuffledArray[b].text;
+                if(shuffledArray[b].col == "R"){
+        document.getElementById("new-card").style.color = "red";
+    }
+    else{
+        document.getElementById("new-card").style.color = "black";
+    }
                 return;
             }
             else{
@@ -410,8 +605,24 @@ function UpToFound(){
                 document.getElementById("DF").innerHTML = shuffledArray[a].text;
                 foundationD = 13;
                 deck.shift()
+                if(deck.length==1){        
+        document.getElementById("pile").style.visibility = "hidden";
+        document.getElementById("swap-deck").style.visibility = "hidden";        
+    }    
+    if(deck.length==0){
+        document.getElementById("deck-to-board").style.visibility = "hidden";
+        document.getElementById("deck-to-found").style.visibility = "hidden";
+        document.getElementById("new-card").style.visibility = "hidden";
+        return;
+    }
                 let b = deck[0];
                 document.getElementById("new-card").innerHTML = shuffledArray[b].text;
+                if(shuffledArray[b].col == "R"){
+        document.getElementById("new-card").style.color = "red";
+    }
+    else{
+        document.getElementById("new-card").style.color = "black";
+    }
                 return;
             }
             else{
@@ -419,14 +630,33 @@ function UpToFound(){
             }
         }
         else{
-            let c = shuffledArray[a].id;
-            let newID = c+1;
+         //   console.log("step1");
+            let c = Number(shuffledArray[a].id);
+            let newID = c-1;
+          //  console.log(newID, foundationD);
             if(newID==foundationD){
+           //    console.log("step2");
                 document.getElementById("DF").innerHTML = shuffledArray[a].text;
                 foundationD += 1;
                 deck.shift()
+                if(deck.length==1){        
+        document.getElementById("pile").style.visibility = "hidden";
+        document.getElementById("swap-deck").style.visibility = "hidden";        
+    }    
+    if(deck.length==0){
+        document.getElementById("deck-to-board").style.visibility = "hidden";
+        document.getElementById("deck-to-found").style.visibility = "hidden";
+        document.getElementById("new-card").style.visibility = "hidden";
+        return;
+    }
                 let b = deck[0];
                 document.getElementById("new-card").innerHTML = shuffledArray[b].text;
+                if(shuffledArray[b].col == "R"){
+        document.getElementById("new-card").style.color = "red";
+    }
+    else{
+        document.getElementById("new-card").style.color = "black";
+    }
                 return;
             }
             else{
@@ -441,8 +671,24 @@ function UpToFound(){
                 document.getElementById("CF").innerHTML = shuffledArray[a].text;
                 foundationC = 26;
                 deck.shift()
+                if(deck.length==1){        
+        document.getElementById("pile").style.visibility = "hidden";
+        document.getElementById("swap-deck").style.visibility = "hidden";        
+    }    
+    if(deck.length==0){
+        document.getElementById("deck-to-board").style.visibility = "hidden";
+        document.getElementById("deck-to-found").style.visibility = "hidden";
+        document.getElementById("new-card").style.visibility = "hidden";
+        return;
+    }
                 let b = deck[0];
                 document.getElementById("new-card").innerHTML = shuffledArray[b].text;
+                if(shuffledArray[b].col == "R"){
+        document.getElementById("new-card").style.color = "red";
+    }
+    else{
+        document.getElementById("new-card").style.color = "black";
+    }
                 return;
             }
             else{
@@ -450,14 +696,33 @@ function UpToFound(){
             }
         }
         else{
-            let c = shuffledArray[a].id;
-            let newID = c+1;
+       //     console.log("step1");
+            let c = Number(shuffledArray[a].id);
+            let newID = c-1;
+        //    console.log(newID, foundationC);
             if(newID==foundationC){
+            //    console.log("step2");
                 document.getElementById("CF").innerHTML = shuffledArray[a].text;
                 foundationC += 1;
                 deck.shift()
+                if(deck.length==1){        
+        document.getElementById("pile").style.visibility = "hidden";
+        document.getElementById("swap-deck").style.visibility = "hidden";        
+    }    
+    if(deck.length==0){
+        document.getElementById("deck-to-board").style.visibility = "hidden";
+        document.getElementById("deck-to-found").style.visibility = "hidden";
+        document.getElementById("new-card").style.visibility = "hidden";
+        return;
+    }
                 let b = deck[0];
                 document.getElementById("new-card").innerHTML = shuffledArray[b].text;
+                if(shuffledArray[b].col == "R"){
+        document.getElementById("new-card").style.color = "red";
+    }
+    else{
+        document.getElementById("new-card").style.color = "black";
+    }
                 return;
             }
             else{
@@ -472,8 +737,24 @@ function UpToFound(){
                 document.getElementById("SF").innerHTML = shuffledArray[a].text;
                 foundationS = 39;
                 deck.shift()
+                if(deck.length==1){        
+        document.getElementById("pile").style.visibility = "hidden";
+        document.getElementById("swap-deck").style.visibility = "hidden";        
+    }    
+    if(deck.length==0){
+        document.getElementById("deck-to-board").style.visibility = "hidden";
+        document.getElementById("deck-to-found").style.visibility = "hidden";
+        document.getElementById("new-card").style.visibility = "hidden";
+        return;
+    }
                 let b = deck[0];
                 document.getElementById("new-card").innerHTML = shuffledArray[b].text;
+                if(shuffledArray[b].col == "R"){
+        document.getElementById("new-card").style.color = "red";
+    }
+    else{
+        document.getElementById("new-card").style.color = "black";
+    }
                 return;
             }
             else{
@@ -481,14 +762,33 @@ function UpToFound(){
             }
         }
         else{
-            let c = shuffledArray[a].id;
-            let newID = c+1;
+         //   console.log("step1");
+            let c = Number(shuffledArray[a].id);
+            let newID = c-1;
+         //   console.log(newID, foundationS);
             if(newID==foundationS){
+           //     console.log("step2");
                 document.getElementById("SF").innerHTML = shuffledArray[a].text;
                 foundationS += 1;
                 deck.shift()
+                if(deck.length==1){        
+        document.getElementById("pile").style.visibility = "hidden";
+        document.getElementById("swap-deck").style.visibility = "hidden";        
+    }    
+    if(deck.length==0){
+        document.getElementById("deck-to-board").style.visibility = "hidden";
+        document.getElementById("deck-to-found").style.visibility = "hidden";
+        document.getElementById("new-card").style.visibility = "hidden";
+        return;
+    }
                 let b = deck[0];
                 document.getElementById("new-card").innerHTML = shuffledArray[b].text;
+                if(shuffledArray[b].col == "R"){
+                     document.getElementById("new-card").style.color = "red";
+                }
+                else{
+                    document.getElementById("new-card").style.color = "black";
+                }
                 return;
             }
             else{
@@ -497,10 +797,23 @@ function UpToFound(){
         }        
     }
 }
-
+let deckID = [];
 function SwapDeck(){
+    if(deck.length==0||deck.length==1){
+        return;
+    }
     deck.push(deck[0]);
     deck.shift();
+    if(deck.length==1){        
+        document.getElementById("pile").style.visibility = "hidden";
+        document.getElementById("swap-deck").style.visibility = "hidden";        
+    }    
+    if(deck.length==0){
+        document.getElementById("deck-to-board").style.visibility = "hidden";
+        document.getElementById("deck-to-found").style.visibility = "hidden";
+        document.getElementById("new-card").style.visibility = "hidden";
+        return;
+    }    
     let a = deck[0];
     document.getElementById("new-card").innerHTML = shuffledArray[a].text;
     //console.log(deck,shuffledArray[a].col);
@@ -517,24 +830,7 @@ let shuffledArray = cardArrayA.slice();
 shuffle(shuffledArray);
 
 
-
-//console.log(shuffledArray[0]);
-
-/*document.getElementById("0").innerHTML = shuffledArray[0].text;
-document.getElementById("1").innerHTML = shuffledArray[1].text;
-document.getElementById("2").innerHTML = shuffledArray[2].text;
-document.getElementById("3").innerHTML = shuffledArray[3].text;
-document.getElementById("4").innerHTML = shuffledArray[4].text;
-document.getElementById("5").innerHTML = shuffledArray[5].text;
-document.getElementById("6").innerHTML = shuffledArray[6].text;*/
-
 let boardContainer = document.getElementById("board-container");
-
-/*let num8 = document.createElement('div');
-num8.classList.add('card');
-num8.classList.add('second-row');
-num8.id = 8;
-boardContainer.append(num8);*/
 
 for(let i=0;i<140;i++){
    // let a = i+1;
@@ -579,6 +875,14 @@ for(let i=0;i<52;i++){
 }
 //console.log(deck);
 
+column2.push(shuffledArray[1].id);
+column3.push(shuffledArray[2].id, shuffledArray[9].id);
+column4.push(shuffledArray[3].id, shuffledArray[10].id, shuffledArray[17].id);
+column5.push(shuffledArray[4].id, shuffledArray[11].id, shuffledArray[18].id, shuffledArray[25].id);
+column6.push(shuffledArray[5].id, shuffledArray[12].id, shuffledArray[19].id, shuffledArray[26].id, shuffledArray[33].id);
+column7.push(shuffledArray[6].id, shuffledArray[13].id, shuffledArray[20].id, shuffledArray[27].id, shuffledArray[34].id, shuffledArray[41].id);
+console.log(column1,column2,column3,column4,column5,column6,column7);
+
 let firstDeck = deck[0];
 document.getElementById("new-card").innerHTML = shuffledArray[firstDeck].text;
 if(shuffledArray[firstDeck].col == "R"){
@@ -587,11 +891,8 @@ if(shuffledArray[firstDeck].col == "R"){
 else{
     document.getElementById("new-card").style.color = "black";
 }
-/*if(shuffledArray[6].col == "R"){
-    document.getElementById("7").style.color = "red";
-}
-else{
-document.getElementById("7").style.color = "black";
-}*/
+//function win()
+//let Victory = false;
+//function reset()
 </script>
 </html>
