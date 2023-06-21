@@ -31,3 +31,8 @@ Deck cards now change colour on both types of moves.
 When deck cards move to foundation, card is hidden and next card is shown. If no card left, moving button for row disappears.
 
 ADD NEXT: win function with victory changes, reset button and function, when moving deck to board have the correct column chosen to move to and add card to that column, code cleaning required.
+
+21st Jun:
+started on checking value function for moving from deck to board.
+
+ADD NEXT: victory function for div, reset function for div, continue moveCheck function, when moving deck to board have the correct column chosen to move to and add card to that column, code cleaning required.
