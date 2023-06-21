@@ -35,4 +35,12 @@ ADD NEXT: win function with victory changes, reset button and function, when mov
 21st Jun:
 started on checking value function for moving from deck to board.
 
-ADD NEXT: victory function for div, reset function for div, continue moveCheck function, when moving deck to board have the correct column chosen to move to and add card to that column, code cleaning required.
+ADD NEXT: victory function for div, reset function for div, continue moveCheck function, when moving deck to board have the correct column chosen to move to and add card to that column, code cleaning required, move between columns and copy ids and html.
+
+Began reworking entire game around ID Array, where all 140 possible slots on board have ID value in Array, as well as deck and foundation. With foundation to be added.
+
+ADD NEXT: add victory function activation to move to foundation and board to foundation,
+modify all functions to use permArrayID and cardArrayA,
+code cleaning required,
+add move between board buttons and function
+modify all buttons to use matching function, with move to and move from column taking precedence, move to requiring function for deck to board & board to board & board to found & found to board
