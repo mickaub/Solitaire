@@ -54,3 +54,14 @@ modify all functions to use permArrayID and cardArrayA,
 add move between board buttons and function
 modify all buttons to use matching function, with move to and move from column taking precedence, move to requiring function for deck to board & board to board & board to found & found to board,
 add div to show results of testing, to replace console log.
+
+Moving to requiring function for deck to board.
+Created divs to show result of testing.
+Began testing deck to board and have moved to columns successfully.
+Tested deck emptying with success.
+
+ADD NEXT: add victory function activation to move to foundation and board to foundation,
+continue modifying all functions to use permArrayID and cardArrayA,
+add move between board functions,
+modify all buttons to use matching function, with move to and move from column taking precedence, finish on matching for deck to board, 
+start on matching board to board & board to found & found to board.
