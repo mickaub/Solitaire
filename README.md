@@ -44,3 +44,13 @@ modify all functions to use permArrayID and cardArrayA,
 code cleaning required,
 add move between board buttons and function
 modify all buttons to use matching function, with move to and move from column taking precedence, move to requiring function for deck to board & board to board & board to found & found to board
+
+22 June: Code cleaning partially completed.
+Tried working on deck to board with mixed results.
+Large rewrite of functions required.
+
+ADD NEXT: add victory function activation to move to foundation and board to foundation,
+modify all functions to use permArrayID and cardArrayA,
+add move between board buttons and function
+modify all buttons to use matching function, with move to and move from column taking precedence, move to requiring function for deck to board & board to board & board to found & found to board,
+add div to show results of testing, to replace console log.
