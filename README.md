@@ -65,3 +65,7 @@ continue modifying all functions to use permArrayID and cardArrayA,
 add move between board functions,
 modify all buttons to use matching function, with move to and move from column taking precedence, finish on matching for deck to board, 
 start on matching board to board & board to found & found to board.
+
+23 June: Continued working on deck to board and deck to foundation.
+Deck to board is a little buggy but can work, need to work on function to make fully functional.
+Need to create match function to use to simplify code.
