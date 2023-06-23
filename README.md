@@ -69,3 +69,14 @@ start on matching board to board & board to found & found to board.
 23 June: Continued working on deck to board and deck to foundation.
 Deck to board is a little buggy but can work, need to work on function to make fully functional.
 Need to create match function to use to simplify code.
+Added victory is foundations are at max.
+
+Started work on match function. Able to match cards including King, if column empty king able to move.
+Most deck functions now working well.
+
+ADD NEXT: Continue work on match function.
+Continue modifying functions to use CardArrayA.
+Try to take away dependency on PermArray.
+Add move between board functions.
+Modify all buttons to use matching function, with move to and move from column taking precedence. 
+Start on matching board to board & board to found & found to board.
