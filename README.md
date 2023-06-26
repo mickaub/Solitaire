@@ -80,3 +80,13 @@ Try to take away dependency on PermArray.
 Add move between board functions.
 Modify all buttons to use matching function, with move to and move from column taking precedence. 
 Start on matching board to board & board to found & found to board.
+
+26 Jun: Massive rewrite and simplification of code.
+Deck to found has issues and deck to board has issues.
+
+ADD NEXT: Continue work on match function.
+Continue modifying functions to use CardArrayA.
+Try to take away dependency on PermArray.
+Add move between board functions.
+Modify all buttons to use matching function, with move to and move from column taking precedence. 
+Start on matching board to board & board to found & found to board.

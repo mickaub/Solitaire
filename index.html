@@ -74,32 +74,17 @@
     <div id="deck-array"></div>
     <div id="front-div"></div>
     <div id="match"></div>
-    <div class="foundation-container">
-        <div class="card" id="HF"></div>
-        <div class="card" id="DF"></div>
-        <div class="card" id="CF"></div>
-        <div class="card" id="SF"></div>
-    </div>    
-    <br>
-    <button id="move-to-found">Move To Foundation</button>
-    <button id="move-to-found">Move To Foundation</button>
-    <button id="move-to-found">Move To Foundation</button>
-    <button id="move-to-found">Move To Foundation</button>
-    <br>
-    <button id="board-to-foundation1" onclick="BoardToFound(1)">Board to Foundation</button>
-    <button id="board-to-foundation2" onclick="BoardToFound(2)">Board to Foundation</button>
-    <button id="board-to-foundation3" onclick="BoardToFound(3)">Board to Foundation</button>
-    <button id="board-to-foundation4" onclick="BoardToFound(4)">Board to Foundation</button>
-    <button id="board-to-foundation5" onclick="BoardToFound(5)">Board to Foundation</button>
-    <button id="board-to-foundation6" onclick="BoardToFound(6)">Board to Foundation</button>
-    <button id="board-to-foundation7" onclick="BoardToFound(7)">Board to Foundation</button>
-    <button id="reset" onclick="Reset()">Reset</button>
-    <br>
-    <button id="found-to-board1" onclick="FoundToBoard(1)">Foundation to Board</button>
-    <button id="found-to-board1" onclick="FoundToBoard(2)">Foundation to Board</button>
-    <button id="found-to-board1" onclick="FoundToBoard(3)">Foundation to Board</button>
-    <button id="found-to-board1" onclick="FoundToBoard(4)">Foundation to Board</button>       
-    <br>
+    <div>
+        <button id="move-to-found" class="deck-button">Move to Found</button>
+        <button id="move-from-found" class="deck-button">Move from Found</button>
+        <div class="foundation-container">
+            <div class="card" id="HF"></div>
+            <div class="card" id="DF"></div>
+            <div class="card" id="CF"></div>
+            <div class="card" id="SF"></div>
+        </div>    
+    </div>
+    <br>       
     <button id="move-from-col">Move From Column</button>
     <button id="move-from-col">Move From Column</button>
     <button id="move-from-col">Move From Column</button>
@@ -232,6 +217,9 @@ let front4 = [];
 let front5 = [];
 let front6 = [];
 let front7 = [];
+
+let moveReady = [false,false,false,false,false,false,false,false,false,false,false];
+let finalFront = [-1,-1,-1,-1,-1,-1,-1]
 
 let foundationCodes = [];
 let deckID = [];
@@ -538,17 +526,7 @@ function UpToBoard(tarCol){ //needs fixing
         }
     }
     else{
-    /*frontArray.push(front1[0]);
-    frontArray.push(front2[0]);
-    frontArray.push(front3[0]);
-    frontArray.push(front4[0]);
-    frontArray.push(front5[0]);
-    frontArray.push(front6[0]);
-    frontArray.push(front7[0]);*/
-    //console.log(frontArray);
-
-    //let frontCopy = front;//temp
-
+   
     for(let i=0;i>7;i++){
         let f = front[i];
         let targetID = permArrayID[f];
@@ -606,77 +584,15 @@ function UpToBoard(tarCol){ //needs fixing
     permArrayID[replacer] = a;
 }
    // console.log(moveSuccess);     
-   document.getElementById("deck-to-board1").style.color = "black";
+    
     document.getElementById("deck-to-board2").style.color = "black";
     document.getElementById("deck-to-board3").style.color = "black";
     document.getElementById("deck-to-board4").style.color = "black";
     document.getElementById("deck-to-board5").style.color = "black";
     document.getElementById("deck-to-board6").style.color = "black";
     document.getElementById("deck-to-board7").style.color = "black";
+    SwapDeck();
     
-    deck.shift();
-
-    if(deck.length==1){        
-        document.getElementById("pile").style.visibility = "hidden";
-        document.getElementById("swap-deck").style.visibility = "hidden";        
-    }    
-    if(deck.length==0){
-        document.getElementById("deck-to-board1").style.visibility = "hidden";
-        document.getElementById("deck-to-board2").style.visibility = "hidden";
-        document.getElementById("deck-to-board3").style.visibility = "hidden";
-        document.getElementById("deck-to-board4").style.visibility = "hidden";
-        document.getElementById("deck-to-board5").style.visibility = "hidden";
-        document.getElementById("deck-to-board6").style.visibility = "hidden";
-        document.getElementById("deck-to-board7").style.visibility = "hidden";
-        document.getElementById("deck-to-found").style.visibility = "hidden";
-        document.getElementById("new-card").style.visibility = "hidden";
-        return;
-    }
-
-    let b = deck[0];
-    document.getElementById("new-card").innerHTML = cardArrayA[b].text;
-    for(let i=0;i<7;i++){
-        let f = front[i];
-        let b = permArrayID[f];
-        let d = deck[0];
-        let ip = i + 1;
-        matchID[ip] = b;
-        document.getElementById(`deck-to-board${ip}`).style.color = "black";
-        //if d = 13,26,29,42 && front=-1
-        if(d<13){
-            if(b==(d+27)||b==(d+40)){
-                document.getElementById(`deck-to-board${ip}`).style.color = "yellow";             
-            }
-        }
-        if(d>12&&d<26){//13over27and40
-            if(b==(d+14)||b==(d+27)){    
-                document.getElementById(`deck-to-board${ip}`).style.color = "yellow";              
-            }
-        }
-        if(d>25&&d<39){//26over1and14
-            if(b==(d-25)||b==(d-12)){       
-                document.getElementById(`deck-to-board${ip}`).style.color = "yellow";          
-            }
-        }
-        if(d>38){//39over1and14
-            if(b==(d-38)||b==(d-25)){
-                document.getElementById(`deck-to-board${ip}`).style.color = "yellow";         
-            }
-        }        
-    }
-
-    for(let i=0;i<4;i++){
-        if(foundationReady[i]==deck[0]){
-            document.getElementById("deck-to-found").style.color = "yellow"; 
-        }
-    }
-    
-    if(cardArrayA[b].col == "R"){
-        document.getElementById("new-card").style.color = "red";
-    }
-    else{
-        document.getElementById("new-card").style.color = "black";
-    }
     document.getElementById("deck-array").innerHTML = deck;//temp
     document.getElementById("board-array").innerHTML = permArrayID;//temp
     document.getElementById("front-div").innerHTML = front;//temp
@@ -684,39 +600,36 @@ function UpToBoard(tarCol){ //needs fixing
 //console.log(moveSuccess);
 
 function FoundToBoard(iden){ //needs fixing
-    /*if(iden==1){
-        let a = document.getElementById("HF").innerHTML;        
-        document.getElementById("HF").innerHTML = "";
-        document.getElementById("7").innerHTML = a;
-        document.getElementById("7").style.visibility = "visible";
-        document.getElementById("7").classList.remove("covered");        
-        document.getElementById("7").style.color = "red";
-        
-    }
-    if(iden==2){
-        let a = document.getElementById("DF").innerHTML;
-        document.getElementById("DF").innerHTML = "";
-        document.getElementById("7").innerHTML = a;
-        document.getElementById("7").style.visibility = "visible";
-        document.getElementById("7").classList.remove("covered");
-        document.getElementById("7").style.color = "red";
-    }
-    if(iden==3){
-        let a = document.getElementById("CF").innerHTML;
-        document.getElementById("CF").innerHTML = "";
-        document.getElementById("7").innerHTML = a;
-        document.getElementById("7").style.visibility = "visible";
-        document.getElementById("7").classList.remove("covered");
-        document.getElementById("7").style.color = "black";
-    }
-    if(iden==4){
-        let a = document.getElementById("SF").innerHTML;
-        document.getElementById("SF").innerHTML = "";
-        document.getElementById("7").innerHTML = a;
-        document.getElementById("7").style.visibility = "visible";
-        document.getElementById("7").classList.remove("covered");
-        document.getElementById("7").style.color = "black";
-    }*/
+    for(let i=0;i<7;i++){
+        if(d<13){
+            if(b==(d+27)||b==(d+40)){
+                document.getElementById(`deck-to-board${ip}`).style.color = "yellow";    
+                let c = i.toString();
+                testText += c;         
+            }
+        }
+        if(d>12&&d<26){//13over27and40
+            if(b==(d+14)||b==(d+27)){    
+                document.getElementById(`deck-to-board${ip}`).style.color = "yellow";       
+                let c = i.toString();
+                testText += c;             
+            }
+        }
+        if(d>25&&d<39){//26over1and14
+            if(b==(d-25)||b==(d-12)){       
+                document.getElementById(`deck-to-board${ip}`).style.color = "yellow";       
+                let c = i.toString();
+                testText += c;         
+            }
+        }
+        if(d>38){//39over1and14
+            if(b==(d-38)||b==(d-25)){
+                document.getElementById(`deck-to-board${ip}`).style.color = "yellow";       
+                let c = i.toString();
+                testText += c;        
+                }
+            }        
+        }    
 }
 
 function UpToFound(){    
@@ -750,335 +663,8 @@ function UpToFound(){
     if(foundationReady[0]==12 && foundationReady[1]==25 && foundationReady[2]==38 && foundationReady[3]==51){
         Victory();
     }   
-
-    deck.shift();
-    matchID[0] = deck[0];    //temp
-    if(deck.length==1){        
-        document.getElementById("pile").style.visibility = "hidden";
-        document.getElementById("swap-deck").style.visibility = "hidden";        
-    }    
-    if(deck.length==0){
-        document.getElementById("deck-to-board").style.visibility = "hidden";
-        document.getElementById("deck-to-found").style.visibility = "hidden";
-        document.getElementById("new-card").style.visibility = "hidden";
-        return;
-    }
-    for(let i=0;i<7;i++){
-        let f = front[i];
-        let b = permArrayID[f];
-        let d = deck[0];
-        let ip = i + 1;
-        matchID[ip] = b;
-        document.getElementById(`deck-to-board${ip}`).style.color = "black";
-        //if d = 13,26,29,42 && front=-1
-        if(d<13){
-            if(b==(d+27)||b==(d+40)){
-                document.getElementById(`deck-to-board${ip}`).style.color = "yellow";             
-            }
-        }
-        if(d>12&&d<26){//13over27and40
-            if(b==(d+14)||b==(d+27)){    
-                document.getElementById(`deck-to-board${ip}`).style.color = "yellow";              
-            }
-        }
-        if(d>25&&d<39){//26over1and14
-            if(b==(d-25)||b==(d-12)){       
-                document.getElementById(`deck-to-board${ip}`).style.color = "yellow";          
-            }
-        }
-        if(d>38){//39over1and14
-            if(b==(d-38)||b==(d-25)){
-                document.getElementById(`deck-to-board${ip}`).style.color = "yellow";         
-            }
-        }        
-    }
-
-    for(let i=0;i<4;i++){
-        if(foundationReady[i]==deck[0]){
-            document.getElementById("deck-to-found").style.color = "yellow"; 
-        }
-    }
-    let nd = deck[0];
-    document.getElementById("new-card").innerHTML = cardArrayA[nd].text;    
-    if(cardArrayA[nd].col == "R"){
-        document.getElementById("new-card").style.color = "red";
-    }
-    else{
-        document.getElementById("new-card").style.color = "black";
-    }
-    document.getElementById("deck-array").innerHTML = deck;//temp
-    document.getElementById("board-array").innerHTML = permArrayID;//temp
-    document.getElementById("front-div").innerHTML = front;//temp
-    /*
-
-    if(shuffledArray[a].id < 13){
-        if(foundationH == -1){
-            if(shuffledArray[a].id==0){
-                document.getElementById("HF").innerHTML = shuffledArray[a].text;
-                foundationH = 0;
-                deck.shift()
-                if(deck.length==1){        
-        document.getElementById("pile").style.visibility = "hidden";
-        document.getElementById("swap-deck").style.visibility = "hidden";        
-    }    
-    if(deck.length==0){
-        document.getElementById("deck-to-board").style.visibility = "hidden";
-        document.getElementById("deck-to-found").style.visibility = "hidden";
-        document.getElementById("new-card").style.visibility = "hidden";
-        return;
-    }
-                
-                let b = deck[0];
-                document.getElementById("new-card").innerHTML = shuffledArray[b].text;
-                if(shuffledArray[b].col == "R"){
-        document.getElementById("new-card").style.color = "red";
-    }
-    else{
-        document.getElementById("new-card").style.color = "black";
-    }
-                return;
-            }
-            else{
-                return;
-            }
-        }
-        else{
-           // console.log("step1");
-            let c = Number(shuffledArray[a].id);
-            let newID = c-1;
-         //   console.log(newID, foundationH);
-            if(newID==foundationH){
-              //  console.log("step2");
-                document.getElementById("HF").innerHTML = shuffledArray[a].text;
-                foundationH += 1;
-                deck.shift()
-                if(deck.length==1){        
-        document.getElementById("pile").style.visibility = "hidden";
-        document.getElementById("swap-deck").style.visibility = "hidden";        
-    }    
-    if(deck.length==0){
-        document.getElementById("deck-to-board").style.visibility = "hidden";
-        document.getElementById("deck-to-found").style.visibility = "hidden";
-        document.getElementById("new-card").style.visibility = "hidden";
-        return;
-    }
-               
-                let b = deck[0];
-                document.getElementById("new-card").innerHTML = shuffledArray[b].text;
-                if(shuffledArray[b].col == "R"){
-        document.getElementById("new-card").style.color = "red";
-    }
-    else{
-        document.getElementById("new-card").style.color = "black";
-    }
-                return;
-            }
-            else{
-                return;
-            }
-        }
-       
-    }
-     if(shuffledArray[a].id < 26){
-        if(foundationD == -1){
-            if(shuffledArray[a].id==13){
-                document.getElementById("DF").innerHTML = shuffledArray[a].text;
-                foundationD = 13;
-                deck.shift()
-                if(deck.length==1){        
-        document.getElementById("pile").style.visibility = "hidden";
-        document.getElementById("swap-deck").style.visibility = "hidden";        
-    }    
-    if(deck.length==0){
-        document.getElementById("deck-to-board").style.visibility = "hidden";
-        document.getElementById("deck-to-found").style.visibility = "hidden";
-        document.getElementById("new-card").style.visibility = "hidden";
-        return;
-    }
-                let b = deck[0];
-                document.getElementById("new-card").innerHTML = shuffledArray[b].text;
-                if(shuffledArray[b].col == "R"){
-        document.getElementById("new-card").style.color = "red";
-    }
-    else{
-        document.getElementById("new-card").style.color = "black";
-    }
-                return;
-            }
-            else{
-                return;
-            }
-        }
-        else{
-         //   console.log("step1");
-            let c = Number(shuffledArray[a].id);
-            let newID = c-1;
-          //  console.log(newID, foundationD);
-            if(newID==foundationD){
-           //    console.log("step2");
-                document.getElementById("DF").innerHTML = shuffledArray[a].text;
-                foundationD += 1;
-                deck.shift()
-                if(deck.length==1){        
-        document.getElementById("pile").style.visibility = "hidden";
-        document.getElementById("swap-deck").style.visibility = "hidden";        
-    }    
-    if(deck.length==0){
-        document.getElementById("deck-to-board").style.visibility = "hidden";
-        document.getElementById("deck-to-found").style.visibility = "hidden";
-        document.getElementById("new-card").style.visibility = "hidden";
-        return;
-    }
-                let b = deck[0];
-                document.getElementById("new-card").innerHTML = shuffledArray[b].text;
-                if(shuffledArray[b].col == "R"){
-        document.getElementById("new-card").style.color = "red";
-    }
-    else{
-        document.getElementById("new-card").style.color = "black";
-    }
-                return;
-            }
-            else{
-                return;
-            }
-        }        
-        
-    }
-     if(shuffledArray[a].id < 39){
-        if(foundationC == -1){
-            if(shuffledArray[a].id==26){
-                document.getElementById("CF").innerHTML = shuffledArray[a].text;
-                foundationC = 26;
-                deck.shift()
-                if(deck.length==1){        
-        document.getElementById("pile").style.visibility = "hidden";
-        document.getElementById("swap-deck").style.visibility = "hidden";        
-    }    
-    if(deck.length==0){
-        document.getElementById("deck-to-board").style.visibility = "hidden";
-        document.getElementById("deck-to-found").style.visibility = "hidden";
-        document.getElementById("new-card").style.visibility = "hidden";
-        return;
-    }
-                let b = deck[0];
-                document.getElementById("new-card").innerHTML = shuffledArray[b].text;
-                if(shuffledArray[b].col == "R"){
-        document.getElementById("new-card").style.color = "red";
-    }
-    else{
-        document.getElementById("new-card").style.color = "black";
-    }
-                return;
-            }
-            else{
-                return;
-            }
-        }
-        else{
-       //     console.log("step1");
-            let c = Number(shuffledArray[a].id);
-            let newID = c-1;
-        //    console.log(newID, foundationC);
-            if(newID==foundationC){
-            //    console.log("step2");
-                document.getElementById("CF").innerHTML = shuffledArray[a].text;
-                foundationC += 1;
-                deck.shift()
-                if(deck.length==1){        
-        document.getElementById("pile").style.visibility = "hidden";
-        document.getElementById("swap-deck").style.visibility = "hidden";        
-    }    
-    if(deck.length==0){
-        document.getElementById("deck-to-board").style.visibility = "hidden";
-        document.getElementById("deck-to-found").style.visibility = "hidden";
-        document.getElementById("new-card").style.visibility = "hidden";
-        return;
-    }
-                let b = deck[0];
-                document.getElementById("new-card").innerHTML = shuffledArray[b].text;
-                if(shuffledArray[b].col == "R"){
-        document.getElementById("new-card").style.color = "red";
-    }
-    else{
-        document.getElementById("new-card").style.color = "black";
-    }
-                return;
-            }
-            else{
-                return;
-            }
-        }
-        
-    }
-    else{
-        if(foundationS == -1){
-            if(shuffledArray[a].id==39){
-                document.getElementById("SF").innerHTML = shuffledArray[a].text;
-                foundationS = 39;
-                deck.shift()
-                if(deck.length==1){        
-        document.getElementById("pile").style.visibility = "hidden";
-        document.getElementById("swap-deck").style.visibility = "hidden";        
-    }    
-    if(deck.length==0){
-        document.getElementById("deck-to-board").style.visibility = "hidden";
-        document.getElementById("deck-to-found").style.visibility = "hidden";
-        document.getElementById("new-card").style.visibility = "hidden";
-        return;
-    }
-                let b = deck[0];
-                document.getElementById("new-card").innerHTML = shuffledArray[b].text;
-                if(shuffledArray[b].col == "R"){
-        document.getElementById("new-card").style.color = "red";
-    }
-    else{
-        document.getElementById("new-card").style.color = "black";
-    }
-                return;
-            }
-            else{
-                return;
-            }
-        }
-        else{
-         //   console.log("step1");
-            let c = Number(shuffledArray[a].id);
-            let newID = c-1;
-         //   console.log(newID, foundationS);
-            if(newID==foundationS){
-           //     console.log("step2");
-                document.getElementById("SF").innerHTML = shuffledArray[a].text;
-                foundationS += 1;
-                deck.shift()
-                if(deck.length==1){        
-        document.getElementById("pile").style.visibility = "hidden";
-        document.getElementById("swap-deck").style.visibility = "hidden";        
-    }    
-    if(deck.length==0){
-        document.getElementById("deck-to-board").style.visibility = "hidden";
-        document.getElementById("deck-to-found").style.visibility = "hidden";
-        document.getElementById("new-card").style.visibility = "hidden";
-        return;
-    }
-                let b = deck[0];
-                document.getElementById("new-card").innerHTML = shuffledArray[b].text;
-                if(shuffledArray[b].col == "R"){
-                     document.getElementById("new-card").style.color = "red";
-                }
-                else{
-                    document.getElementById("new-card").style.color = "black";
-                }
-                return;
-            }
-            else{
-                return;
-            }
-        }        
-    }
-    if(foundationArr[12]==12 && foundationArr[25]==25 && foundationArr[38]==38 && foundationArr[51]==51){
-        Victory();
-    }*/
+    SwapDeck();
+   
 }
 
 function SwapDeck(){
@@ -1161,37 +747,8 @@ function moveCheck(){ //needs fixing and splitting
     if(a>12&&a<26){if(shuffledArray[b].col=="B"){match=true}};
     if(a>25&&a<39){if(shuffledArray[b].col=="R"){match=true}};
     if(a>38){if(shuffledArray[b].col=="R"){match=true}};
-   /* let cLog = "NO";
-    let c = a.sym;    
-    if(a==12||a==25||a==318||a==51){
-        return;
-    }
-    //console.log(front);
-    for(let i=0;i>7;i++){
-        let p = front[i];
-        let b = shuffledArray[p].id;
-        if(c=="H"){
-            if(b==(a+27)||b==(a+40)){
-                cLog += "match";
-            }
-        }
-        if(c=="D"){//13over27and40
-            if(b==(a+14)||b==(a+27)){
-                cLog += "match";
-            }
-        }
-        if(c=="C"){//26over1and14
-            if(b==(a-25)||b==(a-12)){
-                cLog += "match";
-            }
-        }
-        if(c=="S"){//39over1and14
-            if(b==(a-38)||b==(a-25)){
-                cLog += "match";
-            }
-        }
-    }*/
-            console.log(a-c,match);       
+   
+    console.log(a-c,match);       
 }
 
 function Victory(){
@@ -1201,32 +758,6 @@ function Victory(){
 
 function Reset(){
     location.reload();
-}
-
-function Match(target) {
-        let p = Number(target);
-        let b = cardArrayA[p];
-        let c = b.id;
-        if(c=="H"){
-            if(b==(a+27)||b==(a+40)){
-                cLog += "match";
-            }
-        }
-        if(c=="D"){//13over27and40
-            if(b==(a+14)||b==(a+27)){
-                cLog += "match";
-            }
-        }
-        if(c=="C"){//26over1and14
-            if(b==(a-25)||b==(a-12)){
-                cLog += "match";
-            }
-        }
-        if(c=="S"){//39over1and14
-            if(b==(a-38)||b==(a-25)){
-                cLog += "match";
-            }
-        }
 }
 
 //28 cards on board, 24 cards in deck
@@ -1362,23 +893,13 @@ document.getElementById("board-array").innerHTML = permArrayID;
 document.getElementById("deck-array").innerHTML = deck;
 document.getElementById("front-div").innerHTML = front;
 document.getElementById("match").innerHTML = matchID;
-//console.log(front1,front2,front3,front4,front5,front6,front7);
 
-//let firstDeck = deck[0];
-//document.getElementById("new-card").innerHTML = shuffledArray[firstDeck].text;
-/*if(shuffledArray[firstDeck].col == "R"){
-        document.getElementById("new-card").style.color = "red";
-}
-else{
-    document.getElementById("new-card").style.color = "black";
-}*/
-//moveCheck();
 let testVar = deck[0];
 let board = 1;
 let found = 2;
-front[0] = -1;//test
-document.getElementById("0").innerHTML = "";
-document.getElementById("0").style.visibility = "hidden";//test
+//front[0] = -1;//test
+//document.getElementById("0").innerHTML = "";//temp
+//document.getElementById("0").style.visibility = "hidden";//test
 
 function MatchTest(input,type){
     let testText = "";
@@ -1439,8 +960,9 @@ function MatchTest(input,type){
     if(type==2){
         for(let i=0;i<4;i++){
         if(foundationReady[i]==deck[0]){
+            let p = i+7;
             document.getElementById("deck-to-found").style.color = "yellow"; 
-            
+            moveReady[p] = true;
             let c = i.toString();
             testText += c;
             testText += "found";
