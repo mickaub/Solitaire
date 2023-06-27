@@ -90,3 +90,12 @@ Try to take away dependency on PermArray.
 Add move between board functions.
 Modify all buttons to use matching function, with move to and move from column taking precedence. 
 Start on matching board to board & board to found & found to board.
+
+27 June: Began reorganising code, with main focus on permArray, foundationArr and frontPos/frontID arrays. 
+Will use arrays within arrays to help match cards, with card matches in matches array to check before moving if match can occur.
+
+ADD NEXT: Continue work on matchtest function.
+Start reworking deck functions, beginning with swapdeck.
+Add move between board functions. 
+Start on matching board to board & board to found & found to board.
+Fix CSS that is cutting board in half.
