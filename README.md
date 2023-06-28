@@ -118,3 +118,10 @@ All matching functions will use the MatchArray function in some way, including b
 
 TO DO: Continue working on swapdeck and other deck functions.
 Add move between board functions. 
+
+Reworked deck to foundation function, which is working and updating correctly.
+Swapdeck includes move to foundation options.
+
+TO DO: Work on deck to board function.
+Amend swap deck to include deck to board options, with matchcombined being used.
+Need to add functions to foundation and column buttons.
