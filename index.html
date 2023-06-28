@@ -27,6 +27,7 @@
     gap: 10px;
     padding: 10px;
     height: 1200px;
+    margin-top: 200px;
 }
 .card{
     background-color: white;
@@ -52,7 +53,7 @@
     color: red;
 }
 .second-row{
-    margin-top: -180px;
+    margin-top: -200px;
 }
 .covered{
     background-color: rgb(255, 245, 100);
@@ -103,7 +104,7 @@
     <button id="move-to-col">Move To Column</button>
     <button id="reload" onclick="Reset()" class="deck-button">Reset</button>
     <br>
-    <div class="board-container" id="board-container">         
+    <div class="board-container" id="board-container">        
     </div>    
     <br>    
     <div class="new-card-block">
@@ -215,7 +216,7 @@ let boardContainer = document.getElementById("board-container");
 let matchesCombined = matches.concat(foundationArr);
 let matchesArray = [];
 
-function Shuffle (array) {
+function Shuffle (array) {    
     let currentIndex = array.length;
     let temporaryValue, randomIndex;
 
@@ -228,19 +229,58 @@ function Shuffle (array) {
     }        
 }
 
-let testArr = [0,1,[2,3]];//temp
-console.log(testArr.length, testArr[2].length)//temp
+//let testArr = [0,1,[2,3]];//temp
+//console.log(testArr.length, testArr[2].length)//temp
 
-function MatchTest(){
-    for(let i=0;i<7;i++){
-        let a = frontID[i];
-        if(a==-1){
-            matches[i] = [12,25,38,51];
+function FrontMatch(){    
+    for(let i=0;i<7;i++){ //calculates cards that go on top     
+        let a = [];
+        let b = Number(frontID[i]);
+        let c = b%13;
+
+        if(b==-1){
+            a = [12,25,38,51];
+        }
+        if(b>0&&b<13){
+            let d = b+25;
+            let e = b+38;
+            a = [d,e];
+        }
+        if(b>12 && b<26){
+            let d = b+12;
+            let e = b+25;
+            a = [d,e];
+        }
+        if(b>25 && b<39){
+            let d = b-27;
+            let e = b-14;
+            a = [d,e];
+        }
+        if(b>38){
+            let d = b-27;
+            let e = b-40;
+            a = [d,e];
+        }
+        if(c==0||c==1){
+            a = [-2];
+        }
+        matchesCombined[i] = a;
+    }
+
+    for(let i=7;i<11;i++){
+        let a = i-7;
+        matchesCombined[i] = foundationArr[a];
+    }
+
+    for(let i=0;i<matchesCombined.length;i++){
+        if(matchesCombined[i].length>1){
+            for(let j=0;j<matchesCombined[i].length;j++){
+                matchesArray.push(matchesCombined[i][j]);
+            }
         }
         else{
-            if(a==0||a==13||a==26||a==39){
-                matches[i] = -1; //change into seperate for each array
-            }
+            let a = Number(matchesCombined[i])
+            matchesArray.push(a);
         }
     }
 }
@@ -250,9 +290,9 @@ Shuffle(shuffledArray);
 for(let i=0;i<140;i++){
     let newCard = document.createElement('div');
     newCard.classList.add('card');   
-    if(i>7){//adding to top row causes float
+    //adding to top row causes float
         newCard.classList.add('second-row');
-    }    
+      
     newCard.id = i;
     boardContainer.append(newCard);
     if(i<52){
@@ -284,54 +324,12 @@ for(let i=0;i<140;i++){
         document.getElementById(`${i}`).style.visibility = "hidden"; 
     }  
 }
-
 //frontID[0]=-1;//temp
-for(let i=0;i<7;i++){ //calculates cards that go on top 
-    //CHANGE INTO FUNCTION FOR REUSE
-    let a = [];
-    let b = Number(frontID[i]);
-    let c = b%13;
+//foundationArr[0] = 1;//temp
+FrontMatch();
 
-    if(b==-1){
-        a = [12,25,38,51];
-    }
-    if(b>0&&b<13){
-        let d = b+25;
-        let e = b+38;
-        a = [d,e];
-    }
-    if(b>12 && b<26){
-        let d = b+12;
-        let e = b+25;
-        a = [d,e];
-    }
-    if(b>25 && b<39){
-        let d = b-27;
-        let e = b-14;
-        a = [d,e];
-    }
-    if(b>38){
-        let d = b-27;
-        let e = b-40;
-        a = [d,e];
-    }
-    if(c==0||c==1){
-        a = [-2];
-    }
-    matchesCombined[i] = a;
-}
-
-for(let i=0;i<matchesCombined.length;i++){
-    if(matchesCombined[i].length>1){
-        for(let j=0;j<matchesCombined[i].length;j++){
-            matchesArray.push(matchesCombined[i][j]);
-        }
-    }
-    else{
-        matchesArray.push(matchesCombined[i]);
-    }
-}
 console.log(matchesArray);
+console.log(foundationArr);
 //matchesCombined = matches.concat(foundationArr);
 
 document.getElementById("foundation-array").innerHTML = foundationArr; //temp
@@ -341,7 +339,6 @@ document.getElementById("front-div").innerHTML = frontPos; //temp
 document.getElementById("frontID-div").innerHTML = frontID; //temp
 document.getElementById("match").innerHTML = matchesArray; //temp
 
-//deck
 function SwapDeck(){
     if(deck.length==0||deck.length==1){
         return;
@@ -360,10 +357,16 @@ function SwapDeck(){
     }    
     let a = deck[0];  
     document.getElementById("new-card").innerHTML = cardArrayA[a].text;
-    matchID[0] = a;    //temp
+    //matchID[0] = a;    //temp
+    if(cardArrayA[a].col == "R"){
+        document.getElementById("new-card").style.color = "red";
+    }
+    else{
+        document.getElementById("new-card").style.color = "black";
+    }
 
     document.getElementById("deck-to-found").style.color = "black"; 
-
+/*
     for(let i=0;i<7;i++){
         let f = front[i];
         let b = permArrayID[f];
@@ -399,14 +402,9 @@ function SwapDeck(){
             document.getElementById("deck-to-found").style.color = "yellow"; 
         }
     }
-    document.getElementById("match").innerHTML = matchID;    
+   // document.getElementById("match").innerHTML = matchID;    
+    */
     
-    if(cardArrayA[a].col == "R"){
-        document.getElementById("new-card").style.color = "red";
-    }
-    else{
-        document.getElementById("new-card").style.color = "black";
-    }
 
     document.getElementById("deck-array").innerHTML = deck;//temp
   //  console.log(cardArrayA[a].id);

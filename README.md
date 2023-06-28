@@ -109,3 +109,12 @@ Start reworking deck functions, beginning with swapdeck.
 Add move between board functions. 
 Start on matching board to board & board to found & found to board.
 Fix CSS that is cutting board in half.
+
+Fixed CSS isue that was cutting board in half.
+MatchArray is now a function.
+MatchArray has no objects and is all numbers.
+Started working on swapdeck.
+All matching functions will use the MatchArray function in some way, including board to board movements.
+
+TO DO: Continue working on swapdeck and other deck functions.
+Add move between board functions. 
