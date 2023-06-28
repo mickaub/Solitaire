@@ -99,3 +99,13 @@ Start reworking deck functions, beginning with swapdeck.
 Add move between board functions. 
 Start on matching board to board & board to found & found to board.
 Fix CSS that is cutting board in half.
+
+28 June: Began working on match function.
+MatchFunction works and shows id that is required to go on top of all board columns and foundation as well.
+
+ADD NEXT: Convert working match loop into function.
+Continue working on match function.
+Start reworking deck functions, beginning with swapdeck.
+Add move between board functions. 
+Start on matching board to board & board to found & found to board.
+Fix CSS that is cutting board in half.

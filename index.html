@@ -101,6 +101,7 @@
     <button id="move-to-col">Move To Column</button>
     <button id="move-to-col">Move To Column</button>
     <button id="move-to-col">Move To Column</button>
+    <button id="reload" onclick="Reset()" class="deck-button">Reset</button>
     <br>
     <div class="board-container" id="board-container">         
     </div>    
@@ -208,9 +209,11 @@ let hidden = [7,14,21,28,35,42,49,15,22,29,36,43,50,23,30,37,44,51,31,38,45,39,4
 let shuffledArray = cardArrayA.slice();
 let frontPos = [0,8,16,24,32,40,48];
 let deck = [];
-let frontID = [];
-let matches = [-1,-1,-1,-1,-1,-1,-1,-1,-1,-1-1];
+let frontID = []; //for matchID -2 is for 2s and As and -1 is for Empty
+let matches = [-1,-1,-1,-1,-1,-1,-1];
 let boardContainer = document.getElementById("board-container");
+let matchesCombined = matches.concat(foundationArr);
+let matchesArray = [];
 
 function Shuffle (array) {
     let currentIndex = array.length;
@@ -282,12 +285,61 @@ for(let i=0;i<140;i++){
     }  
 }
 
+//frontID[0]=-1;//temp
+for(let i=0;i<7;i++){ //calculates cards that go on top 
+    //CHANGE INTO FUNCTION FOR REUSE
+    let a = [];
+    let b = Number(frontID[i]);
+    let c = b%13;
+
+    if(b==-1){
+        a = [12,25,38,51];
+    }
+    if(b>0&&b<13){
+        let d = b+25;
+        let e = b+38;
+        a = [d,e];
+    }
+    if(b>12 && b<26){
+        let d = b+12;
+        let e = b+25;
+        a = [d,e];
+    }
+    if(b>25 && b<39){
+        let d = b-27;
+        let e = b-14;
+        a = [d,e];
+    }
+    if(b>38){
+        let d = b-27;
+        let e = b-40;
+        a = [d,e];
+    }
+    if(c==0||c==1){
+        a = [-2];
+    }
+    matchesCombined[i] = a;
+}
+
+for(let i=0;i<matchesCombined.length;i++){
+    if(matchesCombined[i].length>1){
+        for(let j=0;j<matchesCombined[i].length;j++){
+            matchesArray.push(matchesCombined[i][j]);
+        }
+    }
+    else{
+        matchesArray.push(matchesCombined[i]);
+    }
+}
+console.log(matchesArray);
+//matchesCombined = matches.concat(foundationArr);
+
 document.getElementById("foundation-array").innerHTML = foundationArr; //temp
 document.getElementById("board-array").innerHTML = permArrayID; //temp
 document.getElementById("deck-array").innerHTML = deck; //temp
 document.getElementById("front-div").innerHTML = frontPos; //temp
-document.getElementById("match").innerHTML = frontID; //temp
 document.getElementById("frontID-div").innerHTML = frontID; //temp
+document.getElementById("match").innerHTML = matchesArray; //temp
 
 //deck
 function SwapDeck(){
