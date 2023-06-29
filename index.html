@@ -39,6 +39,10 @@
     padding-left: 20px;
     color: black;
 }
+.small{
+    height: 10px;
+    margin-top: -20px;
+}
 .new-card-block{
     display: flex;
 }
@@ -87,21 +91,21 @@
         </div>    
     </div>
     <br>       
-    <button id="move-from-col">Move From Column</button>
-    <button id="move-from-col">Move From Column</button>
-    <button id="move-from-col">Move From Column</button>
-    <button id="move-from-col">Move From Column</button>
-    <button id="move-from-col">Move From Column</button>
-    <button id="move-from-col">Move From Column</button>
-    <button id="move-from-col">Move From Column</button>
+    <button id="move-from-col0">Move From Column</button>
+    <button id="move-from-col1">Move From Column</button>
+    <button id="move-from-col2">Move From Column</button>
+    <button id="move-from-col3">Move From Column</button>
+    <button id="move-from-col4">Move From Column</button>
+    <button id="move-from-col5">Move From Column</button>
+    <button id="move-from-col6">Move From Column</button>
     <br>
-    <button id="move-to-col">Move To Column</button>
-    <button id="move-to-col">Move To Column</button>
-    <button id="move-to-col">Move To Column</button>
-    <button id="move-to-col">Move To Column</button>
-    <button id="move-to-col">Move To Column</button>
-    <button id="move-to-col">Move To Column</button>
-    <button id="move-to-col">Move To Column</button>
+    <button id="move-to-col0">Move To Column</button>
+    <button id="move-to-col1">Move To Column</button>
+    <button id="move-to-col2">Move To Column</button>
+    <button id="move-to-col3">Move To Column</button>
+    <button id="move-to-col4">Move To Column</button>
+    <button id="move-to-col5">Move To Column</button>
+    <button id="move-to-col6">Move To Column</button>
     <button id="reload" onclick="Reset()" class="deck-button">Reset</button>
     <br>
     <div class="board-container" id="board-container">        
@@ -292,7 +296,7 @@ for(let i=0;i<140;i++){
     let newCard = document.createElement('div');
     newCard.classList.add('card');   
     //adding to top row causes float
-        newCard.classList.add('second-row');
+    newCard.classList.add('second-row');
       
     newCard.id = i;
     boardContainer.append(newCard);
@@ -323,10 +327,12 @@ for(let i=0;i<140;i++){
     else{
         permArrayID.push(-1);
         document.getElementById(`${i}`).style.visibility = "hidden"; 
+        document.getElementById(`${i}`).classList.add("small");//temp
     }  
 }
 //frontID[0]=-1;//temp
 //foundationArr[0] = 1;//temp
+document.getElementById("board-container").style.height = "600px";//temp
 FrontMatch();
 
 for(let i=0;i<4;i++){
@@ -336,8 +342,8 @@ for(let i=0;i<4;i++){
     }
 }
 
-console.log(matchesArray);
-console.log(foundationArr);
+//console.log(matchesArray);
+//console.log(foundationArr);
 //matchesCombined = matches.concat(foundationArr);
 
 document.getElementById("foundation-array").innerHTML = foundationArr; //temp
@@ -471,7 +477,7 @@ function UpToFound(){
         }        
     }
     
-    if(foundationArr[0]==99&&foundationArr[1]==99&&foundationArr[2]==99&&foundationArr[3]==99){
+    if(foundationArr[0]==99&&foundationArr[1]==99&&foundationArr[2]==99&&foundationArr[3]==99){       
         Victory();
     }   
 
@@ -496,71 +502,65 @@ function UpToFound(){
 
     document.getElementById("match").innerHTML = matchesArray; //temp
 }
+function UpToBoard(tarCol){
+    
+    let a = deck[0];
+    let moving = cardArrayA[a];
+    let target = frontPos[tarCol] + 7;
+    let targetText = moving.text;
+    let potMatch = matchesCombined[tarCol];
+    let MatchProceed = false;
+
+    for(let i=0;i<potMatch.length;i++){
+        if(potMatch[i]==a){
+            MatchProceed = true;
+        }
+    }
+
+    if(MatchProceed == false){
+        return;
+    }
+
+    console.log(target, potMatch);
+
+    document.getElementById(target).innerHTML = targetText;
+    document.getElementById(target).style.visibility = "visible";
+
+    if(moving.col == "R"){
+        document.getElementById(target).style.color = "red";
+    }
+    else{
+        document.getElementById(target).style.color = "black";
+    }
+
+    permArrayID[target] = a;
+    frontPos[tarCol] = target;
+    frontID[tarCol] = a;
+
+    SwapDeck(0);
+    FrontMatch();
+    
+    document.getElementById("deck-array").innerHTML = deck;//temp
+    document.getElementById("board-array").innerHTML = permArrayID;//temp
+    document.getElementById("front-div").innerHTML = frontPos;//temp
+    document.getElementById("frontID-div").innerHTML = frontID;//temp
+    document.getElementById("match").innerHTML = matchesArray; //temp
+    /*
+    document.getElementById("deck-to-board2").style.color = "black";
+    document.getElementById("deck-to-board3").style.color = "black";
+    document.getElementById("deck-to-board4").style.color = "black";
+    document.getElementById("deck-to-board5").style.color = "black";
+    document.getElementById("deck-to-board6").style.color = "black";
+    document.getElementById("deck-to-board7").style.color = "black";
+    */
+    
+}
 //foundation
-
-//board
-
-//victory and reload
-function Victory(){ //when king added to foundations, array is turned to 99
-    document.getElementById("victory").innerHTML = "VICTORY!";
-    document.getElementById("victory").style.fontSize = "50px";
-}
-
-function Reset(){
-    location.reload();
-}
-
-let foundationH = -1;
-let foundationD = -1;
-let foundationC = -1;
-let foundationS = -1;
-let column1 = [];
-let column2 = [];
-let column3 = [];
-let column4 = [];
-let column5 = [];
-let column6 = [];
-let column7 = [];
-let front1 = [];
-let front2 = [];
-let front3 = [];
-let front4 = [];
-let front5 = [];
-let front6 = [];
-let front7 = [];
-
-let moveReady = [false,false,false,false,false,false,false,false,false,false,false];
-let finalFront = [-1,-1,-1,-1,-1,-1,-1]
-
-let foundationCodes = [];
-let deckID = [];
-
-
-
-
-
-
-
-
-let frontOfFront = [7,15,23,31,39,47,55];//temp
-
-
-let foundHLength = 0;
-let foundDLength = 0;
-let foundCLength = 0;
-let foundSLength = 0;
-
-let matchID = [0];
-
-let foundationReady = [0,13,26,39];
-
-//let foundationArr = [];
-
-
 function BoardToFound(row){ //needs fixing
-    if(foundationReady[0]==99 && foundationReady[1]==99 && foundationReady[2]==99 && foundationReady[3]==99){
+    if(foundationArr[0]==99 && foundationArr[1]==99 && foundationArr[2]==99 && foundationArr[3]==99){
         Victory();
     } 
+    /*
     let pos = row-1
     let a = front[pos];
     
@@ -794,108 +794,72 @@ function BoardToFound(row){ //needs fixing
                 return;
             }
         }
-    }    
+    } */   
 }
+//board
+
+//victory and reload
+function Victory(){ //when king added to foundations, array is turned to 99
+    document.getElementById("victory").innerHTML = "VICTORY!";
+    document.getElementById("victory").style.fontSize = "50px";
+}
+
+function Reset(){
+    location.reload();
+}
+
+let foundationH = -1;
+let foundationD = -1;
+let foundationC = -1;
+let foundationS = -1;
+let column1 = [];
+let column2 = [];
+let column3 = [];
+let column4 = [];
+let column5 = [];
+let column6 = [];
+let column7 = [];
+let front1 = [];
+let front2 = [];
+let front3 = [];
+let front4 = [];
+let front5 = [];
+let front6 = [];
+let front7 = [];
+
+let moveReady = [false,false,false,false,false,false,false,false,false,false,false];
+let finalFront = [-1,-1,-1,-1,-1,-1,-1]
+
+let foundationCodes = [];
+let deckID = [];
+
+
+
+
+
+
+
+
+let frontOfFront = [7,15,23,31,39,47,55];//temp
+
+
+let foundHLength = 0;
+let foundDLength = 0;
+let foundCLength = 0;
+let foundSLength = 0;
+
+let matchID = [0];
+
+let foundationReady = [0,13,26,39];
+
+//let foundationArr = [];
+
+
+
 let moveSuccess = "NO"; //temp
 //console.log(deck);
 
-function UpToBoard(tarCol){ //needs fixing
-    
-    let a = deck[0];
-    let target = cardArrayA[a];
-    let frontArray = [];
-    let newLocation = -1; //do not call variable new
-    if(front[tarCol]==-1){
-        let place = 0;
-        if(tarCol>0){
-            let mult = tarCol * 7;
-            place += mult;
-        }
-        let replacer = place;
-        document.getElementById(`${replacer}`).innerHTML = target.text;  
-        document.getElementById(`${replacer}`).style.visibility = "visible";
-        frontOfFront[tarCol] = place+7;
-        front[tarCol] = place;
 
-        if(target.col == "R"){
-        document.getElementById(`${replacer}`).style.color = "red";
-        }
-        else{
-            document.getElementById(`${replacer}`).style.color = "black";
-        }
-    }
-    else{
-   
-    for(let i=0;i>7;i++){
-        let f = front[i];
-        let targetID = permArrayID[f];
-        let targetObj = cardArrayA[targetID];
-        
-        let b = Number(target);        
-        
-        if(a==12||a==25||a==38||a==51){
-            if(frontArray[i]==-1){
-                let b = i+1;
-                b = b;
-                newLocation = frontArray[i];
-                newLocation += 7;
-            }
-            return; //temp
-        }
-        if(a<13){
-            if(b==(a+27)||b==(a+40)){
-                frontOfFront[i]              
-                
-            }
-        }
-        if(a>12&&a<26){//13over27and40
-            if(b==(a+14)||b==(a+27)){
-                moveSuccess = "match";
-                
-            }
-        }
-        if(a>25&&a<39){//26over1and14
-            if(b==(a-25)||b==(a-12)){
-                moveSuccess = "match";
-               
-            }
-        }
-        if(a>38){//39over1and14
-            if(b==(a-38)||b==(a-25)){
-                moveSuccess = "match";
-               
-            }
-        }
-      
-    }
-    let replacer = frontOfFront[tarCol];
-    document.getElementById(`${replacer}`).innerHTML = target.text;  
-    document.getElementById(`${replacer}`).style.visibility = "visible";
-    document.getElementById(`${replacer}`).classList.remove("covered");    
-    if(target.col == "R"){
-        document.getElementById(`${replacer}`).style.color = "red";
-    }
-    else{
-        document.getElementById(`${replacer}`).style.color = "black";
-    }
-    frontOfFront[tarCol] += 7;
-    front[tarCol] += 7;
-    permArrayID[replacer] = a;
-}
-   // console.log(moveSuccess);     
-    
-    document.getElementById("deck-to-board2").style.color = "black";
-    document.getElementById("deck-to-board3").style.color = "black";
-    document.getElementById("deck-to-board4").style.color = "black";
-    document.getElementById("deck-to-board5").style.color = "black";
-    document.getElementById("deck-to-board6").style.color = "black";
-    document.getElementById("deck-to-board7").style.color = "black";
-    SwapDeck();
-    
-    document.getElementById("deck-array").innerHTML = deck;//temp
-    document.getElementById("board-array").innerHTML = permArrayID;//temp
-    document.getElementById("front-div").innerHTML = front;//temp
-}
 //console.log(moveSuccess);
 
 function FoundToBoard(iden){ //needs fixing

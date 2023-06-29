@@ -125,3 +125,12 @@ Swapdeck includes move to foundation options.
 TO DO: Work on deck to board function.
 Amend swap deck to include deck to board options, with matchcombined being used.
 Need to add functions to foundation and column buttons.
+
+29 Jun: Deck to Board is functioning, without updating the div colours.
+Deck to board works for multiple cards in seperate matches.
+Victory condition also works correctly.
+Changed formatting to be more readable.
+
+TO DO: Continue with Board to Foundation function.
+Add div colour change/check for swapDeck and other Deck functions.
+Need to add functions to foundation and column buttons.
