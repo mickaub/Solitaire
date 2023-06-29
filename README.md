@@ -134,3 +134,12 @@ Changed formatting to be more readable.
 TO DO: Continue with Board to Foundation function.
 Add div colour change/check for swapDeck and other Deck functions.
 Need to add functions to foundation and column buttons.
+
+Board to Foundation function works, with only the right card moving to the foundation.
+Temporarily combined MoveFromBoard and Move To Foundation, in order to move from board to foundation.
+Move From Column buttons now have function.
+
+TO DO: Seperate MoveFromBoard and BoardToFound, via storing arguments into a variable, which will then need to be wiped after use.
+Begin work on Foundation down to Board.
+Add div colour change/check for swapDeck and other Deck functions.
+Need to add functions to foundation and move to column buttons.

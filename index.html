@@ -91,13 +91,16 @@
         </div>    
     </div>
     <br>       
-    <button id="move-from-col0">Move From Column</button>
-    <button id="move-from-col1">Move From Column</button>
-    <button id="move-from-col2">Move From Column</button>
-    <button id="move-from-col3">Move From Column</button>
-    <button id="move-from-col4">Move From Column</button>
-    <button id="move-from-col5">Move From Column</button>
-    <button id="move-from-col6">Move From Column</button>
+    <button id="move-from-col0" onclick="MoveFromBoard(0)">Move From Column</button>
+    <button id="move-from-col1" onclick="MoveFromBoard(1)">Move From Column</button>
+    <button id="move-from-col2"
+    onclick="MoveFromBoard(2)">Move From Column</button>
+    <button id="move-from-col3"
+    onclick="MoveFromBoard(3)">Move From Column</button>
+    <button id="move-from-col4"
+    onclick="MoveFromBoard(4)">Move From Column</button>
+    <button id="move-from-col5" onclick="MoveFromBoard(5)">Move From Column</button>
+    <button id="move-from-col6" onclick="MoveFromBoard(6)">Move From Column</button>
     <br>
     <button id="move-to-col0">Move To Column</button>
     <button id="move-to-col1">Move To Column</button>
@@ -332,13 +335,25 @@ for(let i=0;i<140;i++){
 }
 //frontID[0]=-1;//temp
 //foundationArr[0] = 1;//temp
+
+let deckTop = deck[0];  
+
+document.getElementById("new-card").innerHTML = cardArrayA[deckTop].text;
+
+if(cardArrayA[deckTop].col == "R"){
+    document.getElementById("new-card").style.color = "red";
+}
+else{
+    document.getElementById("new-card").style.color = "black";
+}
+
 document.getElementById("board-container").style.height = "600px";//temp
 FrontMatch();
 
 for(let i=0;i<4;i++){
     if(foundationArr[i]==deck[0]){
         document.getElementById("deck-to-found").style.color = "yellow"; 
-        document.getElementById("move-to-found").style.color = "yellow"; 
+        //document.getElementById("move-to-found").style.color = "yellow"; 
     }
 }
 
@@ -417,7 +432,7 @@ function SwapDeck(swap){
     for(let i=0;i<4;i++){
         if(foundationArr[i]==deck[0]){
             document.getElementById("deck-to-found").style.color = "yellow"; 
-            document.getElementById("move-to-found").style.color = "yellow"; 
+            //document.getElementById("move-to-found").style.color = "yellow"; 
         }
     }
    // document.getElementById("match").innerHTML = matchID;
@@ -438,7 +453,7 @@ function UpToFound(){
     }
     //console.log("foundWorking",deck[0]);
     document.getElementById("deck-to-found").style.color = "black"; 
-    document.getElementById("move-to-found").style.color = "black";
+   // document.getElementById("move-to-found").style.color = "black";
 
     if(a==foundationArr[0]){
         document.getElementById("HF").innerHTML = b;
@@ -479,6 +494,7 @@ function UpToFound(){
     
     if(foundationArr[0]==99&&foundationArr[1]==99&&foundationArr[2]==99&&foundationArr[3]==99){       
         Victory();
+        return;
     }   
 
     SwapDeck(0);
@@ -502,6 +518,7 @@ function UpToFound(){
 
     document.getElementById("match").innerHTML = matchesArray; //temp
 }
+
 function UpToBoard(tarCol){
     
     let a = deck[0];
@@ -556,10 +573,99 @@ function UpToBoard(tarCol){
     
 }
 //foundation
-function BoardToFound(row){ //needs fixing
+function BoardToFound(BoardMatch,MatchPosition,MovingCol){ //needs fixing
     if(foundationArr[0]==99 && foundationArr[1]==99 && foundationArr[2]==99 && foundationArr[3]==99){
         Victory();
+        return;
     } 
+    
+    let moving = cardArrayA[BoardMatch];
+    let targetID = Number(moving.id);//make sure to turn all properties into number from string
+    let targetText = moving.text;
+
+    console.log(targetID,foundationArr);
+    if(foundationArr.indexOf(targetID)==-1){
+        return;
+    }
+    else{
+        console.log("match");
+    }
+
+    if(targetID == foundationArr[0]){
+        document.getElementById("HF").innerHTML = targetText;
+        if(foundationArr[0]==12){
+            foundationArr[0] = 99;
+        }
+        else{
+            foundationArr[0] += 1;
+        }   
+    }
+    if(targetID == foundationArr[1]){
+        document.getElementById("DF").innerHTML = targetText;
+        if(foundationArr[1]==25){
+            foundationArr[1] = 99;
+        }
+        else{
+            foundationArr[1] += 1;
+        }        
+    }
+    if(targetID==foundationArr[2]){
+        document.getElementById("CF").innerHTML = targetText;
+        if(foundationArr[2]==38){
+            foundationArr[2] = 99;
+        }
+        else{
+            foundationArr[2] += 1;
+        }        
+    }
+    if(targetID==foundationArr[3]){
+        document.getElementById("SF").innerHTML = targetText;
+        if(foundationArr[3]==51){
+            foundationArr[3] = 99;
+        }
+        else{
+            foundationArr[3] += 1;
+        }        
+    }
+
+    document.getElementById(`${MatchPosition}`).innerHTML = "";
+    document.getElementById(`${MatchPosition}`).style.visibility = "hidden";
+
+    let changingCard = frontID[MovingCol];  
+    let newCardPos = -1;
+    if(MatchPosition>6){
+        newCardPos = MatchPosition - 7;
+    }
+   
+    
+    //let newCardID = Number(CardArrayA[newCardPos].id);
+
+
+    if(newCardPos!==-1){
+        frontID[MovingCol] = permArrayID[newCardPos];
+        document.getElementById(`${newCardPos}`).classList.remove("covered");
+    }
+    else{
+        frontID[MovingCol] = -1;
+    }
+    if(frontPos[MovingCol]>6){
+        frontPos[MovingCol] -=  7;
+    }
+    else{
+        frontPos[MovingCol] = -1;
+    }
+    
+    permArrayID[MatchPosition] = -1;
+
+    FrontMatch();
+
+    document.getElementById("board-array").innerHTML = permArrayID;//temp
+    document.getElementById("front-div").innerHTML = frontPos;//temp
+    document.getElementById("frontID-div").innerHTML = frontID;//temp
+    //document.getElementById("match").innerHTML = matchesArray; //temp
+    document.getElementById("foundation-array").innerHTML = foundationArr; //temp
+   /* 
+
     /*
     let pos = row-1
     let a = front[pos];
@@ -797,7 +903,16 @@ function BoardToFound(row){ //needs fixing
     } */   
 }
 //board
+function MoveFromBoard(MovingCol){
+    let a = frontID[MovingCol];
+    let b = frontPos[MovingCol];
+    let moving = cardArrayA[a];
+    let targetText = moving.text;
 
+    BoardToFound(a,b,MovingCol);
+
+   
+}
 //victory and reload
 function Victory(){ //when king added to foundations, array is turned to 99
     document.getElementById("victory").innerHTML = "VICTORY!";
@@ -808,7 +923,7 @@ function Reset(){
     location.reload();
 }
 
-let foundationH = -1;
+/*let foundationH = -1;
 let foundationD = -1;
 let foundationC = -1;
 let foundationS = -1;
@@ -861,7 +976,7 @@ let moveSuccess = "NO"; //temp
 
 
 //console.log(moveSuccess);
-
+*/
 function FoundToBoard(iden){ //needs fixing
     for(let i=0;i<7;i++){
         if(d<13){
@@ -934,7 +1049,7 @@ function moveCheck(){ //needs fixing and splitting
     permArrayID.push(deck[i]);
 }*/
 
-let frontDeckID = deck[0];
+/*let frontDeckID = deck[0];
 let frontDeckCard = cardArrayA[frontDeckID];
 document.getElementById("new-card").innerHTML = frontDeckCard.text;
 
@@ -943,25 +1058,10 @@ if(frontDeckCard.col == "R"){
 }
 else{
     document.getElementById("new-card").style.color = "black";
-}
+}*/
 
 //console.log(permArrayID.length);
 
-column2.push(shuffledArray[1].id);
-column3.push(shuffledArray[2].id, shuffledArray[9].id);
-column4.push(shuffledArray[3].id, shuffledArray[10].id, shuffledArray[17].id);
-column5.push(shuffledArray[4].id, shuffledArray[11].id, shuffledArray[18].id, shuffledArray[25].id);
-column6.push(shuffledArray[5].id, shuffledArray[12].id, shuffledArray[19].id, shuffledArray[26].id, shuffledArray[33].id);
-column7.push(shuffledArray[6].id, shuffledArray[13].id, shuffledArray[20].id, shuffledArray[27].id, shuffledArray[34].id, shuffledArray[41].id);
-//console.log(column1,column2,column3,column4,column5,column6,column7);
-
-front1.push(shuffledArray[0].id);
-front2.push(shuffledArray[8].id);
-front3.push(shuffledArray[16].id);
-front4.push(shuffledArray[24].id);
-front5.push(shuffledArray[32].id);
-front6.push(shuffledArray[40].id);
-front7.push(shuffledArray[48].id);
 /*
 matchID[0] = deck[0];
 for(let i=0;i<7;i++){
@@ -1008,9 +1108,9 @@ for(let i=0;i<4;i++){
 
 //document.getElementById("match").innerHTML = matchID;
 
-let testVar = deck[0];
+/*let testVar = deck[0];
 let board = 1;
-let found = 2;
+let found = 2;*/
 //front[0] = -1;//test
 //document.getElementById("0").innerHTML = "";//temp
 //document.getElementById("0").style.visibility = "hidden";//test
