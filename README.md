@@ -143,3 +143,14 @@ TO DO: Seperate MoveFromBoard and BoardToFound, via storing arguments into a var
 Begin work on Foundation down to Board.
 Add div colour change/check for swapDeck and other Deck functions.
 Need to add functions to foundation and move to column buttons.
+
+30 June:
+Foundation to Board works, although it only uses the first match.
+Changed design so that deck is in the middle of the foundation and the board.
+
+TO DO: 
+Work on Board to Board function.
+Seperate MoveFromBoard and BoardToFound, via storing arguments into a variable, which will then need to be wiped after use.
+Seperate MoveToBoard and FoundToBoard, via storing arguments into a variable, which will then need to be wiped after use.
+Need to add selector for multiple foundations, with extra divs that popup/greyin or out.
+Add div colour change/check for swapDeck and other Deck functions.

@@ -81,8 +81,8 @@
     <div id="frontID-div"></div>
     <div id="match"></div>
     <div>
-        <button id="move-to-found" class="deck-button">Move to Found</button>
-        <button id="move-from-found" class="deck-button">Move from Found</button>
+        <button id="move-to-found" class="deck-button">Board to Found</button>
+        <button id="move-from-found" class="deck-button" onclick="FoundToBoard()">Found to Board</button>
         <div class="foundation-container">
             <div class="card" id="HF"></div>
             <div class="card" id="DF"></div>
@@ -90,29 +90,6 @@
             <div class="card" id="SF"></div>
         </div>    
     </div>
-    <br>       
-    <button id="move-from-col0" onclick="MoveFromBoard(0)">Move From Column</button>
-    <button id="move-from-col1" onclick="MoveFromBoard(1)">Move From Column</button>
-    <button id="move-from-col2"
-    onclick="MoveFromBoard(2)">Move From Column</button>
-    <button id="move-from-col3"
-    onclick="MoveFromBoard(3)">Move From Column</button>
-    <button id="move-from-col4"
-    onclick="MoveFromBoard(4)">Move From Column</button>
-    <button id="move-from-col5" onclick="MoveFromBoard(5)">Move From Column</button>
-    <button id="move-from-col6" onclick="MoveFromBoard(6)">Move From Column</button>
-    <br>
-    <button id="move-to-col0">Move To Column</button>
-    <button id="move-to-col1">Move To Column</button>
-    <button id="move-to-col2">Move To Column</button>
-    <button id="move-to-col3">Move To Column</button>
-    <button id="move-to-col4">Move To Column</button>
-    <button id="move-to-col5">Move To Column</button>
-    <button id="move-to-col6">Move To Column</button>
-    <button id="reload" onclick="Reset()" class="deck-button">Reset</button>
-    <br>
-    <div class="board-container" id="board-container">        
-    </div>    
     <br>    
     <div class="new-card-block">
         <div class="card" id="pile"></div>
@@ -127,6 +104,29 @@
         <button id="deck-to-board7" onclick="UpToBoard(6)"class="deck-button">Move to Board</button>
         <button id="deck-to-found" onclick="UpToFound()"class="deck-button">Move to Foundation</button>
     </div>
+    <br>       
+    <button id="move-from-col0" onclick="MoveFromBoard(0)">Move From Column</button>
+    <button id="move-from-col1" onclick="MoveFromBoard(1)">Move From Column</button>
+    <button id="move-from-col2"
+    onclick="MoveFromBoard(2)">Move From Column</button>
+    <button id="move-from-col3"
+    onclick="MoveFromBoard(3)">Move From Column</button>
+    <button id="move-from-col4"
+    onclick="MoveFromBoard(4)">Move From Column</button>
+    <button id="move-from-col5" onclick="MoveFromBoard(5)">Move From Column</button>
+    <button id="move-from-col6" onclick="MoveFromBoard(6)">Move From Column</button>
+    <br>
+    <button id="move-to-col0" onclick="MoveToBoard(0)">Move To Column</button>
+    <button id="move-to-col1" onclick="MoveToBoard(1)">Move To Column</button>
+    <button id="move-to-col2" onclick="MoveToBoard(2)">Move To Column</button>
+    <button id="move-to-col3" onclick="MoveToBoard(3)">Move To Column</button>
+    <button id="move-to-col4" onclick="MoveToBoard(4)">Move To Column</button>
+    <button id="move-to-col5" onclick="MoveToBoard(5)">Move To Column</button>
+    <button id="move-to-col6" onclick="MoveToBoard(6)">Move To Column</button>
+    <button id="reload" onclick="Reset()" class="deck-button">Reset</button>
+    <br>
+    <div class="board-container" id="board-container">        
+    </div>        
 </body>
 
 <script>
@@ -222,6 +222,7 @@ let matches = [-1,-1,-1,-1,-1,-1,-1];
 let boardContainer = document.getElementById("board-container");
 let matchesCombined = matches.concat(foundationArr);
 let matchesArray = [];
+let movingToColArray = [];//needs fixing
 
 function Shuffle (array) {    
     let currentIndex = array.length;
@@ -456,7 +457,8 @@ function UpToFound(){
    // document.getElementById("move-to-found").style.color = "black";
 
     if(a==foundationArr[0]){
-        document.getElementById("HF").innerHTML = b;
+        document.getElementById("HF").innerHTML = b;        
+        
         if(foundationArr[0]==12){
             foundationArr[0] = 99;
         }
@@ -517,6 +519,7 @@ function UpToFound(){
     }
 
     document.getElementById("match").innerHTML = matchesArray; //temp
+    document.getElementById("foundation-array").innerHTML = foundationArr; //temp
 }
 
 function UpToBoard(tarCol){
@@ -538,7 +541,7 @@ function UpToBoard(tarCol){
         return;
     }
 
-    console.log(target, potMatch);
+    //console.log(target, potMatch);
 
     document.getElementById(target).innerHTML = targetText;
     document.getElementById(target).style.visibility = "visible";
@@ -664,244 +667,82 @@ function BoardToFound(BoardMatch,MatchPosition,MovingCol){ //needs fixing
     document.getElementById("frontID-div").innerHTML = frontID;//temp
     //document.getElementById("match").innerHTML = matchesArray; //temp
     document.getElementById("foundation-array").innerHTML = foundationArr; //temp
-   /* 
+   
+}
+/*foundationArr = [10,20,30,40];//temp
+document.getElementById("HF").innerHTML = cardArrayA[10].text;//temp
+document.getElementById("DF").innerHTML = cardArrayA[20].text;//temp
+document.getElementById("CF").innerHTML = cardArrayA[30].text;//temp
+document.getElementById("SF").innerHTML = cardArrayA[40].text;//temp
 
-    /*
-    let pos = row-1
-    let a = front[pos];
+//document.getElementById("match").innerHTML = matchesArray; //temp
+document.getElementById("foundation-array").innerHTML = foundationArr; //temp*/
+
+FrontMatch();//temp
+console.log(matchesCombined);
+
+function FoundToBoard(){ //needs fixing
     
-    if(a==-1){
+    for(let i=0;i<4;i++){
+        let foundChoice = foundationArr[i];
+        for(let j=0;j<7.;j++){
+            if(matchesCombined[j].length>1){
+                for(let k=0;k<matchesCombined[j].length;k++){
+                    if(matchesCombined[j][k]==foundChoice){                       
+                        movingToColArray.push(j);
+                    };
+                }
+            }            
+        }
+    }
+    
+    console.log(movingToColArray);
+    
+    /*
+    let a = deck[0];
+    let moving = cardArrayA[a];
+    let target = frontPos[tarCol] + 7;
+    let targetText = moving.text;
+    let potMatch = matchesCombined[tarCol];
+    let MatchProceed = false;
+
+    for(let i=0;i<potMatch.length;i++){
+        if(potMatch[i]==a){
+            MatchProceed = true;
+        }
+    }
+
+    if(MatchProceed == false){
         return;
     }
-    let columnChoice = -1;
-    if(pos==0){
-        columnChoice = column1;
-    }    
-    if(pos==1){
-        columnChoice = column2;
-    } 
-    if(pos==2){
-        columnChoice = column3;
-    } 
-    if(pos==3){
-        columnChoice = column4;
-    } 
-    if(pos==4){
-        columnChoice = column5;
-    } 
-    if(pos==5){
-        columnChoice = column6;
-    } 
-    if(pos==6){
-        columnChoice = column7;
-    } 
-    
-    if(shuffledArray[a].id < 13){
-        if(foundationH == -1){
-            if(shuffledArray[a].id==0){
-                document.getElementById("HF").innerHTML = shuffledArray[a].text;
-                foundationH = 0;      
-                if(columnChoice.length==0){
-                    document.getElementById(`board-to-foundation${row}`).style.visibility = "hidden";
-                    front[pos]=-1;
-                    document.getElementById(`${a}`).style.visibility = "hidden";
-                    return;
-                }    
-                else{
-                    document.getElementById(`${a}`).style.visibility = "hidden";
-                    front[pos] -= 7;  
-                    a = front[pos];                  
-                    document.getElementById(`${a}`).classList.remove("covered");
-                    return;
-                }      
-                
-            }
-            else{
-                return;
-            }
-        }
-        else{
-          //  console.log("step1");
-            let b = Number(shuffledArray[a].id);
-            let newID = b-1;
-          //  console.log(newID, foundationH);
-            if(newID==foundationH){
-                console.log("step2");
-                document.getElementById("HF").innerHTML = shuffledArray[a].text;
-                foundationH += 1;
-                if(columnChoice.length==0){
-                    document.getElementById(`board-to-foundation${row}`).style.visibility = "hidden";
-                    front[pos]=-1;
-                    document.getElementById(`${a}`).style.visibility = "hidden";
-                    return;
-                }    
-                else{
-                    document.getElementById(`${a}`).style.visibility = "hidden";
-                    front[pos] -= 7;  
-                    a = front[pos];                  
-                    document.getElementById(`${a}`).classList.remove("covered");
-                    return;
-                }    
-            }
-            else{
-                return;
-            }
-        }
-    }
-     if(shuffledArray[a].id < 26){
-        if(foundationD == -1){
-            if(shuffledArray[a].id==13){
-                document.getElementById("DF").innerHTML = shuffledArray[a].text;
-                foundationD = 13;
-                if(columnChoice.length==0){
-                    document.getElementById(`board-to-foundation${row}`).style.visibility = "hidden";
-                    front[pos]=-1;
-                    document.getElementById(`${a}`).style.visibility = "hidden";
-                    return;
-                }    
-                else{
-                    document.getElementById(`${a}`).style.visibility = "hidden";
-                    front[pos] -= 7;  
-                    a = front[pos];                  
-                    document.getElementById(`${a}`).classList.remove("covered");
-                    return;
-                }    
-            }
-            else{
-                return;
-            }
-        }
-        else{
-            console.log("step1");
-            let b = Number(shuffledArray[a].id);
-            let newID = b-1;
-            console.log(newID, foundationD);
-            if(newID==foundationD){
-               // console.log("step2");
-                document.getElementById("DF").innerHTML = shuffledArray[a].text;
-                foundationD += 1;
-                if(columnChoice.length==0){
-                    document.getElementById(`board-to-foundation${row}`).style.visibility = "hidden";
-                    front[pos]=-1;
-                    document.getElementById(`${a}`).style.visibility = "hidden";
-                    return;
-                }    
-                else{
-                    document.getElementById(`${a}`).style.visibility = "hidden";
-                    front[pos] -= 7;  
-                    a = front[pos];                  
-                    document.getElementById(`${a}`).classList.remove("covered");
-                    return;
-                }    
-            }
-            else{
-                return;
-            }
-        }        
-    }
-     if(shuffledArray[a].id < 39){
-        if(foundationC == -1){
-            if(shuffledArray[a].id==26){
-                document.getElementById("CF").innerHTML = shuffledArray[a].text;
-                foundationC = 26;
-                if(columnChoice.length==0){
-                    document.getElementById(`board-to-foundation${row}`).style.visibility = "hidden";
-                    front[pos]=-1;
-                    document.getElementById(`${a}`).style.visibility = "hidden";
-                    return;
-                }    
-                else{
-                    document.getElementById(`${a}`).style.visibility = "hidden";
-                    front[pos] -= 7;  
-                    a = front[pos];                  
-                    document.getElementById(`${a}`).classList.remove("covered");
-                    return;
-                }    
-            }
-            else{
-                return;
-            }
-        }
-        else{
-          //  console.log("step1");
-            let b = Number(shuffledArray[a].id);
-            let newID = b-1;
-           // console.log(newID, foundationC);
-            if(newID==foundationC){
-              //  console.log("step2");
-                document.getElementById("CF").innerHTML = shuffledArray[a].text;
-                foundationC += 1;
-                if(columnChoice.length==0){
-                    document.getElementById(`board-to-foundation${row}`).style.visibility = "hidden";
-                    front[pos]=-1;
-                    document.getElementById(`${a}`).style.visibility = "hidden";
-                    return;
-                }    
-                else{
-                    document.getElementById(`${a}`).style.visibility = "hidden";
-                    front[pos] -= 7;  
-                    a = front[pos];                  
-                    document.getElementById(`${a}`).classList.remove("covered");
-                    return;
-                }    
-            }
-            else{
-                return;
-            }
-        }
+
+    console.log(target, potMatch);
+
+    document.getElementById(target).innerHTML = targetText;
+    document.getElementById(target).style.visibility = "visible";
+
+    if(moving.col == "R"){
+        document.getElementById(target).style.color = "red";
     }
     else{
-        if(foundationS == -1){
-            if(shuffledArray[a].id==39){
-                document.getElementById("SF").innerHTML = shuffledArray[a].text;
-                foundationS = 39;
-                if(columnChoice.length==0){
-                    document.getElementById(`board-to-foundation${row}`).style.visibility = "hidden";
-                    front[pos]=-1;
-                    document.getElementById(`${a}`).style.visibility = "hidden";
-                    return;
-                }    
-                else{
-                    document.getElementById(`${a}`).style.visibility = "hidden";
-                    front[pos] -= 7;  
-                    a = front[pos];                  
-                    document.getElementById(`${a}`).classList.remove("covered");
-                    return;
-                }    
-            }
-            else{
-                return;
-            }
-        }
-        else{
-         //   console.log("step1");
-            let b = Number(shuffledArray[a].id);
-            let newID = b-1;
-         //   console.log(newID, foundationS);
-            if(newID==foundationS){
-              //  console.log("step2");
-                document.getElementById("SF").innerHTML = shuffledArray[a].text;
-                foundationS += 1;
-                if(columnChoice.length==0){
-                    document.getElementById(`board-to-foundation${row}`).style.visibility = "hidden";
-                    front[pos]=-1;
-                    document.getElementById(`${a}`).style.visibility = "hidden";
-                    return;
-                }    
-                else{
-                    document.getElementById(`${a}`).style.visibility = "hidden";
-                    front[pos] -= 7;  
-                    a = front[pos];                  
-                    document.getElementById(`${a}`).classList.remove("covered");
-                    return;
-                }    
-            }
-            else{
-                return;
-            }
-        }
-    } */   
+        document.getElementById(target).style.color = "black";
+    }
+
+    permArrayID[target] = a;
+    frontPos[tarCol] = target;
+    frontID[tarCol] = a;
+
+    SwapDeck(0);
+    FrontMatch(); */
+    
+    
+    document.getElementById("board-array").innerHTML = permArrayID;//temp
+    document.getElementById("front-div").innerHTML = frontPos;//temp
+    document.getElementById("frontID-div").innerHTML = frontID;//temp
+    document.getElementById("match").innerHTML = matchesArray; //temp
 }
+
+
 //board
 function MoveFromBoard(MovingCol){
     let a = frontID[MovingCol];
@@ -912,6 +753,72 @@ function MoveFromBoard(MovingCol){
     BoardToFound(a,b,MovingCol);
 
    
+}
+function MoveToBoard(MovingCol){
+    if(movingToColArray.indexOf(MovingCol)==-1){
+        return;
+    }
+    let matches = matchesCombined[MovingCol];
+    let foundationMatchesArr = [];    
+    let foundationChanging = [];//temp
+
+    for(let i=0;i<4;i++){
+        if(matches.indexOf(foundationArr[i])!==-1){
+            foundationMatchesArr.push(foundationArr[i]);      
+            foundationChanging.push(i); 
+        }
+    }
+    let moving = foundationMatchesArr[0];//temp
+    let movingCard = cardArrayA[moving];//temp
+    let target = frontPos[MovingCol] + 7;
+    let targetText = movingCard.text;
+    let firstChange = foundationChanging[0];
+
+    foundationArr[firstChange] -= 1;
+    let newArrayID = foundationArr[firstChange];
+    let newArrayCard = cardArrayA[newArrayID];
+    if(firstChange==0){
+        document.getElementById("HF").innerHTML = newArrayCard.text;
+    }
+    if(firstChange==1){
+        document.getElementById("DF").innerHTML = newArrayCard.text;
+    }
+    if(firstChange==2){
+        document.getElementById("CF").innerHTML = newArrayCard.text;
+    }
+    if(firstChange==3){
+        document.getElementById("SF").innerHTML = newArrayCard.text;
+    }
+    //console.log(moving);
+   // let potMatch = matchesCombined[tarCol];
+    //let MatchProceed = false;
+
+    document.getElementById(target).innerHTML = targetText;
+
+    if(movingCard.col == "R"){
+        document.getElementById(target).style.color = "red";
+    }
+    else{
+        document.getElementById(target).style.color = "black";
+    }
+
+    document.getElementById(target).style.visibility = "visible";    
+
+    permArrayID[target] = moving;
+    frontPos[MovingCol] = target;
+    frontID[MovingCol] = moving;
+
+    FrontMatch();
+
+    movingToColArray.shift();
+    console.log(movingToColArray);
+
+    document.getElementById("board-array").innerHTML = permArrayID;//temp
+    document.getElementById("front-div").innerHTML = frontPos;//temp
+    document.getElementById("frontID-div").innerHTML = frontID;//temp
+    document.getElementById("match").innerHTML = matchesArray; //temp
+    document.getElementById("foundation-array").innerHTML = foundationArr; //temp
+
 }
 //victory and reload
 function Victory(){ //when king added to foundations, array is turned to 99
@@ -977,62 +884,6 @@ let moveSuccess = "NO"; //temp
 
 //console.log(moveSuccess);
 */
-function FoundToBoard(iden){ //needs fixing
-    for(let i=0;i<7;i++){
-        if(d<13){
-            if(b==(d+27)||b==(d+40)){
-                document.getElementById(`deck-to-board${ip}`).style.color = "yellow";    
-                let c = i.toString();
-                testText += c;         
-            }
-        }
-        if(d>12&&d<26){//13over27and40
-            if(b==(d+14)||b==(d+27)){    
-                document.getElementById(`deck-to-board${ip}`).style.color = "yellow";       
-                let c = i.toString();
-                testText += c;             
-            }
-        }
-        if(d>25&&d<39){//26over1and14
-            if(b==(d-25)||b==(d-12)){       
-                document.getElementById(`deck-to-board${ip}`).style.color = "yellow";       
-                let c = i.toString();
-                testText += c;         
-            }
-        }
-        if(d>38){//39over1and14
-            if(b==(d-38)||b==(d-25)){
-                document.getElementById(`deck-to-board${ip}`).style.color = "yellow";       
-                let c = i.toString();
-                testText += c;        
-                }
-            }        
-        }    
-}
-
-
-
-
-
-function moveCheck(){ //needs fixing and splitting
-    let a = shuffledArray[firstDeck].id;
-    let b = front[0];
-    let c = shuffledArray[b].id;
-    let match = false;
-    let diff = 0;
-    if(a<13){if(shuffledArray[b].col=="B"){match=true}};
-    if(a>12&&a<26){if(shuffledArray[b].col=="B"){match=true}};
-    if(a>25&&a<39){if(shuffledArray[b].col=="R"){match=true}};
-    if(a>38){if(shuffledArray[b].col=="R"){match=true}};
-   
-    console.log(a-c,match);       
-}
-
-
-
-
-
-
 
 //Victory();//temp
 
