@@ -154,3 +154,18 @@ Seperate MoveFromBoard and BoardToFound, via storing arguments into a variable, 
 Seperate MoveToBoard and FoundToBoard, via storing arguments into a variable, which will then need to be wiped after use.
 Need to add selector for multiple foundations, with extra divs that popup/greyin or out.
 Add div colour change/check for swapDeck and other Deck functions.
+
+1 July:
+Added seperate selections for multiple foundation options.
+Got board to board function(through movefromboard) to work correctly.
+Fixed king from deck to empty column.
+Fixed king from column to empty column.
+Added frontbackPos array and have planned how to use.
+
+TO DO:
+Add frontbackPos to functions including board to future board to board function. LINE220 PLANNING
+Add div colour change/check for swapDeck and other Deck functions, as well as all other buttons and functions.
+Add seperate selections of foundToboard and BoardtoFound options into the functions.
+Seperate MoveFromBoard and BoardToFound, via storing arguments into a variable, which will then need to be wiped after use.
+Seperate moving Board to Board from MoveFromBoard and put some into MoveToBoard.
+Seperate MoveToBoard and FoundToBoard, via storing arguments into a variable, which will then need to be wiped after use.
