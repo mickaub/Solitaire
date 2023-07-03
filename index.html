@@ -235,8 +235,8 @@ let frontPos = [0,8,16,24,32,40,48];
 let deck = [];
 let frontID = []; //for matchID -2 is for 2s and As and -1 is for Empty
 let frontBackPos = [0,8,16,24,32,40,48];
-let middleBackIDArr = [-1,-1,-1,-1,-1,-1,-1];
-let middleBackPosArr = [-1,-1,-1,-1,-1,-1,-1];
+let notFrontIDArr = [-1,-1,-1,-1,-1,-1,-1];
+let notFrontPosArr = [-1,-1,-1,-1,-1,-1,-1];
 let matches = [-1,-1,-1,-1,-1,-1,-1];
 let boardContainer = document.getElementById("board-container");
 let matchesCombined = matches.concat(foundationArr);
@@ -260,10 +260,12 @@ let testArr = [];//temp
 //console.log(testArr.length, testArr[2].length)//temp
 
 function FrontMatch(){    
+   // let acematch = [];
     for(let i=0;i<7;i++){ //calculates cards that go on top     
         let a = [];
         let b = Number(frontID[i]);
         let c = b%13;
+        
 
         if(b==-1){
             a = [12,25,38,51];
@@ -291,27 +293,26 @@ function FrontMatch(){
         if(c==0||c==1){
             a = [-2];
         }
-        matchesCombined[i] = a;
-   /*   if(frontPos[i]!==frontBackPos[i]&&frontPos[i]>-1){
-        let tPos = frontBackPos[i];
-       // let tID = Number(permArrayID[tPos]);
-        let posArr = [];
-        //let IDArr = [];
-       let layers = (frontBackPos[i]-frontPos[i])/7;
-        for(let j=0;j<layers;j++){
-            let add = j+1;
-            let newPos = frontPos[i]-(add*7);
-            posArr.push(newPos);
-        }
-       // testArr.push(tID,tPos);
-      //  middleBackIDArr[i] = tID;
-        middleBackPosArr[i] = posArr;
-                }*/
-    }
+        matchesCombined[i] = a;   
 
+        if(foundationArr.indexOf(b)!==-1){
+            let aceMatch = foundationArr.indexOf(b);
+            document.getElementById(`move-to-found${aceMatch}`).style.color = "yellow"; 
+            document.getElementById(`move-from-col${i}`).style.color = "yellow"; 
+        }
+    }
+    
+   /* for(let i=0;i<4;i++){
+        if(frontID.indexOf(foundationArr[i])!==-1){
+           // let arrMatch = frontID.indexOf(foundationArr[i]);
+            document.getElementById(`move-to-found${i}`).style.color = "yellow"; 
+            //acematch.push(i);
+        }
+    }*/
+   // console.log(acematch,frontID);
     for(let i=7;i<11;i++){
         let a = i-7;
-        matchesCombined[i] = foundationArr[a];
+        matchesCombined[i] = foundationArr[a];        
     }
     matchesArray = [];
     for(let i=0;i<matchesCombined.length;i++){
@@ -325,6 +326,7 @@ function FrontMatch(){
             matchesArray.push(a);
         }
     }
+    
    // console.log(testArr);
   //  console.log(middleBackIDArr);
    // console.log(middleBackPosArr);
@@ -368,7 +370,7 @@ for(let i=0;i<140;i++){
     else{
         permArrayID.push(-1);
         document.getElementById(`${i}`).style.visibility = "hidden"; 
-        document.getElementById(`${i}`).classList.add("small");//temp
+        //document.getElementById(`${i}`).classList.add("small");//temp
     }  
 }
 //frontID[0]=-1;//temp
@@ -621,11 +623,7 @@ function DeckToBoard(tarCol){
     
 }
 //foundation
-function BoardToFound(BoardMatch,MatchPosition,MovingCol){ //needs fixing
-    if(foundationArr[0]==99 && foundationArr[1]==99 && foundationArr[2]==99 && foundationArr[3]==99){
-        Victory();
-        return;
-    } 
+function BoardToFound(BoardMatch,MatchPosition,MovingCol){ //needs fixing   
     
     let moving = cardArrayA[BoardMatch];
     let targetID = Number(moving.id);//make sure to turn all properties into number from string
@@ -708,6 +706,16 @@ function BoardToFound(BoardMatch,MatchPosition,MovingCol){ //needs fixing
     }
     
     permArrayID[MatchPosition] = -1;
+
+    if(foundationArr[0]==99 && foundationArr[1]==99 && foundationArr[2]==99 && foundationArr[3]==99){
+        Victory();
+        return;
+    } 
+
+    document.getElementById("move-to-found0").style.color = "black";
+    document.getElementById("move-to-found1").style.color = "black";
+    document.getElementById("move-to-found2").style.color = "black";
+    document.getElementById("move-to-found3").style.color = "black";
 
     FrontMatch();
 
@@ -971,6 +979,26 @@ function Reset(){
 
 function CheckBack(){
     console.log(frontBackPos);
+    let diffArr = [-1,-1,-1,-1,-1,-1,-1];//temp
+    for(let i=0;i<7;i++){
+        if(frontPos[i]>6){
+            let a = frontPos[i] - frontBackPos[i];
+            let b = a/7; 
+            let change = frontPos[i] - 7;
+            if (b>0){
+                let tempArr = [];
+                for(let i=0;i<b;i++){
+                    let c = permArrayID[change];
+                    let d = Number(cardArrayA[c].id);
+                    tempArr.push(d);
+                    change -= 7;
+                }
+                diffArr[i] = tempArr;
+            }               
+         }
+    }
+        
+    console.log(diffArr);
 }
 
 /*
