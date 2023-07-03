@@ -165,7 +165,24 @@ Added frontbackPos array and have planned how to use.
 TO DO:
 Add frontbackPos to functions including board to future board to board function. LINE220 PLANNING
 Add div colour change/check for swapDeck and other Deck functions, as well as all other buttons and functions.
+Add function to board to found buttons.
 Add seperate selections of foundToboard and BoardtoFound options into the functions.
 Seperate MoveFromBoard and BoardToFound, via storing arguments into a variable, which will then need to be wiped after use.
 Seperate moving Board to Board from MoveFromBoard and put some into MoveToBoard.
 Seperate MoveToBoard and FoundToBoard, via storing arguments into a variable, which will then need to be wiped after use.
+Fix formatting issue with cards above div 52.
+
+3 Jul
+Began working on frontbackPos to record the furthest back card that is visible.
+frontBackPos works in various functions.
+Attempted to start recording the cards in the middle of the front and the last front card, but the calculations were causing issues.
+
+TODO:
+Attempt to calculate middle cards by recording and holding on to the front card pos and id in the middletoback arrays.
+Add div colour change/check for swapDeck and other Deck functions, as well as all other buttons and functions.
+Add function to board to found buttons.
+Add seperate selections of foundToboard and BoardtoFound options into the functions.
+Seperate MoveFromBoard and BoardToFound, via storing arguments into a variable, which will then need to be wiped after use.
+Seperate moving Board to Board from MoveFromBoard and put some into MoveToBoard.
+Seperate MoveToBoard and FoundToBoard, via storing arguments into a variable, which will then need to be wiped after use.
+Fix formatting issue with cards above div 52.
