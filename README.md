@@ -190,3 +190,18 @@ Add seperate selections of foundToboard and BoardtoFound options into the functi
 Seperate MoveFromBoard and BoardToFound, via storing arguments into a variable, which will then need to be wiped after use.
 Seperate moving Board to Board from MoveFromBoard and put some into MoveToBoard.
 Seperate MoveToBoard and FoundToBoard, via storing arguments into a variable, which will then need to be wiped after use.
+
+4 Jul
+Deck to board buttons change div colour when ready and change back.
+Seperated movefromboard and boardtofound functions.
+Board to Found divs change colour and back again when needed.
+Added functions to board to found buttons.
+Added seperate selections for boardToFound function.
+
+TODO:
+
+Continue working on MoveFromBoard and MoveToBoard functions.
+Continue working on foundToBoard function and include selections.
+Add to frontmatch function the ability to check found to board, and board to board chance.
+Add div colour change/check for found to board, move from column and move to column buttons.
+Seperate MoveToBoard and FoundToBoard, via storing arguments into a variable, which will then need to be wiped after use.

@@ -82,10 +82,10 @@
     <div id="frontID-div"></div>
     <div id="match"></div>
     <div>
-        <button id="move-to-found0" class="deck-button">Board to Found</button>
-        <button id="move-to-found1" class="deck-button">Board to Found</button>
-        <button id="move-to-found2" class="deck-button">Board to Found</button>
-        <button id="move-to-found3" class="deck-button">Board to Found</button>
+        <button id="move-to-found0" class="deck-button" onclick="BoardToFound(0)">Board to Found</button>
+        <button id="move-to-found1" class="deck-button" onclick="BoardToFound(1)">Board to Found</button>
+        <button id="move-to-found2" class="deck-button" onclick="BoardToFound(2)">Board to Found</button>
+        <button id="move-to-found3" class="deck-button" onclick="BoardToFound(3)">Board to Found</button>
         <br>
         <button id="move-from-found0" class="deck-button" onclick="FoundToBoard()">Found to Board</button>
         <button id="move-from-found1" class="deck-button" onclick="FoundToBoard()">Found to Board</button>
@@ -260,6 +260,13 @@ let testArr = [];//temp
 //console.log(testArr.length, testArr[2].length)//temp
 
 function FrontMatch(){    
+    document.getElementById(`deck-to-board1`).style.color = "black";
+    document.getElementById(`deck-to-board2`).style.color = "black";
+    document.getElementById(`deck-to-board3`).style.color = "black";
+    document.getElementById(`deck-to-board4`).style.color = "black";
+    document.getElementById(`deck-to-board5`).style.color = "black";
+    document.getElementById(`deck-to-board6`).style.color = "black";
+    document.getElementById(`deck-to-board7`).style.color = "black";
    // let acematch = [];
     for(let i=0;i<7;i++){ //calculates cards that go on top     
         let a = [];
@@ -298,7 +305,7 @@ function FrontMatch(){
         if(foundationArr.indexOf(b)!==-1){
             let aceMatch = foundationArr.indexOf(b);
             document.getElementById(`move-to-found${aceMatch}`).style.color = "yellow"; 
-            document.getElementById(`move-from-col${i}`).style.color = "yellow"; 
+          //  document.getElementById(`move-from-col${i}`).style.color = "yellow"; 
         }
     }
     
@@ -326,7 +333,19 @@ function FrontMatch(){
             matchesArray.push(a);
         }
     }
-    
+    if(deck.length>0){
+        let topDeck = deck[0];
+        for(let i=0;i<7;i++){
+            let potDeckMatch = matchesCombined[i];
+            for(let j=0;j<potDeckMatch.length;j++){
+                if(potDeckMatch[j]==topDeck){
+                    let k = i+1;
+                    document.getElementById(`deck-to-board${k}`).style.color = "yellow";
+                }
+            }
+        }         
+    }
+   
    // console.log(testArr);
   //  console.log(middleBackIDArr);
    // console.log(middleBackPosArr);
@@ -425,6 +444,7 @@ function SwapDeck(swap){
         document.getElementById("deck-to-board").style.visibility = "hidden";
         document.getElementById("deck-to-found").style.visibility = "hidden";
         document.getElementById("new-card").style.visibility = "hidden";
+        FrontMatch();
         return;
     }    
     let a = deck[0];  
@@ -438,47 +458,19 @@ function SwapDeck(swap){
     }
 
     document.getElementById("deck-to-found").style.color = "black"; 
-/*
-    for(let i=0;i<7;i++){
-        let f = front[i];
-        let b = permArrayID[f];
-        let d = deck[0];
-        let ip = i + 1;
-        matchID[ip] = b;
-        document.getElementById(`deck-to-board${ip}`).style.color = "black";
-        //if d = 13,26,29,42 && front=-1
-        if(d<13){
-            if(b==(d+27)||b==(d+40)){
-                document.getElementById(`deck-to-board${ip}`).style.color = "yellow";             
-            }
-        }
-        if(d>12&&d<26){//13over27and40
-            if(b==(d+14)||b==(d+27)){    
-                document.getElementById(`deck-to-board${ip}`).style.color = "yellow";              
-            }
-        }
-        if(d>25&&d<39){//26over1and14
-            if(b==(d-25)||b==(d-12)){       
-                document.getElementById(`deck-to-board${ip}`).style.color = "yellow";          
-            }
-        }
-        if(d>38){//39over1and14
-            if(b==(d-38)||b==(d-25)){
-                document.getElementById(`deck-to-board${ip}`).style.color = "yellow";         
-            }
-        }        
-    }
-*/
+
+    FrontMatch();
+
     for(let i=0;i<4;i++){
         if(foundationArr[i]==deck[0]){
             document.getElementById("deck-to-found").style.color = "yellow"; 
-            //document.getElementById("move-to-found").style.color = "yellow"; 
         }
     }
    // document.getElementById("match").innerHTML = matchID;
     document.getElementById("deck-array").innerHTML = deck;//temp
   //  console.log(cardArrayA[a].id);
 }
+
 //deck[0]=0;//temp
 function UpToFound(){    
     if(deck.length==0){
@@ -605,38 +597,40 @@ function DeckToBoard(tarCol){
     frontID[tarCol] = a;
 
     SwapDeck(0);
-    FrontMatch();
+   // FrontMatch();
     
     document.getElementById("deck-array").innerHTML = deck;//temp
     document.getElementById("board-array").innerHTML = permArrayID;//temp
     document.getElementById("front-div").innerHTML = frontPos;//temp
     document.getElementById("frontID-div").innerHTML = frontID;//temp
     document.getElementById("match").innerHTML = matchesArray; //temp
-    /*
-    document.getElementById("deck-to-board2").style.color = "black";
-    document.getElementById("deck-to-board3").style.color = "black";
-    document.getElementById("deck-to-board4").style.color = "black";
-    document.getElementById("deck-to-board5").style.color = "black";
-    document.getElementById("deck-to-board6").style.color = "black";
-    document.getElementById("deck-to-board7").style.color = "black";
-    */
-    
+        
 }
 //foundation
-function BoardToFound(BoardMatch,MatchPosition,MovingCol){ //needs fixing   
-    
-    let moving = cardArrayA[BoardMatch];
+
+function BoardToFound(found){
+
+    let moving = -1;
+    let matchFrontID = -1;
+    let matchPosition = -1;
+    let movingCol = -1;
+    for(let i=0;i<7;i++){
+        if(frontID[i]==foundationArr[found]){
+            matchFrontID = frontID[i];
+            moving = cardArrayA[matchFrontID];
+            matchPosition = frontPos[i];
+            movingCol = i;
+        }
+    }
+    if(moving==-1){
+        return;
+    }
+   // let moving = cardArrayA[BoardMatch];
     let targetID = Number(moving.id);//make sure to turn all properties into number from string
     let targetText = moving.text;
 
-    console.log(targetID,foundationArr);
-    if(foundationArr.indexOf(targetID)==-1){
-        return;
-    }
-    else{
-        console.log("match");
-    }
-
+    //console.log(targetID,foundationArr);
+    
     if(targetID == foundationArr[0]){
         document.getElementById("HF").innerHTML = targetText;
         if(foundationArr[0]==12){
@@ -674,13 +668,13 @@ function BoardToFound(BoardMatch,MatchPosition,MovingCol){ //needs fixing
         }        
     }
 
-    document.getElementById(`${MatchPosition}`).innerHTML = "";
-    document.getElementById(`${MatchPosition}`).style.visibility = "hidden";
+    document.getElementById(`${matchPosition}`).innerHTML = "";
+    document.getElementById(`${matchPosition}`).style.visibility = "hidden";
 
-    let changingCard = frontID[MovingCol];  
+    //let changingCard = matchFrontID;  
     let newCardPos = -1;
-    if(MatchPosition>6){
-        newCardPos = MatchPosition - 7;
+    if(matchPosition>6){
+        newCardPos = matchPosition - 7;
     }
    
     
@@ -688,24 +682,25 @@ function BoardToFound(BoardMatch,MatchPosition,MovingCol){ //needs fixing
 
 
     if(newCardPos!==-1){
-        frontID[MovingCol] = permArrayID[newCardPos];
+        frontID[movingCol] = permArrayID[newCardPos];
         document.getElementById(`${newCardPos}`).classList.remove("covered");
     }
     else{
-        frontID[MovingCol] = -1;
+        frontID[movingCol] = -1;
     }
-    if(frontPos[MovingCol]>6){
-        frontPos[MovingCol] -=  7;
-        if(frontPos[MovingCol]<frontBackPos[MovingCol]){
-            frontBackPos[MovingCol] = frontPos[MovingCol];
+
+    if(frontPos[movingCol]>6){
+        frontPos[movingCol] -=  7;
+        if(frontPos[movingCol]<frontBackPos[movingCol]){
+            frontBackPos[movingCol] = frontPos[movingCol];
         }
     }
     else{
-        frontPos[MovingCol] = -1;
-        frontBackPos[MovingCol] = -1;
-    }
+        frontPos[movingCol] = -1;
+        frontBackPos[movingCol] = -1;
+    } 
     
-    permArrayID[MatchPosition] = -1;
+    permArrayID[matchPosition] = -1;
 
     if(foundationArr[0]==99 && foundationArr[1]==99 && foundationArr[2]==99 && foundationArr[3]==99){
         Victory();
@@ -716,6 +711,13 @@ function BoardToFound(BoardMatch,MatchPosition,MovingCol){ //needs fixing
     document.getElementById("move-to-found1").style.color = "black";
     document.getElementById("move-to-found2").style.color = "black";
     document.getElementById("move-to-found3").style.color = "black";
+    /*document.getElementById("move-from-col0").style.color = "black"; 
+    document.getElementById("move-from-col1").style.color = "black"; 
+    document.getElementById("move-from-col2").style.color = "black"; 
+    document.getElementById("move-from-col3").style.color = "black"; 
+    document.getElementById("move-from-col4").style.color = "black"; 
+    document.getElementById("move-from-col5").style.color = "black"; 
+    document.getElementById("move-from-col6").style.color = "black"; */
 
     FrontMatch();
 
@@ -891,9 +893,7 @@ function MoveFromBoard(MovingCol){
     document.getElementById("front-div").innerHTML = frontPos;//temp
     document.getElementById("frontID-div").innerHTML = frontID;//temp
     document.getElementById("match").innerHTML = matchesArray; //temp
-    if(potMovers.length==0){
-        BoardToFound(a,b,MovingCol);
-    }
+    
     potMovers = [];
     
 }
@@ -1001,164 +1001,5 @@ function CheckBack(){
     console.log(diffArr);
 }
 
-/*
-
-let moveReady = [false,false,false,false,false,false,false,false,false,false,false];
-let finalFront = [-1,-1,-1,-1,-1,-1,-1]
-
-let foundationCodes = [];
-let deckID = [];
-
-let frontOfFront = [7,15,23,31,39,47,55];//temp
-
-let foundHLength = 0;
-let foundDLength = 0;
-let foundCLength = 0;
-let foundSLength = 0;
-
-let matchID = [0];
-
-let foundationReady = [0,13,26,39];
-
-//let foundationArr = [];
-
-let moveSuccess = "NO"; //temp
-
-/*let frontDeckID = deck[0];
-let frontDeckCard = cardArrayA[frontDeckID];
-document.getElementById("new-card").innerHTML = frontDeckCard.text;
-
-if(frontDeckCard.col == "R"){
-    document.getElementById("new-card").style.color = "red";
-}
-else{
-    document.getElementById("new-card").style.color = "black";
-}*/
-
-//console.log(permArrayID.length);
-
-/*
-matchID[0] = deck[0];
-for(let i=0;i<7;i++){
-    let a = frontPos[i];
-    let b = permArrayID[a];
-    let d = deck[0];
-    let ip = i + 1;
-    if(d<13){
-        if(b==(d+27)||b==(d+40)){
-           
-            document.getElementById(`deck-to-board${ip}`).style.color = "yellow";  
-        }
-    }
-    if(d>12&&d<26){//13over27and40
-        if(b==(d+14)||b==(d+27)){
-                
-            document.getElementById(`deck-to-board${ip}`).style.color = "yellow";            
-        }
-    }
-    if(d>25&&d<39){//26over1and14
-        if(b==(d-25)||b==(d-12)){
-              
-            document.getElementById(`deck-to-board${ip}`).style.color = "yellow";     
-        }
-    }
-    if(d>38){//39over1and14
-        if(b==(d-38)||b==(d-25)){
-           
-            document.getElementById(`deck-to-board${ip}`).style.color = "yellow";         
-        }
-    }
-    matchID.push(b);
-}
-
-for(let i=0;i<4;i++){
-    if(foundationReady[i]==deck[0]){
-        document.getElementById("deck-to-found").style.color = "yellow"; 
-    }
-}
-
-//document.getElementById("match").innerHTML = matchID;
-
-/*let testVar = deck[0];
-let board = 1;
-let found = 2;*/
-//front[0] = -1;//test
-//document.getElementById("0").innerHTML = "";//temp
-//document.getElementById("0").style.visibility = "hidden";//test
-
-function MatchTest(input,type){ //possibly replace with matchlist or modify
-    let testText = "";
-    if(type==1){
-    for(let i=0;i<7;i++){
-        let f = frontPos[i];        
-        let d = input;
-        let ip = i + 1;
-        
-        document.getElementById(`deck-to-board${ip}`).style.color = "black";
-        if (d==12|| d==25||d==38||d==51){
-            if(f==-1){
-                document.getElementById(`deck-to-board${ip}`).style.color = "yellow";  
-                let e = "king ";
-                let c = i.toString();
-                testText += e;
-                testText += c;
-                return testText;
-            }
-            else{
-                testText += "No place for king";
-                return testText;
-            }
-        }
-        let b = permArrayID[f];
-        matchID[ip] = b;
-        if(d<13){
-            if(b==(d+27)||b==(d+40)){
-                document.getElementById(`deck-to-board${ip}`).style.color = "yellow";    
-                let c = i.toString();
-                testText += c;         
-            }
-        }
-        if(d>12&&d<26){//13over27and40
-            if(b==(d+14)||b==(d+27)){    
-                document.getElementById(`deck-to-board${ip}`).style.color = "yellow";       
-                let c = i.toString();
-                testText += c;             
-            }
-        }
-        if(d>25&&d<39){//26over1and14
-            if(b==(d-25)||b==(d-12)){       
-                document.getElementById(`deck-to-board${ip}`).style.color = "yellow";       
-                let c = i.toString();
-                testText += c;         
-            }
-        }
-        if(d>38){//39over1and14
-            if(b==(d-38)||b==(d-25)){
-                document.getElementById(`deck-to-board${ip}`).style.color = "yellow";       
-                let c = i.toString();
-                testText += c;        
-                }
-            }        
-        }
-        return testText;
-    }
-    if(type==2){
-        for(let i=0;i<4;i++){
-        if(foundationReady[i]==deck[0]){
-            let p = i+7;
-            document.getElementById("deck-to-found").style.color = "yellow"; 
-            moveReady[p] = true;
-            let c = i.toString();
-            testText += c;
-            testText += "found";
-            return testText;
-        }
-    }
-    return testText;
-    }
-}
-//let testTwo = MatchTest(testVar,board);
-//let testFound = MatchTest(testVar,found);
-//console.log(testTwo,testFound);
 </script>
 </html>
