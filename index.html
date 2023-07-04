@@ -67,6 +67,9 @@
     height: 60px;
     margin: auto 20px;
 }
+.col-button{
+    width: 100px;
+}
 </style>
 
 <body>    
@@ -87,10 +90,10 @@
         <button id="move-to-found2" class="deck-button" onclick="BoardToFound(2)">Board to Found</button>
         <button id="move-to-found3" class="deck-button" onclick="BoardToFound(3)">Board to Found</button>
         <br>
-        <button id="move-from-found0" class="deck-button" onclick="FoundToBoard()">Found to Board</button>
-        <button id="move-from-found1" class="deck-button" onclick="FoundToBoard()">Found to Board</button>
-        <button id="move-from-found2" class="deck-button" onclick="FoundToBoard()">Found to Board</button>
-        <button id="move-from-found3" class="deck-button" onclick="FoundToBoard()">Found to Board</button>
+        <button id="move-from-found0" class="deck-button" onclick="FoundToBoard(0)">Found to Board</button>
+        <button id="move-from-found1" class="deck-button" onclick="FoundToBoard(1)">Found to Board</button>
+        <button id="move-from-found2" class="deck-button" onclick="FoundToBoard(2)">Found to Board</button>
+        <button id="move-from-found3" class="deck-button" onclick="FoundToBoard(3)">Found to Board</button>
         <div class="foundation-container">
             <div class="card" id="HF"></div>
             <div class="card" id="DF"></div>
@@ -113,24 +116,24 @@
         <button id="deck-to-found" onclick="UpToFound()"class="deck-button">Move to Foundation</button>
     </div>
     <br>       
-    <button id="move-from-col0" onclick="MoveFromBoard(0)">Move From Column</button>
-    <button id="move-from-col1" onclick="MoveFromBoard(1)">Move From Column</button>
+    <button id="move-from-col0" onclick="MoveFromBoard(0)" class="col-button">Move From Column</button>
+    <button id="move-from-col1" onclick="MoveFromBoard(1)" class="col-button">Move From Column</button>
     <button id="move-from-col2"
-    onclick="MoveFromBoard(2)">Move From Column</button>
+    onclick="MoveFromBoard(2)" class="col-button">Move From Column</button>
     <button id="move-from-col3"
-    onclick="MoveFromBoard(3)">Move From Column</button>
+    onclick="MoveFromBoard(3)" class="col-button">Move From Column</button>
     <button id="move-from-col4"
-    onclick="MoveFromBoard(4)">Move From Column</button>
-    <button id="move-from-col5" onclick="MoveFromBoard(5)">Move From Column</button>
-    <button id="move-from-col6" onclick="MoveFromBoard(6)">Move From Column</button>
+    onclick="MoveFromBoard(4)" class="col-button">Move From Column</button>
+    <button id="move-from-col5" onclick="MoveFromBoard(5)" class="col-button">Move From Column</button>
+    <button id="move-from-col6" onclick="MoveFromBoard(6)" class="col-button">Move From Column</button>
     <br>
-    <button id="move-to-col0" onclick="MoveToBoard(0)">Move To Column</button>
-    <button id="move-to-col1" onclick="MoveToBoard(1)">Move To Column</button>
-    <button id="move-to-col2" onclick="MoveToBoard(2)">Move To Column</button>
-    <button id="move-to-col3" onclick="MoveToBoard(3)">Move To Column</button>
-    <button id="move-to-col4" onclick="MoveToBoard(4)">Move To Column</button>
-    <button id="move-to-col5" onclick="MoveToBoard(5)">Move To Column</button>
-    <button id="move-to-col6" onclick="MoveToBoard(6)">Move To Column</button>
+    <button id="move-to-col0" onclick="MoveToBoard(0)" style="width:100px;">Move To Column</button>
+    <button id="move-to-col1" onclick="MoveToBoard(1)" class="col-button">Move To Column</button>
+    <button id="move-to-col2" onclick="MoveToBoard(2)" class="col-button">Move To Column</button>
+    <button id="move-to-col3" onclick="MoveToBoard(3)" class="col-button">Move To Column</button>
+    <button id="move-to-col4" onclick="MoveToBoard(4)" class="col-button">Move To Column</button>
+    <button id="move-to-col5" onclick="MoveToBoard(5)" class="col-button">Move To Column</button>
+    <button id="move-to-col6" onclick="MoveToBoard(6)" class="col-button">Move To Column</button>
     <button id="reload" onclick="Reset()" class="deck-button">Reset</button>
     <br>
     <div class="board-container" id="board-container">        
@@ -309,13 +312,7 @@ function FrontMatch(){
         }
     }
     
-   /* for(let i=0;i<4;i++){
-        if(frontID.indexOf(foundationArr[i])!==-1){
-           // let arrMatch = frontID.indexOf(foundationArr[i]);
-            document.getElementById(`move-to-found${i}`).style.color = "yellow"; 
-            //acematch.push(i);
-        }
-    }*/
+   
    // console.log(acematch,frontID);
     for(let i=7;i<11;i++){
         let a = i-7;
@@ -344,6 +341,21 @@ function FrontMatch(){
                 }
             }
         }         
+    }
+    let nonFoundMatches = matchesCombined.slice(0,7);
+    for(let i=0;i<4;i++){   
+        let foundSel = -1;
+        let notCompat = [0,13,26,39];
+        if(notCompat.indexOf(foundationArr[i])==-1){
+            foundSel = foundationArr[i]-1;
+            for(let j=0;j<7;j++){
+                for(let k=0;k<nonFoundMatches[j].length;k++){
+                    if(nonFoundMatches[j][k]==foundSel){
+                        document.getElementById(`move-from-found${i}`).style.color = "yellow";
+                    }
+                }
+            }
+        }       
     }
    
    // console.log(testArr);
@@ -728,77 +740,39 @@ function BoardToFound(found){
     document.getElementById("foundation-array").innerHTML = foundationArr; //temp
    
 }
-/*foundationArr = [10,20,30,40];//temp
-document.getElementById("HF").innerHTML = cardArrayA[10].text;//temp
-document.getElementById("DF").innerHTML = cardArrayA[20].text;//temp
-document.getElementById("CF").innerHTML = cardArrayA[30].text;//temp
+/*foundationArr = [10,20,30,41];//temp
+document.getElementById("HF").innerHTML = cardArrayA[9].text;//temp
+document.getElementById("DF").innerHTML = cardArrayA[19].text;//temp
+document.getElementById("CF").innerHTML = cardArrayA[29].text;//temp
 document.getElementById("SF").innerHTML = cardArrayA[40].text;//temp
 
-//document.getElementById("match").innerHTML = matchesArray; //temp
+document.getElementById("match").innerHTML = matchesArray; //temp
 document.getElementById("foundation-array").innerHTML = foundationArr; //temp*/
 
-FrontMatch();//temp
-console.log(matchesCombined);
+/*FrontMatch();//temp
+console.log(matchesCombined);*/
 
-function FoundToBoard(){ //needs fixing
+function FoundToBoard(col){ 
     
-    for(let i=0;i<4;i++){
-        let foundChoice = foundationArr[i];
-        for(let j=0;j<7.;j++){
-            if(matchesCombined[j].length>1){
-                for(let k=0;k<matchesCombined[j].length;k++){
-                    if(matchesCombined[j][k]==foundChoice){                       
-                        movingToColArray.push(j);
-                    };
-                }
-            }            
-        }
-    }
-    
-    console.log(movingToColArray);
-    
-    /*
-    let a = deck[0];
-    let moving = cardArrayA[a];
-    let target = frontPos[tarCol] + 7;
-    let targetText = moving.text;
-    let potMatch = matchesCombined[tarCol];
-    let MatchProceed = false;
-
-    for(let i=0;i<potMatch.length;i++){
-        if(potMatch[i]==a){
-            MatchProceed = true;
-        }
-    }
-
-    if(MatchProceed == false){
+    if(foundationArr[col]==0||foundationArr[col]==13||foundationArr[col]==26||foundationArr[col]==39){
         return;
     }
-
-    console.log(target, potMatch);
-
-    document.getElementById(target).innerHTML = targetText;
-    document.getElementById(target).style.visibility = "visible";
-
-    if(moving.col == "R"){
-        document.getElementById(target).style.color = "red";
+    let foundChoice = foundationArr[col] - 1;
+    for(let i=0;i<7.;i++){
+        if(matchesCombined[i].length>1){
+            for(let k=0;k<matchesCombined[i].length;k++){
+                if(matchesCombined[i][k]==foundChoice){                       
+                    document.getElementById(`move-to-col${i}`).style.color = "yellow";
+                    document.getElementById(`move-from-found${col}`).style.color = "orange";
+                }
+            }
+        }            
     }
-    else{
-        document.getElementById(target).style.color = "black";
-    }
-
-    permArrayID[target] = a;
-    frontPos[tarCol] = target;
-    frontID[tarCol] = a;
-
-    SwapDeck(0);
-    FrontMatch(); */
     
-    
-    document.getElementById("board-array").innerHTML = permArrayID;//temp
-    document.getElementById("front-div").innerHTML = frontPos;//temp
-    document.getElementById("frontID-div").innerHTML = frontID;//temp
-    document.getElementById("match").innerHTML = matchesArray; //temp
+   // document.getElementById("board-array").innerHTML = permArrayID;//temp
+  //  document.getElementById("front-div").innerHTML = frontPos;//temp
+  //  document.getElementById("frontID-div").innerHTML = frontID;//temp
+  //  document.getElementById("match").innerHTML = matchesArray; //temp
 }
 
 
@@ -899,6 +873,7 @@ function MoveFromBoard(MovingCol){
 }
 
 function MoveToBoard(MovingCol){
+    
     if(movingToColArray.indexOf(MovingCol)==-1){
         return;
     }

@@ -198,10 +198,15 @@ Board to Found divs change colour and back again when needed.
 Added functions to board to found buttons.
 Added seperate selections for boardToFound function.
 
+Adjusted size of moving to and from column buttons.
+Worked on foundation to board function.
+Foundation to board and move to column change colour when ready.
+FoundToBoard function works correctly.
+Added to frontMatch the ability to check found to board.
+
 TODO:
 
-Continue working on MoveFromBoard and MoveToBoard functions.
-Continue working on foundToBoard function and include selections.
-Add to frontmatch function the ability to check found to board, and board to board chance.
-Add div colour change/check for found to board, move from column and move to column buttons.
-Seperate MoveToBoard and FoundToBoard, via storing arguments into a variable, which will then need to be wiped after use.
+Continue working on MoveFromBoard and MoveToBoard functions, especially in relation to multiple layer moves.
+Add to frontmatch function the ability to check board to board chance.
+Add div colour change/check for move from column and move to column buttons, for interboard transfer.
+Rework movetoBoard by allowing it to change the foundation and move the proper foundation card to the correct column.
