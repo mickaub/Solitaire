@@ -245,6 +245,7 @@ let boardContainer = document.getElementById("board-container");
 let matchesCombined = matches.concat(foundationArr);
 let matchesArray = [];
 let foundToColArray = [-1,-1,-1,-1,-1,-1,-1];//needs fixing
+let moveFromColArr = [-1,-1,-1,-1,-1,-1,-1];
 let boardToColArray = [-1,-1,-1,-1,-1,-1,-1];
 
 function Shuffle (array) {    
@@ -358,7 +359,20 @@ function FrontMatch(){
             }
         }       
     }
-   
+    for(let i=0;i<7;i++){
+        let f = frontID[i];        
+
+        for(let k=0;k<7;k++){
+            if(matchesCombined[k].length>1){
+                for(let j=0;j<matchesCombined[k].length;j++){
+                    if(matchesCombined[k][j]==f&&f!==-1){
+                        document.getElementById(`move-from-col${i}`).style.color = "yellow";      
+                        moveFromColArr[i] = k;                   
+                    }                
+                }
+            }
+        }
+    }
    // console.log(testArr);
   //  console.log(middleBackIDArr);
    // console.log(middleBackPosArr);
@@ -724,13 +738,7 @@ function BoardToFound(found){
     document.getElementById("move-to-found1").style.color = "black";
     document.getElementById("move-to-found2").style.color = "black";
     document.getElementById("move-to-found3").style.color = "black";
-    /*document.getElementById("move-from-col0").style.color = "black"; 
-    document.getElementById("move-from-col1").style.color = "black"; 
-    document.getElementById("move-from-col2").style.color = "black"; 
-    document.getElementById("move-from-col3").style.color = "black"; 
-    document.getElementById("move-from-col4").style.color = "black"; 
-    document.getElementById("move-from-col5").style.color = "black"; 
-    document.getElementById("move-from-col6").style.color = "black"; */
+   
 
     FrontMatch();
 
@@ -741,17 +749,6 @@ function BoardToFound(found){
     document.getElementById("foundation-array").innerHTML = foundationArr; //temp
    
 }
-/*foundationArr = [10,20,30,41];//temp
-document.getElementById("HF").innerHTML = cardArrayA[9].text;//temp
-document.getElementById("DF").innerHTML = cardArrayA[19].text;//temp
-document.getElementById("CF").innerHTML = cardArrayA[29].text;//temp
-document.getElementById("SF").innerHTML = cardArrayA[40].text;//temp
-
-document.getElementById("match").innerHTML = matchesArray; //temp
-document.getElementById("foundation-array").innerHTML = foundationArr; //temp*/
-
-/*FrontMatch();//temp
-console.log(matchesCombined);*/
 
 function FoundToBoard(col){ 
     
@@ -770,107 +767,19 @@ function FoundToBoard(col){
             }
         }            
     }
-    console.log(foundToColArray);
-   // document.getElementById("board-array").innerHTML = permArrayID;//temp
-  //  document.getElementById("front-div").innerHTML = frontPos;//temp
-  //  document.getElementById("frontID-div").innerHTML = frontID;//temp
-  //  document.getElementById("match").innerHTML = matchesArray; //temp
+    console.log(foundToColArray);   
 }
-
 
 //board
 
 function MoveFromBoard(MovingCol){
-    let a = frontID[MovingCol];
-
-    if(a==-1){
+    if(moveFromColArr[MovingCol]==-1){
         return;
     }
-    let b = frontPos[MovingCol];
-    let moving = cardArrayA[a];
-    let targetText = moving.text;
-
-   
-    let potMovers = [];
-    //let potDest = [];
-
-    for(let i=0;i<7;i++){
-        if(matchesCombined[i].length>1){
-            for(let j=0;j<matchesCombined[i].length;j++){
-                if(matchesCombined[i][j]==a){
-                    potMovers.push(i);
-                }                
-            }
-        }
-    }
-    if(potMovers.length>0){
-        console.log(potMovers);
-        let m = potMovers[0];//temp     
-        let mNewPos = -1;
-        if(frontPos[m]!==-1){
-            mNewPos = frontPos[m] + 7;   
-        }
-        else{
-            mNewPos = m;
-            frontBackPos[m] = m;
-        }
-     
-        document.getElementById(`${b}`).innerHTML = "";
-        document.getElementById(`${b}`).style.visibility = "hidden";
-
-        let newCardPos = -1;
-        if(b>6){
-            newCardPos = b - 7;
-        }
-        
-        if(newCardPos!==-1){
-            frontID[MovingCol] = permArrayID[newCardPos];
-            document.getElementById(`${newCardPos}`).classList.remove("covered");
-        }
-        else{
-            frontID[MovingCol] = -1;
-        }
-
-        if(frontPos[MovingCol]>6){
-            frontPos[MovingCol] -=  7;
-            if(frontPos[MovingCol]<frontBackPos[MovingCol]){
-                frontBackPos[MovingCol] = frontPos[MovingCol];
-            }
-        }
-        else{
-            frontPos[MovingCol] = -1;
-            frontBackPos[MovingCol] = -1;
-        }
-
-        permArrayID[b] = -1;
-
-        document.getElementById(`${mNewPos}`).innerHTML = moving.text;
-
-    
-        if(moving.col == "R"){
-            document.getElementById(`${mNewPos}`).style.color = "red";
-        }
-        else{
-            document.getElementById(`${mNewPos}`).style.color = "black";
-        }
-
-        document.getElementById(`${mNewPos}`).style.visibility = "visible";    
-
-        permArrayID[mNewPos] = moving.id;
-        frontPos[m] = mNewPos;
-        frontID[m] = moving.id;
-
-    
-    }
-
-    FrontMatch();
-
-    document.getElementById("board-array").innerHTML = permArrayID;//temp
-    document.getElementById("front-div").innerHTML = frontPos;//temp
-    document.getElementById("frontID-div").innerHTML = frontID;//temp
-    document.getElementById("match").innerHTML = matchesArray; //temp
-    
-    potMovers = [];
+    document.getElementById(`move-from-col${MovingCol}`).style.color = "orange";
+    let newCol = moveFromColArr[MovingCol];
+    document.getElementById(`move-to-col${newCol}`).style.color = "yellow";
+    boardToColArray[newCol] = MovingCol;
     
 }
 
@@ -932,8 +841,87 @@ function MoveToBoard(MovingCol){
         document.getElementById("match").innerHTML = matchesArray; //temp
         document.getElementById("foundation-array").innerHTML = foundationArr; //temp
     }
-    if(boardToColArray[MovingCol]==-1){
-        //ready for interboard transfer code
+    if(boardToColArray[MovingCol]!==-1){
+        let oldCol = boardToColArray[MovingCol];
+        let a = frontID[oldCol];
+        let b = frontPos[oldCol];          
+        let moving = cardArrayA[a];
+        let targetText = moving.text;
+        let mNewPos = -1;
+        //remove old
+        document.getElementById(`${b}`).innerHTML = "";
+        document.getElementById(`${b}`).style.visibility = "hidden";
+        permArrayID[b] = -1;
+        /*        
+        if(potMovers.length>0){
+            console.log(potMovers);
+            let m = potMovers[0];//temp     
+            
+            if(frontPos[MovingCol]>6){
+                frontPos[MovingCol] -=  7;
+                if(frontPos[MovingCol]<frontBackPos[MovingCol]){
+                    frontBackPos[MovingCol] = frontPos[MovingCol];
+                }
+            }
+            else{
+                frontPos[MovingCol] = -1;
+                frontBackPos[MovingCol] = -1;
+            }            
+        }       
+        */
+        //movefrontback
+        let oldReplacePos = -1;
+        if(b>6){
+            oldReplacePos = b - 7;
+            if(oldReplacePos<frontBackPos[oldCol]){
+                frontBackPos[oldCol] = oldReplacePos;
+            }
+        }
+        frontPos[oldCol] = oldReplacePos;
+        if(oldReplacePos!==-1){
+            frontID[oldCol] = permArrayID[oldReplacePos];
+            document.getElementById(`${oldReplacePos}`).classList.remove("covered");
+        }
+        else{
+            frontID[oldCol] = -1;
+            frontBackPos[oldCol] = -1;
+        }
+        //create new
+        if(frontPos[MovingCol]!==-1){
+            mNewPos = frontPos[MovingCol] + 7;   
+        }
+        else{
+            mNewPos = MovingCol;
+            frontBackPos[MovingCol] = MovingCol;
+        }
+
+        document.getElementById(`${mNewPos}`).innerHTML = moving.text;
+        document.getElementById(`${mNewPos}`).style.visibility = "visible";    
+        
+        if(moving.col == "R"){
+            document.getElementById(`${mNewPos}`).style.color = "red";
+        }
+        else{
+            document.getElementById(`${mNewPos}`).style.color = "black";
+        }
+
+        permArrayID[mNewPos] = moving.id;
+        frontPos[MovingCol] = mNewPos;
+        frontID[MovingCol] = moving.id;           
+
+        
+        document.getElementById(`move-to-col${MovingCol}`).style.color = "black";    
+        document.getElementById(`move-from-col${oldCol}`).style.color = "black";
+        boardToColArray[MovingCol] = -1;
+        moveFromColArr[oldCol] = -1;
+        console.log(boardToColArray,moveFromColArr);
+
+        FrontMatch();
+
+        document.getElementById("board-array").innerHTML = permArrayID;//temp
+        document.getElementById("front-div").innerHTML = frontPos;//temp
+        document.getElementById("frontID-div").innerHTML = frontID;//temp
+        document.getElementById("match").innerHTML = matchesArray; //temp
     }
 }
 //victory and reload
