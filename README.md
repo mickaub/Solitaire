@@ -210,3 +210,13 @@ Continue working on MoveFromBoard and MoveToBoard functions, especially in relat
 Add to frontmatch function the ability to check board to board chance.
 Add div colour change/check for move from column and move to column buttons, for interboard transfer.
 Rework movetoBoard by allowing it to change the foundation and move the proper foundation card to the correct column.
+
+5 Jul
+Fixed Found to Board function, which is working correctly.
+Reworked MoveToBoard to differentiate between moving from foundation and moving from board, with the foundation part working correctly.
+
+TODO:
+
+Continue working on MoveFromBoard and MoveToBoard functions in relation to multiple layer moves.
+Add to frontmatch function the ability to check board to board chance.
+Add div colour change/check for move from column and move to column buttons for interboard transfer.

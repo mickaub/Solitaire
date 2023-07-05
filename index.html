@@ -244,7 +244,8 @@ let matches = [-1,-1,-1,-1,-1,-1,-1];
 let boardContainer = document.getElementById("board-container");
 let matchesCombined = matches.concat(foundationArr);
 let matchesArray = [];
-let movingToColArray = [];//needs fixing
+let foundToColArray = [-1,-1,-1,-1,-1,-1,-1];//needs fixing
+let boardToColArray = [-1,-1,-1,-1,-1,-1,-1];
 
 function Shuffle (array) {    
     let currentIndex = array.length;
@@ -754,7 +755,7 @@ console.log(matchesCombined);*/
 
 function FoundToBoard(col){ 
     
-    if(foundationArr[col]==0||foundationArr[col]==13||foundationArr[col]==26||foundationArr[col]==39){
+    if(foundationArr[col]==0||foundationArr[col]==13||foundationArr[col]==26||foundationArr[col]==39||foundationArr[col]==1||foundationArr[col]==14||foundationArr[col]==27||foundationArr[col]==40){
         return;
     }
     let foundChoice = foundationArr[col] - 1;
@@ -764,11 +765,12 @@ function FoundToBoard(col){
                 if(matchesCombined[i][k]==foundChoice){                       
                     document.getElementById(`move-to-col${i}`).style.color = "yellow";
                     document.getElementById(`move-from-found${col}`).style.color = "orange";
+                    foundToColArray[i] = foundChoice;
                 }
             }
         }            
     }
-    
+    console.log(foundToColArray);
    // document.getElementById("board-array").innerHTML = permArrayID;//temp
   //  document.getElementById("front-div").innerHTML = frontPos;//temp
   //  document.getElementById("frontID-div").innerHTML = frontID;//temp
@@ -874,73 +876,65 @@ function MoveFromBoard(MovingCol){
 
 function MoveToBoard(MovingCol){
     
-    if(movingToColArray.indexOf(MovingCol)==-1){
+    if(foundToColArray[MovingCol]==-1&&boardToColArray[MovingCol]==-1){
         return;
     }
-    let matches = matchesCombined[MovingCol];
-    let foundationMatchesArr = [];    
-    let foundationChanging = [];//temp
+    //console.log("step1");
+    if(foundToColArray[MovingCol]!==-1){
+        let movingID = foundToColArray[MovingCol];
+        let target = frontPos[MovingCol] + 7;
+        let moving = cardArrayA[movingID];
+        let targetText = moving.text;
+       // console.log("step2");
 
-    for(let i=0;i<4;i++){
-        if(matches.indexOf(foundationArr[i])!==-1){
-            foundationMatchesArr.push(foundationArr[i]);      
-            foundationChanging.push(i); 
+        document.getElementById(target).innerHTML = targetText;
+        document.getElementById(target).style.visibility = "visible";
+
+        if(moving.col == "R"){
+            document.getElementById(target).style.color = "red";
         }
+        else{
+            document.getElementById(target).style.color = "black";
+        }
+        permArrayID[target] = movingID;
+        frontPos[MovingCol] = target;
+        frontID[MovingCol] = movingID;
+
+        let foundCorr = movingID + 1;
+        let foundCol = foundationArr.indexOf(foundCorr);
+
+        foundationArr[foundCol] -= 2;
+        let newArrayID = foundationArr[foundCol];
+        let newArrayCard = cardArrayA[newArrayID];
+        if(newArrayID<13){
+            document.getElementById("HF").innerHTML = newArrayCard.text;
+        }
+        if(newArrayID>12&&newArrayID<26){
+            document.getElementById("DF").innerHTML = newArrayCard.text;
+        }
+        if(newArrayID>25&&newArrayID<39){
+            document.getElementById("CF").innerHTML = newArrayCard.text;
+        }
+        if(newArrayID>38){
+            document.getElementById("SF").innerHTML = newArrayCard.text;
+        }
+        foundationArr[foundCol] += 1;
+        foundToColArray[MovingCol] = -1;
+
+        document.getElementById(`move-to-col${MovingCol}`).style.color = "black";
+        document.getElementById(`move-from-found${foundCol}`).style.color = "black";
+        console.log(foundToColArray);
+        FrontMatch();
+
+        document.getElementById("board-array").innerHTML = permArrayID;//temp
+        document.getElementById("front-div").innerHTML = frontPos;//temp
+        document.getElementById("frontID-div").innerHTML = frontID;//temp
+        document.getElementById("match").innerHTML = matchesArray; //temp
+        document.getElementById("foundation-array").innerHTML = foundationArr; //temp
     }
-    let moving = foundationMatchesArr[0];//temp
-    let movingCard = cardArrayA[moving];//temp
-    let target = frontPos[MovingCol] + 7;
-    let targetText = movingCard.text;
-    let firstChange = foundationChanging[0];
-
-    foundationArr[firstChange] -= 1;
-    let newArrayID = foundationArr[firstChange];
-    let newArrayCard = cardArrayA[newArrayID];
-    if(firstChange==0){
-        document.getElementById("HF").innerHTML = newArrayCard.text;
+    if(boardToColArray[MovingCol]==-1){
+        //ready for interboard transfer code
     }
-    if(firstChange==1){
-        document.getElementById("DF").innerHTML = newArrayCard.text;
-    }
-    if(firstChange==2){
-        document.getElementById("CF").innerHTML = newArrayCard.text;
-    }
-    if(firstChange==3){
-        document.getElementById("SF").innerHTML = newArrayCard.text;
-    }
-    //console.log(moving);
-   // let potMatch = matchesCombined[tarCol];
-    //let MatchProceed = false;
-
-    document.getElementById(target).innerHTML = targetText;
-
-    if(movingCard.col == "R"){
-        document.getElementById(target).style.color = "red";
-    }
-    else{
-        document.getElementById(target).style.color = "black";
-    }
-
-    document.getElementById(target).style.visibility = "visible";    
-
-    permArrayID[target] = moving;
-    frontPos[MovingCol] = target;
-    if(frontBackPos[MovingCol]==-1){
-        frontBackPos[MovingCol] = MovingCol;
-    }
-    frontID[MovingCol] = moving;
-
-    FrontMatch();
-
-    movingToColArray.shift();
-    console.log(movingToColArray);
-
-    document.getElementById("board-array").innerHTML = permArrayID;//temp
-    document.getElementById("front-div").innerHTML = frontPos;//temp
-    document.getElementById("frontID-div").innerHTML = frontID;//temp
-    document.getElementById("match").innerHTML = matchesArray; //temp
-    document.getElementById("foundation-array").innerHTML = foundationArr; //temp
-
 }
 //victory and reload
 function Victory(){ //when king added to foundations, array is turned to 99
