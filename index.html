@@ -247,6 +247,8 @@ let matchesArray = [];
 let foundToColArray = [-1,-1,-1,-1,-1,-1,-1];//needs fixing
 let moveFromColArr = [-1,-1,-1,-1,-1,-1,-1];
 let boardToColArray = [-1,-1,-1,-1,-1,-1,-1];
+let diffArr = [-1,-1,-1,-1,-1,-1,-1];
+let fromBackPosArr = [-1,-1,-1,-1,-1,-1,-1];
 
 function Shuffle (array) {    
     let currentIndex = array.length;
@@ -359,10 +361,11 @@ function FrontMatch(){
             }
         }       
     }
+    
     for(let i=0;i<7;i++){
-        let f = frontID[i];        
-
-        for(let k=0;k<7;k++){
+        document.getElementById(`move-from-col${i}`).style.color = "black"; 
+        let f = frontID[i];
+        for(let k=0;k<7;k++){  
             if(matchesCombined[k].length>1){
                 for(let j=0;j<matchesCombined[k].length;j++){
                     if(matchesCombined[k][j]==f&&f!==-1){
@@ -373,6 +376,8 @@ function FrontMatch(){
             }
         }
     }
+    CheckBack();
+    
    // console.log(testArr);
   //  console.log(middleBackIDArr);
    // console.log(middleBackPosArr);
@@ -778,8 +783,21 @@ function MoveFromBoard(MovingCol){
     }
     document.getElementById(`move-from-col${MovingCol}`).style.color = "orange";
     let newCol = moveFromColArr[MovingCol];
+    //if(newCol.length==1){
     document.getElementById(`move-to-col${newCol}`).style.color = "yellow";
     boardToColArray[newCol] = MovingCol;
+    
+    console.log(fromBackPosArr);
+    console.log(moveFromColArr);
+   // }
+    /*else{
+        for(let i=0;i<newCol.length;i++){
+            let b = newCol[i];
+            document.getElementById(`move-to-col${b}`).style.color = "yellow";
+        }
+    }*/
+    
+   
     
 }
 
@@ -842,6 +860,11 @@ function MoveToBoard(MovingCol){
         document.getElementById("foundation-array").innerHTML = foundationArr; //temp
     }
     if(boardToColArray[MovingCol]!==-1){
+        if(moveFromColArr.indexOf(MovingCol)!==-1){
+            let z = moveFromColArr.indexOf(MovingCol);
+            let movingBackPos = fromBackPosArr[z];
+            //when bechindfront match is made
+        }
         let oldCol = boardToColArray[MovingCol];
         let a = frontID[oldCol];
         let b = frontPos[oldCol];          
@@ -911,11 +934,16 @@ function MoveToBoard(MovingCol){
 
         
         document.getElementById(`move-to-col${MovingCol}`).style.color = "black";    
-        document.getElementById(`move-from-col${oldCol}`).style.color = "black";
-        boardToColArray[MovingCol] = -1;
-        moveFromColArr[oldCol] = -1;
-        console.log(boardToColArray,moveFromColArr);
-
+        //document.getElementById(`move-from-col${oldCol}`).style.color = "black";
+        //boardToColArray[MovingCol] = -1;
+        for(let i=0;i<7;i++){
+            boardToColArray[i] = -1;
+            moveFromColArr[i] = -1;
+            document.getElementById(`move-from-col${i}`).style.color = "black";
+        }
+        //moveFromColArr[oldCol] = -1;
+        //console.log(boardToColArray,moveFromColArr);
+        fromBackPosArr = [-1,-1,-1,-1,-1,-1,-1];
         FrontMatch();
 
         document.getElementById("board-array").innerHTML = permArrayID;//temp
@@ -936,7 +964,7 @@ function Reset(){
 
 function CheckBack(){
     console.log(frontBackPos);
-    let diffArr = [-1,-1,-1,-1,-1,-1,-1];//temp
+    let t = [];
     for(let i=0;i<7;i++){
         if(frontPos[i]>6){
             let a = frontPos[i] - frontBackPos[i];
@@ -952,10 +980,62 @@ function CheckBack(){
                 }
                 diffArr[i] = tempArr;
             }               
-         }
+        }
+        if(diffArr[i]!==-1){
+            let potbackmatcharr = [];
+            //let c = [];
+            for(let k=0;k<diffArr[i].length;k++){
+                let e = diffArr[i][k];
+                for(let l=0;l<7;l++){
+                    if(matchesCombined[l].length>1){
+                        for(let j=0;j<matchesCombined[l].length;j++){
+                            if(matchesCombined[l][j]==e&&e!==-1){
+                                document.getElementById(`move-from-col${i}`).style.color = "yellow";      
+                                if(moveFromColArr[i]==-1){
+                                    moveFromColArr[i] = l;  
+                                }
+                                /*else{
+                                    let tempo = moveFromColArr[i];
+                                    moveFromColArr[i] = [tempo,l];
+                                } */    
+                                let fromFront = (k+1)*7;
+                                let newPos = frontPos[i]-fromFront;
+                                if(fromBackPosArr==-1){
+                                    fromBackPosArr[i] = newPos;
+                                }
+                                else{
+                                    let fbTemp = fromBackPosArr[i];
+                                    fromBackPosArr[i] = [fbTemp,newPos];
+                                }
+                                t.push(e);           
+                            }                
+                        }
+                    }
+                }
+                /*let c = diffArr[i][k];
+                
+                if(matchesCombined.indexOf(c)!==-1){
+                    t.push(1);
+                    document.getElementById(`move-from-col${i}`).style.color = "yellow"; 
+                } */               
+                /*let frontMatches = matchesCombined[i];
+                let potBackMatch = Number(diffArr[i][k]);
+                for(let j=0;j<frontMatches.length;j++){
+                    if(frontMatches[j]==potBackMatch){
+                        frontWithBackArr.push(i);
+                        //let k = i+1;
+                        //document.getElementById(`deck-to-board${k}`).style.color = "yellow";
+                    }
+                }*/
+            }    
+            console.log(t);
+            //console.log(frontWithBackArr);
+            console.log(diffArr);
+           
+            //console.log(t)   
+        }
     }
-        
-    console.log(diffArr);
+    
 }
 
 </script>

@@ -224,3 +224,10 @@ TODO:
 Continue working on MoveFromBoard and MoveToBoard functions in relation to multiple layer moves.
 Add to frontmatch function the ability to check board to board chance with multiple layers.
 Integrate CheckBack into frontMatch.
+
+6 Jul
+Added to frontMatch function the ability to check board to board chances with multiple layers, by adding checkback function.
+Working on moving from back to one specific column.
+
+TODO:
+Continue working on MoveFromBoard and MoveToBoard functions in relation to multiple layer moves.
