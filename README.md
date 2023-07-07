@@ -231,3 +231,14 @@ Working on moving from back to one specific column.
 
 TODO:
 Continue working on MoveFromBoard and MoveToBoard functions in relation to multiple layer moves.
+
+7 Jul
+TEMPORARY STOP
+To improve efficiency, I will be taking a break for a little while and will move back to solitaire in the future.
+Current completion: 80%.
+When I restart, I will need to focus on:
+Moving multiple layers of cards from behind.
+Changing Checkback function for multiple layers.
+Changing appeareance of move from board and move to board divs for multiple layer moves.
+Changing movefromBoard function to accomodate multiple choices per column.
+Changing movetoBoard function to accomodate moving multiple cards, and choosing from the multiple recieving columns.
