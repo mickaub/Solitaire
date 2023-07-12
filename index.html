@@ -452,6 +452,33 @@ for(let i=0;i<4;i++){
 //console.log(foundationArr);
 //matchesCombined = matches.concat(foundationArr);
 
+/*Testing for multiple Moves
+BEGIN TEST
+DIVS changing = 
+*/
+let testA = [7,14,21,28,15,22,23];
+let testB = [8,33,6,31,21,46,19]//9R,8B,7R,6B 9R,8B 7R
+for(let i=0;i<testA.length;i++){
+    let a = testA[i];
+    let b = testB[i];
+    permArrayID[a] = b;
+    document.getElementById(`${a}`).style.visibility = "visible";
+    document.getElementById(`${a}`).innerHTML = cardArrayA[b].text;
+    document.getElementById(`${a}`).style.color = "orange";
+}
+frontPos[0] += 28;
+frontPos[1] += 14;
+frontPos[2] += 7;
+frontID[0] = 31;
+frontID[1] = 46;
+frontID[2] = 19;
+
+FrontMatch();
+
+let newCombined = matchesCombined.slice(0,3);
+console.log(newCombined);
+//END TEST
+
 document.getElementById("foundation-array").innerHTML = foundationArr; //temp
 document.getElementById("board-array").innerHTML = permArrayID; //temp
 document.getElementById("deck-array").innerHTML = deck; //temp
@@ -772,7 +799,7 @@ function FoundToBoard(col){
             }
         }            
     }
-    console.log(foundToColArray);   
+    //console.log(foundToColArray);   
 }
 
 //board
@@ -787,8 +814,8 @@ function MoveFromBoard(MovingCol){
     document.getElementById(`move-to-col${newCol}`).style.color = "yellow";
     boardToColArray[newCol] = MovingCol;
     
-    console.log(fromBackPosArr);
-    console.log(moveFromColArr);
+   // console.log(fromBackPosArr);
+   // console.log(moveFromColArr);
    // }
     /*else{
         for(let i=0;i<newCol.length;i++){
@@ -850,7 +877,7 @@ function MoveToBoard(MovingCol){
 
         document.getElementById(`move-to-col${MovingCol}`).style.color = "black";
         document.getElementById(`move-from-found${foundCol}`).style.color = "black";
-        console.log(foundToColArray);
+      //  console.log(foundToColArray);
         FrontMatch();
 
         document.getElementById("board-array").innerHTML = permArrayID;//temp
@@ -963,7 +990,7 @@ function Reset(){
 }
 
 function CheckBack(){
-    console.log(frontBackPos);
+   // console.log(frontBackPos);
     let t = [];
     for(let i=0;i<7;i++){
         if(frontPos[i]>6){
@@ -1028,9 +1055,9 @@ function CheckBack(){
                     }
                 }*/
             }    
-            console.log(t);
+           // console.log(t);
             //console.log(frontWithBackArr);
-            console.log(diffArr);
+          //  console.log(diffArr);
            
             //console.log(t)   
         }
