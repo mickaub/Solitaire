@@ -250,6 +250,20 @@ Began adding test cards to use when testing multiple moves.
 TODO:
 Moving multiple layers of cards from behind.
 Changing Checkback function for multiple layers.
-Changing appeareance of move from board and move to board divs for multiple layer moves.
+Changing appearance of move from board and move to board divs for multiple layer moves.
+Changing movefromBoard function to accomodate multiple choices per column.
+Changing movetoBoard function to accomodate moving multiple cards, and choosing from the multiple recieving columns.
+
+13 Jul
+Cleaning code to make moving cards easier.
+Focus on FrontMatch, decktoboard, foundtoBoard, 
+movefromboard, movetoboard functions.
+
+TODO:
+Need to set moving amount and moving values in one of the functions.
+Need to set multiple values in moveFromColArr result, in FrontBack function.
+Reset board to columns and movefromcol array after moves.
+Changing appearance of move from board and move to board divs for multiple layer moves.
+Reset all moving to/from board divs after move.
 Changing movefromBoard function to accomodate multiple choices per column.
 Changing movetoBoard function to accomodate moving multiple cards, and choosing from the multiple recieving columns.
