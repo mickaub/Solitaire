@@ -260,7 +260,13 @@ Focus on FrontMatch, decktoboard, foundtoBoard,
 movefromboard, movetoboard functions.
 Inluded new code to move multiple card matches.
 
+Logged covered cards and removed cards from covered array when no longer covered.
+MatchingCards lists all matches including ones behind the front.
+
 TODO:
+L504: replace i with alternative
+L522: replace frontMatch reference
+Remove other behindfront calculations and arrays.
 Decide between changing movefromcolarr to accomodate multiple options or using fromTo to display multiple options instead.
 Need to set moving amount and moving values in one of the functions.
 Need to set multiple values in moveFromColArr result, in FrontBack function.

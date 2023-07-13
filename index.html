@@ -245,16 +245,17 @@ return to 400-474,978-1069
 need to set moving amount and moving values 
 FRONTMATCH: need to set multiple values in moveFromColArr result
 
-MOVING FROM requires movefromcolarray[i]
+MOVING FROM requires movefromcolarr[i]
 MOVING TO requires foundtocolarray[i] or 
 boardToColArray[i]
 
+fromTo contains FROM COL, FROM ROW , [TO COL/S]
 */
 //step 1 init
 let foundationArr = [0,13,26,39]; //99 is king on top
 let permArrayID = [];
 let starters = [0,1,2,3,4,5,6,8,9,10,11,12,13,16,17,18,19,20,24,25,26,27,32,33,34,40,41,48];
-let hidden = [7,14,21,28,35,42,49,15,22,29,36,43,50,23,30,37,44,51,31,38,45,39,46,47,49,50,51];
+let hidden = [7,14,21,28,35,42,49,15,22,29,36,43,50,23,30,37,44,51,31,38,45,39,46,47,49,50,51]; //21 cards
 let shuffledArray = cardArrayA.slice();
 let frontPos = [0,8,16,24,32,40,48];
 let deck = [];
@@ -279,6 +280,7 @@ let fromTo = [-1,-1,[-1]];
 let fromOpen = [];
 let toOpen = [];
 let moving = [-1,-1];
+let covered = [];
 
 function Shuffle (array) {    
     let currentIndex = array.length;
@@ -481,17 +483,34 @@ function FrontMatch(){
 
     //START OF NEW MULTIMOVE SECTION
     frontCards = [];
+    matchingCards = [];
     for(let i=0;i<140;i++){ //all faceup cards
         let a = permArrayID[i];
-        if(a!==-1 && hidden.indexOf(a)==-1){
-            frontCards.push(a);
+        if(a!==-1 && covered.indexOf(i)==-1){
+            let b = Number(a);       
+            frontCards.push(b);
         }
     }
+    console.log(frontCards);
+    //console.log(covered);
+  //  console.log(matchesCombined);
+    
     for(let i=0;i<frontCards.length;i++){ //all matching IDs 
-        if(frontMatch.indexOf(frontCards)!==-1){ //need to replace frontMatch with matchingArr or similar
-            matchingCards.push(frontCards[i]);
+        let a = frontCards[i];
+        for(let k=0;k<7;k++){  
+            if(matchesCombined[k].length>1){
+                for(let j=0;j<matchesCombined[k].length;j++){
+                    if(matchesCombined[k][j]==a&&a!==-1){
+                       // document.getElementById(`move-from-col${i}`).style.color = "yellow"; //replace i with other number     
+                       // moveFromColArr[i].push(k);     
+                       matchingCards.push(a);              
+                    }                
+                }
+            }
         }
     }
+    console.log(matchingCards); 
+    /*
     if(matchingCards.length>0){ //creates array containing: from column, from row and to column
         for(let i=0;i<matchingCards.length;i++){
             let b = [-1,-1,[-1]];
@@ -500,7 +519,7 @@ function FrontMatch(){
             let fR = Math.floor(fP/7);
             let tC = [];
             for (let j=0;j<7;j++){
-                if(frontMatch[j].indexOf(matchingCards[i])!==-1){
+                if(frontMatch[j].indexOf(matchingCards[i])!==-1){ //replace frontMatch with matchesCombined
                     tC.push(j);
                 }
             }
@@ -508,12 +527,15 @@ function FrontMatch(){
             fromTo.push(b);
         }
     }
-    for(let i=0;i<fromTo.length;i++){ 
+    */
+   /* for(let i=0;i<fromTo.length;i++){ 
         let a = fromTo[i];
         let b = a[0];
         //let c = a[2];
         document.getElementById(`move-from-col${b}`).style.color = "yellow";
     }
+    
+    END OF NEW DATA*/
     
    // console.log(testArr);
   //  console.log(middleBackIDArr);
@@ -549,6 +571,7 @@ for(let i=0;i<140;i++){
             }
             if(frontPos.indexOf(i)==-1){
                 document.getElementById(`${i}`).classList.add("covered");
+                covered.push(i);
             }
             else{
                 frontID.push(shuffledArray[i].id);
@@ -613,7 +636,7 @@ frontID[2] = 19;
 FrontMatch();
 
 let newCombined = matchesCombined.slice(0,3);
-console.log(newCombined);
+//console.log(newCombined);
 //END TEST
 
 document.getElementById("foundation-array").innerHTML = foundationArr; //temp
@@ -883,6 +906,10 @@ function BoardToFound(found){
     if(newCardPos!==-1){
         frontID[movingCol] = permArrayID[newCardPos];
         document.getElementById(`${newCardPos}`).classList.remove("covered");
+        if(covered.indexOf(newCardPos)!==-1){
+            let a = covered.indexOf(newCardPos);
+            covered[a] = -1;
+        }
     }
     else{
         frontID[movingCol] = -1;
@@ -1088,6 +1115,10 @@ function MoveToBoard(MovingCol){
         if(oldReplacePos!==-1){
             frontID[oldCol] = permArrayID[oldReplacePos];
             document.getElementById(`${oldReplacePos}`).classList.remove("covered");
+            if(covered.indexOf(oldReplacePos)!==-1){
+                let a = covered.indexOf(oldReplacePos);
+                covered[a] = -1;
+            }
         }
         else{
             frontID[oldCol] = -1;
