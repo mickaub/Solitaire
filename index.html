@@ -231,7 +231,7 @@ frontback can be increased by found to board or deck to board or board to board
 /*Focus on FrontMatch,291
 decktoboard, 691
 foundtoBoard 861
-movefromboard, 898
+movefromboard, 946
 movetoboard 907
 
 return to 400-474,978-1069
@@ -271,6 +271,14 @@ let moveFromColArr = [-1,-1,-1,-1,-1,-1,-1];
 let boardToColArray = [-1,-1,-1,-1,-1,-1,-1];
 let diffArr = [-1,-1,-1,-1,-1,-1,-1];
 let fromBackPosArr = [-1,-1,-1,-1,-1,-1,-1];
+
+let frontMatch = [];
+let frontCards = [];
+let matchingCards = [];
+let fromTo = [-1,-1,[-1]];
+let fromOpen = [];
+let toOpen = [];
+let moving = [-1,-1];
 
 function Shuffle (array) {    
     let currentIndex = array.length;
@@ -400,7 +408,7 @@ function FrontMatch(){
     }
     console.log(moveFromColArr);
     let t = [];
-    for(let i=0;i<7;i++){
+    for(let i=0;i<7;i++){ //searches through all face up cards and tries to match all cards to front matches
         if(frontPos[i]>6){
             let a = frontPos[i] - frontBackPos[i];
             let b = a/7; 
@@ -469,6 +477,42 @@ function FrontMatch(){
            
             //console.log(t)   
         }
+    }
+
+    //START OF NEW MULTIMOVE SECTION
+    frontCards = [];
+    for(let i=0;i<140;i++){ //all faceup cards
+        let a = permArrayID[i];
+        if(a!==-1 && hidden.indexOf(a)==-1){
+            frontCards.push(a);
+        }
+    }
+    for(let i=0;i<frontCards.length;i++){ //all matching IDs 
+        if(frontMatch.indexOf(frontCards)!==-1){ //need to replace frontMatch with matchingArr or similar
+            matchingCards.push(frontCards[i]);
+        }
+    }
+    if(matchingCards.length>0){ //creates array containing: from column, from row and to column
+        for(let i=0;i<matchingCards.length;i++){
+            let b = [-1,-1,[-1]];
+            let fP = permArrayID.indexOf(matchingCards[i]);
+            let fC = fP % 7;
+            let fR = Math.floor(fP/7);
+            let tC = [];
+            for (let j=0;j<7;j++){
+                if(frontMatch[j].indexOf(matchingCards[i])!==-1){
+                    tC.push(j);
+                }
+            }
+            b = [fC,fR,tC];
+            fromTo.push(b);
+        }
+    }
+    for(let i=0;i<fromTo.length;i++){ 
+        let a = fromTo[i];
+        let b = a[0];
+        //let c = a[2];
+        document.getElementById(`move-from-col${b}`).style.color = "yellow";
     }
     
    // console.log(testArr);
@@ -733,7 +777,10 @@ function DeckToBoard(tarCol){
     }
 
     //console.log(target, potMatch);
-
+    if(hidden.indexOf(target)!==-1){
+        let a = hidden.indexOf(target);
+        hidden[a] = -1;
+    }
     document.getElementById(target).innerHTML = targetText;
     document.getElementById(target).style.visibility = "visible";
 
@@ -908,7 +955,21 @@ function MoveFromBoard(MovingCol){
             let movingC = newCol[i];
             document.getElementById(`move-to-col${movingC}`).style.color = "yellow";
             boardtoColArray[movingC] = MovingCol;
-        }*/
+        }
+        
+        for(let i=0;i<fromTo.length;i++){ //shows choices between multiple moves from selected column
+            let a = fromTo[i];
+            let b = a[0];
+            if(b!==MovingCol){
+                return;
+            }
+            let c = a[2];
+            for(let j=0;j<c.length;j++){
+                let d = c[j];
+                document.getElementById(`move-to-col${d}`).style.color = "yellow";
+            }
+        }
+        */
     document.getElementById(`move-to-col${newCol}`).style.color = "yellow";
     boardToColArray[newCol] = MovingCol; //sets value of new column to moving from column
     

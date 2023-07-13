@@ -258,8 +258,10 @@ Changing movetoBoard function to accomodate moving multiple cards, and choosing 
 Cleaning code to make moving cards easier.
 Focus on FrontMatch, decktoboard, foundtoBoard, 
 movefromboard, movetoboard functions.
+Inluded new code to move multiple card matches.
 
 TODO:
+Decide between changing movefromcolarr to accomodate multiple options or using fromTo to display multiple options instead.
 Need to set moving amount and moving values in one of the functions.
 Need to set multiple values in moveFromColArr result, in FrontBack function.
 Reset board to columns and movefromcol array after moves.
