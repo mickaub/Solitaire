@@ -276,7 +276,7 @@ let fromBackPosArr = [-1,-1,-1,-1,-1,-1,-1];
 let frontMatch = [];
 let frontCards = [];
 let matchingCards = [];
-let fromTo = [-1,-1,[-1]];
+let fromTo = []; //[-1,-1,[-1]] from col, from row, to col
 let fromOpen = [];
 let toOpen = [];
 let moving = [-1,-1];
@@ -491,7 +491,7 @@ function FrontMatch(){
             frontCards.push(b);
         }
     }
-    console.log(frontCards);
+ //   console.log(frontCards);
     //console.log(covered);
   //  console.log(matchesCombined);
     
@@ -510,8 +510,9 @@ function FrontMatch(){
         }
     }
     console.log(matchingCards); 
-    /*
+    
     if(matchingCards.length>0){ //creates array containing: from column, from row and to column
+        fromTo = [];
         for(let i=0;i<matchingCards.length;i++){
             let b = [-1,-1,[-1]];
             let fP = permArrayID.indexOf(matchingCards[i]);
@@ -519,15 +520,30 @@ function FrontMatch(){
             let fR = Math.floor(fP/7);
             let tC = [];
             for (let j=0;j<7;j++){
-                if(frontMatch[j].indexOf(matchingCards[i])!==-1){ //replace frontMatch with matchesCombined
+                if(matchesCombined[j].indexOf(matchingCards[i])!==-1){
                     tC.push(j);
                 }
             }
             b = [fC,fR,tC];
-            fromTo.push(b);
+            if(b[0]!==-1){
+                fromTo.push(b);
+            }            
         }
     }
-    */
+    let noDup = [...new Set(fromTo)];//creates set without duplicates    
+    let noDup2 = [];
+    for(let i=0;i<fromTo.length;i++){
+        let a = fromTo[i][0];
+        noDup2.push(a);
+    }
+    /*for(let i=0;i<fromTo.length;i++){
+        let a = fromTo[i];
+        if(noDup2.indexOf(a)==-1){
+            noDup2.push(a);
+        }
+    }*/
+    console.log(fromTo);
+    console.log(noDup2);
    /* for(let i=0;i<fromTo.length;i++){ 
         let a = fromTo[i];
         let b = a[0];
