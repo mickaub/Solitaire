@@ -275,3 +275,16 @@ Changing appearance of move from board and move to board divs for multiple layer
 Reset all moving to/from board divs after move.
 Changing movefromBoard function to accomodate multiple choices per column.
 Changing movetoBoard function to accomodate moving multiple cards, and choosing from the multiple recieving columns.
+
+14 Jul
+Duplication issue solved by adding positions to frontcards iterations, within the frontmatch function.
+fromTo now works correctly and contains info on from column and to column.
+Have changed movefromBoard function to accomodate multiple choices per column.
+MoveToBoard will reset board to columns and movefromcol array after moves.
+Have decided to continue using movefromColArr and movetoBoardArr, with frontTo working within both moving to/from functions as well.
+
+TODO:
+Continue working on movetoboard 1168-1244
+Need to set moving amount and moving values in MovetoBoard.
+Change movetoBoard function to accomodate moving multiple cards.
+Remove other behindfront calculations and arrays.
