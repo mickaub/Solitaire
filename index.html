@@ -281,7 +281,7 @@ let matchingCards = [];
 let fromTo = []; //[-1,-1,[-1]] from col, from row, to col
 let fromOpen = [];
 let toOpen = [];
-let moving = [-1,-1];
+let movingS = [-1,-1];
 let covered = [];
 
 function Shuffle (array) {    
@@ -845,7 +845,7 @@ function DeckToBoard(tarCol){
 
 function BoardToFound(found){
 
-    if(moving[0]!==-1){
+    if(movingS[0]!==-1){
         return;
     }
 
@@ -971,7 +971,7 @@ function FoundToBoard(col){
     if(foundationArr[col]==0||foundationArr[col]==13||foundationArr[col]==26||foundationArr[col]==39||foundationArr[col]==1||foundationArr[col]==14||foundationArr[col]==27||foundationArr[col]==40){
         return;
     }
-    if(moving[0]!==-1){
+    if(movingS[0]!==-1){
         return;
     }
     let foundChoice = foundationArr[col] - 1;
@@ -993,7 +993,7 @@ function FoundToBoard(col){
     document.getElementById(`move-from-col4`).style.color = "black";
     document.getElementById(`move-from-col5`).style.color = "black";
     document.getElementById(`move-from-col6`).style.color = "black";
-    moving = [-1,-1];
+    movingS = [-1,-1];
     moveFromColArr = [-1,-1,-1,-1,-1,-1,-1];
 
     //console.log(foundToColArray);   
@@ -1023,10 +1023,10 @@ function MoveFromBoard(MovingCol){
     document.getElementById("move-to-found2" ).style.color = "black";
     document.getElementById("move-to-found3" ).style.color = "black";
     
-    moving = [-1,-1];
+    movingS = [-1,-1];
 
     document.getElementById(`move-from-col${MovingCol}`).style.color = "orange";
-    moving[0] = MovingCol;
+    movingS[0] = MovingCol;
 
     let potCols = [];
     for(let i=0;i<fromTo.length;i++){
@@ -1053,7 +1053,7 @@ function MoveFromBoard(MovingCol){
         document.getElementById(`move-to-col${a}`).style.color = "yellow";
         boardToColArray[a] = 1;
     }
-    console.log(boardToColArray, moving);
+    console.log(boardToColArray, movingS);
     //let newCol = moveFromColArr[MovingCol];
     /* 
         for(let i=0;i<newCol.length;i++){
@@ -1150,7 +1150,7 @@ function MoveToBoard(MovingCol){
         return;
     }
     if(boardToColArray[MovingCol]!==-1){ //START EDITING
-        let oldCol = moving[0];
+        let oldCol = movingS[0];
         let oldChoice = [];
 
         for(let i=0;i<fromTo.length;i++){
@@ -1164,8 +1164,42 @@ function MoveToBoard(MovingCol){
                     }               
                 }
             }
+        }        
+        let oldPos = oldChoice[0][0] + (oldChoice[0][1] * 7);
+        // console.log(oldChoice,oldPos);
+        let oldID = permArrayID[oldPos];
+        let moving = cardArrayA[oldID];
+        let targetText = moving.text;
+        let dif = 0;
+        let alldif = [oldPos];
+
+        if(oldPos!==frontPos[oldCol]){
+            dif = (frontPos[oldCol] - oldPos) / 7;
+        }       
+        if(dif==0){    //removing old
+            document.getElementById(`${oldPos}`).innerHTML = "";
+            document.getElementById(`${oldPos}`).style.visibility = "hidden";
+            permArrayID[oldPos] = -1;
+            //need to change for final move to emptiness
         }
-        console.log(oldChoice);
+        else{    //removing multiple old
+            for(let i=0;i<dif;i++){
+                let e = (i * 7) + 7;
+                let f = oldPos + e;
+                alldif.push(f);
+            }
+            for(let i=0;i<alldif.length;i++){
+                let g = alldif[i];
+                document.getElementById(`${g}`).innerHTML = "";
+                document.getElementById(`${g}`).style.visibility = "hidden";
+                permArrayID[g] = -1;
+            }
+        }
+        //console.log(dif,alldif);
+        
+        //OLDPOS IS B
+      
+        
         /*
         if(moveFromColArr.indexOf(MovingCol)!==-1){
             let z = moveFromColArr.indexOf(MovingCol);
@@ -1176,12 +1210,10 @@ function MoveToBoard(MovingCol){
         let a = frontID[oldCol];
         let b = frontPos[oldCol];          
         let moving = cardArrayA[a];
-        let targetText = moving.text;
+        
         let mNewPos = -1;
-        //remove old
-        document.getElementById(`${b}`).innerHTML = "";
-        document.getElementById(`${b}`).style.visibility = "hidden";
-        permArrayID[b] = -1;
+        
+        
         /*        
         if(potMovers.length>0){
             console.log(potMovers);
@@ -1220,6 +1252,38 @@ function MoveToBoard(MovingCol){
             frontID[oldCol] = -1;
             frontBackPos[oldCol] = -1;
         }
+        */
+        //create new
+        let newPos = -1;
+        if(frontPos[MovingCol]!==-1){
+            newPos = frontPos[MovingCol] + 7;
+        }
+        else{
+            newPos = MovingCol;
+        }
+        console.log(newPos);
+
+        if(dif==0){    //adding new
+            document.getElementById(`${newPos}`).innerHTML = targetText;
+            document.getElementById(`${newPos}`).style.visibility = "visible";
+            permArrayID[newPos] = oldID;
+            frontPos[MovingCol] = newPos;
+            frontID[MovingCol] = moving.id;  
+        }/*
+        else{    //removing multiple old
+            for(let i=0;i<dif;i++){
+                let e = (i * 7) + 7;
+                let f = oldPos + e;
+                alldif.push(f);
+            }
+            for(let i=0;i<alldif.length;i++){
+                let g = alldif[i];
+                document.getElementById(`${g}`).innerHTML = "";
+                document.getElementById(`${g}`).style.visibility = "hidden";
+                permArrayID[g] = -1;
+            }
+        }*/
+       /*
         //create new
         if(frontPos[MovingCol]!==-1){
             mNewPos = frontPos[MovingCol] + 7;   
@@ -1255,12 +1319,14 @@ function MoveToBoard(MovingCol){
         //moveFromColArr[oldCol] = -1;
         //console.log(boardToColArray,moveFromColArr);
         fromBackPosArr = [-1,-1,-1,-1,-1,-1,-1];//temp
-        moving = [-1,-1];
+        movingS = [-1,-1];
         FrontMatch();
-
+        */
         document.getElementById("board-array").innerHTML = permArrayID;//temp
+        
         document.getElementById("front-div").innerHTML = frontPos;//temp
         document.getElementById("frontID-div").innerHTML = frontID;//temp
+        /*
         document.getElementById("match").innerHTML = matchesArray; //temp
         */
     }

@@ -285,6 +285,7 @@ Have decided to continue using movefromColArr and movetoBoardArr, with frontTo w
 
 TODO:
 Continue working on movetoboard 1168-1244
+Change new pos to accomodate kings and -1 front.
 Need to set moving amount and moving values in MovetoBoard.
 Change movetoBoard function to accomodate moving multiple cards.
 Remove other behindfront calculations and arrays.
