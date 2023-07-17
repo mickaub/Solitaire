@@ -289,3 +289,14 @@ Change new pos to accomodate kings and -1 front.
 Need to set moving amount and moving values in MovetoBoard.
 Change movetoBoard function to accomodate moving multiple cards.
 Remove other behindfront calculations and arrays.
+
+17 Jul
+Continued working on move to board function with multiple moves.
+Set amount of moving cards and their values in move to board.
+Accomodated kings in move to board function.
+
+TODO:
+Figure out bug where cards should move but don't activate move from column div.
+Figure out bug where move to column can activate dispite previous bug but has no position id for new moving card.
+Ensure empty columns do not cause bugs.
+Remove other behindfront calculations and arrays.

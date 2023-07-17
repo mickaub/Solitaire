@@ -520,7 +520,7 @@ function FrontMatch(){
     }
     console.log(matchingCards); //testing are also 8 33 21 46
     //test normal should be 31 6 19
-    moveFromColArr = [-1,-1,-1,-1,-1,-1,-1];
+    //moveFromColArr = [-1,-1,-1,-1,-1,-1,-1];
     if(matchingCards.length>0){ //creates array containing: from column, from row and to column
         fromTo = [];
         for(let i=0;i<matchingCards.length;i++){
@@ -615,6 +615,7 @@ else{
 /*BEGIN TEST
 DIVS changing = 
 */
+/*
 let testA = [7,14,21,28,15,22,23];
 let testB = [8,33,6,31,21,46,19]//9R,8B,7R,6B 9R,8B 7R
 for(let i=0;i<testA.length;i++){
@@ -630,7 +631,7 @@ frontPos[1] += 14;
 frontPos[2] += 7;
 frontID[0] = 31;
 frontID[1] = 46;
-frontID[2] = 19;
+frontID[2] = 19;*/
 
 //let newCombined = matchesCombined.slice(0,3);
 //console.log(newCombined);
@@ -1165,22 +1166,23 @@ function MoveToBoard(MovingCol){
                 }
             }
         }        
-        let oldPos = oldChoice[0][0] + (oldChoice[0][1] * 7);
+        let oldPos = oldChoice[0][0] + (oldChoice[0][1] * 7); //old column plus row * 7
         // console.log(oldChoice,oldPos);
         let oldID = permArrayID[oldPos];
         let moving = cardArrayA[oldID];
         let targetText = moving.text;
         let dif = 0;
         let alldif = [oldPos];
+        let movingIDArr = []; //for multiple ID moves
+        let behindOldPos = oldPos - 7;
 
-        if(oldPos!==frontPos[oldCol]){
+        if(oldPos!==frontPos[oldCol]){ //selecting multiple rows for move
             dif = (frontPos[oldCol] - oldPos) / 7;
         }       
         if(dif==0){    //removing old
             document.getElementById(`${oldPos}`).innerHTML = "";
             document.getElementById(`${oldPos}`).style.visibility = "hidden";
-            permArrayID[oldPos] = -1;
-            //need to change for final move to emptiness
+            permArrayID[oldPos] = -1;            
         }
         else{    //removing multiple old
             for(let i=0;i<dif;i++){
@@ -1190,10 +1192,23 @@ function MoveToBoard(MovingCol){
             }
             for(let i=0;i<alldif.length;i++){
                 let g = alldif[i];
+                let h = permArrayID[g];
+                movingIDArr.push(h);
                 document.getElementById(`${g}`).innerHTML = "";
                 document.getElementById(`${g}`).style.visibility = "hidden";
                 permArrayID[g] = -1;
             }
+        }
+        console.log(movingIDArr);
+        if(behindOldPos<0){
+            frontPos[oldCol] = -1;
+            frontID[oldCol] = -1;
+        }
+        else{
+            frontPos[oldCol] = behindOldPos;
+            let l = frontPos[oldCol];
+            document.getElementById(`${l}`).classList.remove("covered");
+            frontID[oldCol] = permArrayID[l];
         }
         //console.log(dif,alldif);
         
@@ -1254,21 +1269,83 @@ function MoveToBoard(MovingCol){
         }
         */
         //create new
-        let newPos = -1;
-        if(frontPos[MovingCol]!==-1){
+        let newPos = -1; //newPos is for first moving card
+        if(frontPos[MovingCol]!==-1){ //checking if king is moving across
             newPos = frontPos[MovingCol] + 7;
         }
         else{
             newPos = MovingCol;
         }
+        
         console.log(newPos);
 
         if(dif==0){    //adding new
             document.getElementById(`${newPos}`).innerHTML = targetText;
             document.getElementById(`${newPos}`).style.visibility = "visible";
+
+            if(moving.col == "R"){
+                document.getElementById(`${newPos}`).style.color = "red";
+            }
+            else{
+                document.getElementById(`${newPos}`).style.color = "black";
+            }
+
             permArrayID[newPos] = oldID;
             frontPos[MovingCol] = newPos;
             frontID[MovingCol] = moving.id;  
+        }
+        else{ //adding multiple new
+            for(let i=0;i<movingIDArr.length;i++){
+                let added = i*7;
+                let newPosN = -1;
+
+                if(newPos == MovingCol){ // changing for potential final move to emptiness
+                    newPosN = newPos;
+                }
+                else{
+                    newPosN = frontPos[MovingCol] + 7 + added;
+                }
+                
+                let newID = movingIDArr[i];
+                let newCardD = cardArrayA[newID];
+                let newText = newCardD.text;
+
+                document.getElementById(`${newPosN}`).innerHTML = newText;
+                document.getElementById(`${newPosN}`).style.visibility = "visible";
+
+                if(newCardD.col == "R"){
+                    document.getElementById(`${newPosN}`).style.color = "red";
+                }
+                else{
+                    document.getElementById(`${newPosN}`).style.color = "black";
+                }
+
+                permArrayID[newPosN] = newID;
+            }
+            /*
+            let lastMovingCard = cardArrayA[lastMoverID];
+            let lastText = lastMovingCard.text;
+
+            document.getElementById(`${newFrontPos}`).innerHTML = lastText;
+            document.getElementById(`${newFrontPos}`).style.visibility = "visible";
+
+            if(lastMovingCard.col == "R"){
+                document.getElementById(`${newFrontPos}`).style.color = "red";
+            }
+            else{
+                document.getElementById(`${newFrontPos}`).style.color = "black";
+            }
+            permArrayID[newFrontPos] = lastMoverID;*/
+
+            //LAST ONLY
+            let lastIndex = movingIDArr.length - 1;
+            let lastMoverID = movingIDArr[lastIndex];
+
+            frontID[MovingCol] = lastMoverID;
+
+            let newFrontPos = frontPos[MovingCol] + ((dif*7)+7);
+            frontPos[MovingCol] = newFrontPos;
+            console.log(newFrontPos);
         }/*
         else{    //removing multiple old
             for(let i=0;i<dif;i++){
@@ -1309,7 +1386,7 @@ function MoveToBoard(MovingCol){
         */
         //document.getElementById(`move-from-col${oldCol}`).style.color = "black";
         //boardToColArray[MovingCol] = -1;
-        /*
+        
         for(let i=0;i<7;i++){ //resets MovingTo and MovingFrom Arrays as well as MoveTo and from divs
             boardToColArray[i] = -1;
             moveFromColArr[i] = -1;
@@ -1318,17 +1395,15 @@ function MoveToBoard(MovingCol){
         }
         //moveFromColArr[oldCol] = -1;
         //console.log(boardToColArray,moveFromColArr);
-        fromBackPosArr = [-1,-1,-1,-1,-1,-1,-1];//temp
+        //fromBackPosArr = [-1,-1,-1,-1,-1,-1,-1];//temp
         movingS = [-1,-1];
         FrontMatch();
-        */
-        document.getElementById("board-array").innerHTML = permArrayID;//temp
         
+        document.getElementById("board-array").innerHTML = permArrayID;//temp        
         document.getElementById("front-div").innerHTML = frontPos;//temp
-        document.getElementById("frontID-div").innerHTML = frontID;//temp
-        /*
+        document.getElementById("frontID-div").innerHTML = frontID;//temp        
         document.getElementById("match").innerHTML = matchesArray; //temp
-        */
+        
     }
 }
 //victory and reload
