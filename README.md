@@ -294,9 +294,9 @@ Remove other behindfront calculations and arrays.
 Continued working on move to board function with multiple moves.
 Set amount of moving cards and their values in move to board.
 Accomodated kings in move to board function.
+Fixed bugs,except for bug where when deck length is 0 deck to found doesn't work but deck to board does.
+Removed other behindfront calculations.
+Cleared all references to testing divs.
+Cleaned code.
 
-TODO:
-Figure out bug where cards should move but don't activate move from column div.
-Figure out bug where move to column can activate dispite previous bug but has no position id for new moving card.
-Ensure empty columns do not cause bugs.
-Remove other behindfront calculations and arrays.
+COMPLETE.
